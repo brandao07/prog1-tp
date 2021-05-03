@@ -1,4 +1,4 @@
-#include "project\handlers\headers.h"
+#include "handlers/headers.h"
 
 int main()
 {
