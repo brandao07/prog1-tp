@@ -8,3 +8,4 @@ typedef struct
 } TESTE;
 
 void soma();
+void teste();
