@@ -1,7 +1,8 @@
 #include "handlers/headers.h"
 
-int main()
+int main(int argc, char const *argv[])
 {
-    printf("Hello world\n");
+    int x = 15;
+    printf("Hello World!\n");
     return 0;
 }
