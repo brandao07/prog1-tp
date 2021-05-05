@@ -1,8 +1,8 @@
-#include "handlers/headers.h"
-
+#include "handlers\headers.h"
+#include "handlers\structs.c"
 int main(int argc, char const *argv[])
 {
-    int x = 15;
     printf("Hello World!\n");
+    soma();
     return 0;
 }
