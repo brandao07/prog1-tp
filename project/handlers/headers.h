@@ -26,6 +26,13 @@ typedef struct utilizador
     int rank; // Número de propostas de crédito analisadas
 } UTILIZADOR;
 
+// Estrutura para as prioridades
+typedef struct prioridade
+{
+    char nome[50];
+    int montanteInferior, montanteSuperior;
+} PRIORIDADE;
+
 // Estrutura para até 5 garantias
 typedef struct garantia
 {
@@ -36,7 +43,7 @@ typedef struct garantia
 } GARANTIA;
 
 // Estruturas de uma propostas de crédito
-typedef struct propcredito
+typedef struct credito
 {
     int numeroSequencial; // Proposta 1 ... Proposta 2 ...
     int ID;               // Posição na fila
@@ -64,8 +71,18 @@ typedef struct elem_CREDITO
     struct elem_CREDITO *seguinte; // Aponta para o nó (CREDITO) seguinte
 } ELEM_CREDITO;
 
+// Estrutura da lista das PRIORIDADES
+typedef struct elem_PRIORIDADE
+{
+    PRIORIDADE info;
+    struct elem_PRIORIDADE *anterior; // Aponta para o nó (PRIORIDADE) anterior
+    struct elem_PRIORIDADE *seguinte; // Aponta para o nó (PRIORIDADE) seguinte
+} ELEM_PRIORIDADE;
+
 //! FUNÇÕES
 
-void recebeCSV(char ficheiroCSV[]); // Função que recebe o ficheiro csv introduzido pelo utilizador
+void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Função que recebe o ficheiro csv introduzido pelo utilizador
 
-void criarPrioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Função para criar as várias prioridades recebidas do ficheiro csv
+PRIORIDADE criarPrioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Função para criar as várias prioridades recebidas do ficheiro csv
+
+void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere no fim a prioridade recebida
