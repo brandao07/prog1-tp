@@ -32,7 +32,7 @@ void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char fich
         token = strtok(NULL, ";");
         montanteSuperior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante superior
         info = criarPrioridade(prioridade, montanteInferior, montanteSuperior);
-        inserePrioridade(&iniLista, &fimLista, info);
+        inserePrioridade(iniLista, fimLista, info);
     }
 }
 
