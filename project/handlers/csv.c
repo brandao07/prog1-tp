@@ -53,7 +53,7 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
 
     if (novo == NULL)
     {
-        printf("ERRO falta de memória!");
+        printf("FALTA de memória!\n");
         return;
     }
 
@@ -61,7 +61,7 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
     novo->anterior = NULL;
     novo->seguinte = NULL;
 
-    if (*fimLista == NULL)
+    if (*fimLista == NULL) // Caso a lista estiver fazia
     {
         *iniLista = novo;
         *fimLista = novo;

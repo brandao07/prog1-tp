@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
         printf("FALTAM argumentos para iniciar o programa.\n");
         return -1;
     }
-
+    // Inicializa os apontadores das estruturas das listas (UTILIZADOR CREDITO PRIORIDADE)
     ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
