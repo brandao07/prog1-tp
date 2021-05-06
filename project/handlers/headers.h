@@ -1,11 +1,70 @@
+/*************************************************************\ 
+ ** EI - Programação 1
+ ** PL1 - Gestão Propostas de Crédito
+ ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
+ ** Nome do ficheiro: headers.h
+\*************************************************************/
+
+//! BIBLIOTECAS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct 
-{
-    int num;
-} TESTE;
+//! DEFINIÇÃO DE VARIÁVEIS
+#define MAX_GARANTIAS 5
+#define MAX_GARANTIAS_TIPO 4
 
-void soma();
-void teste();
+//! ESTRUTURAS
+// Estrutra para o utilizador
+typedef struct utilizador
+{
+    char username[20];
+    char nome[100];
+    char password[20];
+    int tipo; //* 4 - Administrador 5 - Analista
+    int rank; // Número de propostas de crédito analisadas
+} UTILIZADOR;
+
+// Estrutura para até 5 garantias
+typedef struct garantia
+{
+    char tipo[20][MAX_GARANTIAS_TIPO]; // Imóvel Fiador Depósitos Produtos
+    char descricao[200];
+    float valor;
+
+} GARANTIA;
+
+// Estruturas de uma propostas de crédito
+typedef struct propcredito
+{
+    int numeroSequencial; // Proposta 1 ... Proposta 2 ...
+    int ID;               // Posição na fila
+    char nome[100];
+    char IBAN[50];
+    GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias
+    char prioridade[20];              // Carregada do ficheiro csv
+    int analise;                      //* 0 - NÃO ANALISADA 1 - ANALISADA
+
+} CREDITO;
+
+// Estrutura da lista dos UTILIZADORES
+typedef struct elem_UTILIZADOR
+{
+    UTILIZADOR info;
+    struct elem_UTILIZADOR *anterior; // Aponta para o nó (UTILIZADOR) anterior
+    struct elem_UTILIZADOR *seguinte; // Aponta para o nó (UTILIAZDOR) seguinte
+} ELEM_UTILIZADOR;
+
+// Estrutura da lista dos CRÉDITOS
+typedef struct elem_CREDITO
+{
+    CREDITO info;
+    struct elem_CREDITO *anterior; // Aponta para o nó (CREDITO) anterior
+    struct elem_CREDITO *seguinte; // Aponta para o nó (CREDITO) seguinte
+} ELEM_CREDITO;
+
+//! FUNÇÕES
+
+void recebeCSV(char ficheiroCSV[]); // Função que recebe o ficheiro csv introduzido pelo utilizador
+
+void criarPrioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Função para criar as várias prioridades recebidas do ficheiro csv
