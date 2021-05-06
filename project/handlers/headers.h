@@ -1,9 +1,10 @@
-/*************************************************************\ 
+/********************************************************************************\
  ** EI - Programação 1
  ** PL1 - Gestão Propostas de Crédito
  ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
  ** Nome do ficheiro: headers.h
-\*************************************************************/
+ ** Ficheiro H responsável por todas as declarações feitas antes da função main
+\********************************************************************************/
 
 //! BIBLIOTECAS
 #include <stdio.h>
