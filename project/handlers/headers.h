@@ -12,8 +12,8 @@
 #include <string.h>
 
 //! DEFINIÇÃO DE VARIÁVEIS
-#define MAX_GARANTIAS 5
-#define MAX_GARANTIAS_TIPO 4
+#define MAX_GARANTIAS 5 // Número máximo de garantias
+#define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
@@ -22,7 +22,8 @@ typedef struct utilizador
     char username[20];
     char nome[100];
     char password[20];
-    int tipo; //* 4 - Administrador 5 - Analista
+    char tipo[20];
+    int tipoID; //* 4 - Administrador 5 - Analista
     int rank; // Número de propostas de crédito analisadas
 } UTILIZADOR;
 
@@ -36,7 +37,7 @@ typedef struct prioridade
 // Estrutura para até 5 garantias
 typedef struct garantia
 {
-    char tipo[20][MAX_GARANTIAS_TIPO]; // Imóvel Fiador Depósitos Produtos
+    char tipo[20]; // Imóvel Fiador Depósitos Produtos
     char descricao[200];
     float valor;
 
@@ -49,7 +50,7 @@ typedef struct credito
     int ID;               // Posição na fila
     char nome[100];
     char IBAN[50];
-    GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias
+    GARANTIA garantia; // Número máximo de garantias
     char prioridade[20];              // Carregada do ficheiro csv
     int analise;                      //* 0 - NÃO ANALISADA 1 - ANALISADA
 
