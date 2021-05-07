@@ -1,1 +1,6 @@
-"args": ["project\\csv\\test.csv"],
+"args": ["project\\bin\\test.csv"],
+
+para executar pelo terminal:
+
+cd .\PROG1_PROJECT\project\bin\
+./main test.csv

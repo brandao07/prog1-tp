@@ -30,6 +30,7 @@ int main(int argc, char const *argv[])
     char ficheiroCSV[100];
     strcpy(ficheiroCSV, argv[1]);                                     // Atribuição do nome do ficheiro csv
     recebeCSV(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
+    //imprimePrioridades(iniListaPRIORIDADE);
 
     return 0;
 }

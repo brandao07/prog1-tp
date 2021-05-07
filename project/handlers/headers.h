@@ -32,7 +32,7 @@ typedef struct utilizador
 typedef struct prioridade
 {
     char nome[50];
-    int montanteInferior, montanteSuperior;
+    float montanteInferior, montanteSuperior;
 } PRIORIDADE;
 
 // Estrutura para até 5 garantias
@@ -88,3 +88,5 @@ void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char fich
 PRIORIDADE criarPrioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Função para criar as várias prioridades recebidas do ficheiro csv
 
 void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere no fim a prioridade recebida
+
+void imprimePrioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades existentes
