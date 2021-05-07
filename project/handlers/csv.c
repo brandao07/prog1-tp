@@ -86,7 +86,7 @@ void imprimePrioridades(ELEM_PRIORIDADE *iniLista)
         return;
     }
 
-    printf("*------------PRIORIDADES---------------*\n");
+    printf("\n*------------PRIORIDADES---------------*\n");
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         printf("%s;%.2f;%.2f\n", // print com estrutura CSV
