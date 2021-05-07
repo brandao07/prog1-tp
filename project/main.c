@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
 
     char ficheiroCSV[100];
-    strcpy(ficheiroCSV, argv[1]);                                     // Atribuição do nome do ficheiro  csv
+    strcpy(ficheiroCSV, argv[1]);                                     // Atribuição do nome do ficheiro csv
     recebeCSV(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
 
     return 0;

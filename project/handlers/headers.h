@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 //! DEFINIÇÃO DE VARIÁVEIS
 #define MAX_GARANTIAS 5 // Número máximo de garantias

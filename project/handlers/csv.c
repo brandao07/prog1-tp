@@ -50,18 +50,18 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
     ELEM_PRIORIDADE *novo = NULL;
 
     novo = (ELEM_PRIORIDADE *)calloc(1, sizeof(ELEM_PRIORIDADE));
-
+    //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (PRIORIDADE)
     if (novo == NULL)
     {
         printf("FALTA de memória!\n");
         return;
     }
 
-    novo->info = info;
+    novo->info = info; // Atribuição da prioridade recebida
     novo->anterior = NULL;
     novo->seguinte = NULL;
 
-    if (*fimLista == NULL) // Caso a lista estiver fazia
+    if (*fimLista == NULL) // Caso a lista estiver fazia atribui o primeiro elemento da lista ao elemento criado
     {
         *iniLista = novo;
         *fimLista = novo;
