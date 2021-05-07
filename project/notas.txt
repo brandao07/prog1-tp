@@ -4,3 +4,8 @@ para executar pelo terminal:
 
 cd .\PROG1_PROJECT\project\bin\
 ./main test.csv
+
+//DIFICULDADES
+
+carregar ficheiro csv
+
