@@ -63,7 +63,7 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
     novo->anterior = NULL;
     novo->seguinte = NULL;
 
-    if (*fimLista == NULL) // Caso a lista estiver fazia atribui o primeiro elemento da lista ao elemento criado
+    if (*fimLista == NULL) // Caso a lista esteja vazia atribui o primeiro elemento da lista ao elemento criado
     {
         *iniLista = novo;
         *fimLista = novo;
