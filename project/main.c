@@ -12,6 +12,8 @@
 
 //! HANDLERS
 #include "handlers\csv.c"
+#include "handlers\users.c"
+#include "handlers\dashboard.c"
 
 //! MAIN
 int main(int argc, char const *argv[])
@@ -31,6 +33,7 @@ int main(int argc, char const *argv[])
     strcpy(ficheiroCSV, argv[1]);                                     // Atribuição do nome do ficheiro csv
     recebeCSV(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
     imprimePrioridades(iniListaPRIORIDADE);
+    menus();
 
     return 0;
 }

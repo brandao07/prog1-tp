@@ -15,6 +15,9 @@
 //! DEFINIÇÃO DE VARIÁVEIS
 #define MAX_GARANTIAS 5 // Número máximo de garantias
 #define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
+#define MENU_INICIAL 0
+#define MENU_ADMIN 1
+#define MENU_ANALISTA 2
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
@@ -90,3 +93,5 @@ PRIORIDADE criarPrioridade(char prioridade[], int montanteInferior, int montante
 void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere no fim a prioridade recebida
 
 void imprimePrioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades existentes
+
+void menus(); // Menus do programa

@@ -4,7 +4,7 @@
  ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
  ** Nome do ficheiro: csv.c
  ** Ficheiro C responsável por todas as operações com a informação recebida do ficheiro CSV
-\*******************************************************************************************/
+\***********************************************************************************************/
 
 void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[])
 {
