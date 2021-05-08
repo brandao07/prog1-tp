@@ -12,7 +12,7 @@
 #include <string.h>
 #include <time.h>
 
-//! DEFINIÇÃO DE VARIÁVEIS
+//! ATRIBUIÇÃO DE VALORES
 #define MAX_GARANTIAS 5 // Número máximo de garantias
 #define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
 #define MENU_INICIAL 0
