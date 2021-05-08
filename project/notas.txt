@@ -8,4 +8,5 @@ cd .\PROG1_PROJECT\project\bin\
 //DIFICULDADES
 
 carregar ficheiro csv
+passar apontadores e duplo apontadores como argumentos de funçoes
 

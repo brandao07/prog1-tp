@@ -24,16 +24,17 @@ int main(int argc, char const *argv[])
         printf("FALTAM argumentos para iniciar o programa.\n");
         return -1;
     }
-    // Inicializa os apontadores das estruturas das listas (UTILIZADOR CREDITO PRIORIDADE)
-    ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
-    ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
-    ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
-
     char ficheiroCSV[100];
-    strcpy(ficheiroCSV, argv[1]);                                     // Atribuição do nome do ficheiro csv
-    recebeCSV(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
-    imprimePrioridades(iniListaPRIORIDADE);
-    menus();
+    // Atribuição do nome do ficheiro csv
+    strcpy(ficheiroCSV, argv[1]);
+    
+    // Inicializa os apontadores das estruturas das listas (UTILIZADOR CREDITO PRIORIDADE)
+    /*LEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
+    ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
+    ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;*/
 
+    // Atribuição do nome do ficheiro csv
+    menuInicial(ficheiroCSV);
+    
     return 0;
 }

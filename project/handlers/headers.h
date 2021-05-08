@@ -18,15 +18,17 @@
 #define MENU_INICIAL 0
 #define MENU_ADMIN 1
 #define MENU_ANALISTA 2
+#define MENU_ENTRAR 3
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
 typedef struct utilizador
 {
+    int ID;
     char username[20];
     char nome[100];
     char password[20];
-    char tipo[20];
+    char tipo[20]; 
     int tipoID; //* 4 - Administrador 5 - Analista
     int rank; // Número de propostas de crédito analisadas
 } UTILIZADOR;
@@ -94,4 +96,20 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
 
 void imprimePrioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades existentes
 
-void menus(); // Menus do programa
+void menuInicial(); // Menu incial do programa
+
+void menuEntrar(int opcao[]);
+
+void menuAnalista(int opcao[]);
+
+void menuAdmin(int opcao[]);
+
+void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Cria os utilizadores do programa e guarda no ficheiro users.txt
+
+void gravarUtilizador(ELEM_UTILIZADOR *iniLista, UTILIZADOR info); //Grava os utilizadores no ficheiro texto users.txt
+
+void inserirUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Insere os utilizadores na lista
+
+int verifiqueUsername(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
+
+void carregarUser(ELEM_UTILIZADOR *iniLista, UTILIZADOR info); // Carrega os utilizadores do programa do ficheiro users.txt
