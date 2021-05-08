@@ -11,7 +11,7 @@ void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char fich
     // Variáveis necessárias para operar com o ficheiro csv
     PRIORIDADE info;
     char tamanhoCSV[100], prioridade[50], *ptr = NULL, *token = NULL;
-    int montanteInferior, montanteSuperior;
+    float montanteInferior, montanteSuperior;
     FILE *fp = NULL;
 
     fp = fopen(ficheiroCSV, "r"); // r - apenas lê do ficheiro
@@ -39,9 +39,11 @@ void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char fich
 PRIORIDADE criarPrioridade(char prioridade[], int montanteInferior, int montanteSuperior)
 {
     PRIORIDADE info;
-    /* 
-    TODO: ATRIBUIR VALOR AS VARIAVEIS
-    */
+
+    //Atribuição da informação recebida para a estrutura PRIORIDADE
+    strcpy(info.nome, prioridade);
+    info.montanteInferior = montanteInferior;
+    info.montanteSuperior = montanteSuperior;
     return info;
 }
 
@@ -72,4 +74,25 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
         (*fimLista)->seguinte = novo;
         *fimLista = novo;
     }
+}
+
+void imprimePrioridades(ELEM_PRIORIDADE *iniLista)
+{
+    ELEM_PRIORIDADE *aux = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Lista vasia\n");
+        return;
+    }
+
+    printf("\n*------------PRIORIDADES---------------*\n");
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        printf("%s;%.2f;%.2f\n", // print com estrutura CSV
+               aux->info.nome,
+               aux->info.montanteInferior,
+               aux->info.montanteSuperior);
+    }
+    printf("*--------------------------------------*\n");
 }
