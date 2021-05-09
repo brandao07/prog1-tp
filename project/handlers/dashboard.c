@@ -39,9 +39,8 @@ void menuAdmin(int opcao[])
             system("cls");
             break;
         }
-        
+
     } while (opcao[MENU_ADMIN] != 0);
-    
 }
 
 void menuAnalista(int opcao[])
@@ -63,7 +62,7 @@ void menuAnalista(int opcao[])
         case 0: // Sai do programa
             exit(0);
 
-        case 1: 
+        case 1:
             system("cls");
             break;
         case 2:
@@ -75,7 +74,7 @@ void menuAnalista(int opcao[])
             system("cls");
             break;
         }
-        
+
     } while (opcao[MENU_ANALISTA] != 0);
 }
 
