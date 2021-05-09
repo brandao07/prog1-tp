@@ -43,7 +43,7 @@ void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTI
         return;
     }
 
-    for (aux=iniLista; aux != NULL; aux = aux->seguinte)
+    for (aux; aux != NULL; aux = aux->seguinte)
     {
         res++;
     }
@@ -51,7 +51,7 @@ void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTI
     info.ID = res + 1;
 
     inserirUtilizador(iniLista, fimLista, info);
-    gravarUtilizador(iniLista, info);
+    gravarUtilizador((*iniLista), info);
 }
 
 void gravarUtilizador(ELEM_UTILIZADOR *iniLista, UTILIZADOR info)
