@@ -6,6 +6,9 @@
  ** Ficheiro C responsável pelo funcionamento dos utilizadores
 \********************************************************************************/
 
+//! HEADER
+#include "headers.h"
+
 void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info)
 {
     int res = 0;

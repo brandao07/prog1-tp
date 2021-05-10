@@ -6,6 +6,9 @@
  ** Ficheiro C responsável por todas as operações com a informação recebida do ficheiro CSV
 \***********************************************************************************************/
 
+//! HEADER
+#include "headers.h"
+
 void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[])
 {
     // Variáveis necessárias para operar com o ficheiro csv

@@ -8,12 +8,7 @@
 \*************************************************************/
 
 //! HEADER
-#include "handlers\headers.h"
-
-//! HANDLERS
-#include "handlers\csv.c"
-#include "handlers\users.c"
-#include "handlers\dashboard.c"
+#include "headers.h"
 
 //! MAIN
 int main(int argc, char const *argv[])
@@ -34,7 +29,7 @@ int main(int argc, char const *argv[])
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;*/
 
     // Atribuição do nome do ficheiro csv
-    menuInicial(ficheiroCSV);
+    menuInicial(ficheiroCSV); 
     
     return 0;
 }

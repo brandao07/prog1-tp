@@ -7,6 +7,9 @@
  *! MENU_INICIAL = 0 MENU_ADMIN = 1 MENU_ANALISTA = 2;
 \********************************************************************************/
 
+//! HEADER
+#include "headers.h"
+
 void menuAdmin(int opcao[])
 {
     do
