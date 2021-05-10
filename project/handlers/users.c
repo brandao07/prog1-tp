@@ -10,6 +10,7 @@ void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTI
 {
     int res = 0;
     ELEM_UTILIZADOR *aux = NULL;
+    
     printf("Introduza um username!\n");
     fflush(stdin);
     scanf("%s", info.username);
