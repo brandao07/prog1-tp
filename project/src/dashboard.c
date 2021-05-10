@@ -31,15 +31,13 @@ void menuAdmin(int opcao[])
         case 1: // Criar utilizador
             //criarUtilizador();
             printf("Utilizador criado com sucesso!\n");
-            system("cls");
             break;
         case 2:
-            system("cls");
+            break;
         case 3: // Volta para o menu anterior
             return;
         default:
             printf("OPCAO INVALIDA!\n");
-            system("cls");
             break;
         }
 
@@ -66,15 +64,13 @@ void menuAnalista(int opcao[])
             exit(0);
 
         case 1:
-            system("cls");
             break;
         case 2:
-            system("cls");
+            break;
         case 3: // Volta para o menu anterior
             return;
         default:
             printf("OPCAO INVALIDA!\n");
-            system("cls");
             break;
         }
 
@@ -101,11 +97,9 @@ void menuEntrar(int opcao[])
 
         case 1: // Entra no menu Admin
             menuAdmin(opcao);
-            system("cls");
             break;
         case 2:
             menuAnalista(opcao); // Entra no menu Analista
-            system("cls");
         case 3: // Volta para o menu anterior
             return;
         default:
@@ -139,11 +133,9 @@ void menuInicial(char ficheiroCSV[])
             exit(0);
         case 1:
             menuEntrar(opcao); // Entra com uma conta do tipo administrador ou analista
-            system("cls");
             break;
         default:
             printf("OPCAO INVALIDA!\n");
-            system("cls");
         }
 
     } while (opcao[MENU_INICIAL] != 0);
