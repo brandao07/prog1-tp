@@ -1,8 +1,8 @@
-"args": ["project\\bin\\test.csv"],
+"args": ["src\\test.csv"],
 
 para executar pelo terminal:
 
-cd .\PROG1_PROJECT\project\bin\
+cd .\PROG1_PROJECT\project\src\
 ./main test.csv
 
 //DIFICULDADES
