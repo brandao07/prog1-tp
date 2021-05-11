@@ -29,7 +29,7 @@ int main(int argc, char const *argv[])
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;*/
 
     // Atribuição do nome do ficheiro csv
-    menuInicial(ficheiroCSV);
+    menu_inicial(ficheiroCSV);
 
     return 0;
 }

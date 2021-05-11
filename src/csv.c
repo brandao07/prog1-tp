@@ -9,7 +9,7 @@
 //! HEADER
 #include "headers.h"
 
-void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[])
+void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[])
 {
     // Variáveis necessárias para operar com o ficheiro csv
     PRIORIDADE info;
@@ -34,12 +34,12 @@ void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char fich
         montanteInferior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante inferior
         token = strtok(NULL, ";");
         montanteSuperior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante superior
-        info = criarPrioridade(prioridade, montanteInferior, montanteSuperior);
-        inserePrioridade(iniLista, fimLista, info);
+        info = criar_prioridade(prioridade, montanteInferior, montanteSuperior);
+        inserir_prioridade(iniLista, fimLista, info);
     }
 }
 
-PRIORIDADE criarPrioridade(char prioridade[], int montanteInferior, int montanteSuperior)
+PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior)
 {
     PRIORIDADE info;
 
@@ -50,7 +50,7 @@ PRIORIDADE criarPrioridade(char prioridade[], int montanteInferior, int montante
     return info;
 }
 
-void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info)
+void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info)
 {
     ELEM_PRIORIDADE *novo = NULL;
 
@@ -58,7 +58,7 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (PRIORIDADE)
     if (novo == NULL)
     {
-        printf("FALTA de memória!\n");
+        printf("FALTA de memoria!\n");
         return;
     }
 
@@ -79,13 +79,13 @@ void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PR
     }
 }
 
-void imprimePrioridades(ELEM_PRIORIDADE *iniLista)
+void imprime_prioridades(ELEM_PRIORIDADE *iniLista)
 {
     ELEM_PRIORIDADE *aux = NULL;
 
     if (iniLista == NULL)
     {
-        printf("Lista vasia\n");
+        printf("Lista vazia!\n");
         return;
     }
 

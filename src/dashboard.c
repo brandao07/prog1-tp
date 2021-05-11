@@ -10,8 +10,9 @@
 //! HEADER
 #include "headers.h"
 
-void menuAdmin(int opcao[])
+void menu_admin(int opcao[])
 {
+    UTILIZADOR info;
     do
     {
         printf("\n*------------MENU ADMIN---------------*\n");
@@ -29,7 +30,10 @@ void menuAdmin(int opcao[])
             exit(0);
 
         case 1: // Criar utilizador
-            //criarUtilizador();
+            //info = criar_utilizador();
+            //inserir_utilizador(&iniLista,&fimLista,info);
+            //gravar_utilizador(iniLista);
+
             printf("Utilizador criado com sucesso!\n");
             break;
         case 2:
@@ -44,7 +48,7 @@ void menuAdmin(int opcao[])
     } while (opcao[MENU_ADMIN] != 0);
 }
 
-void menuAnalista(int opcao[])
+void menu_analista(int opcao[])
 {
     do
     {
@@ -77,7 +81,7 @@ void menuAnalista(int opcao[])
     } while (opcao[MENU_ANALISTA] != 0);
 }
 
-void menuEntrar(int opcao[])
+void menu_entrar(int opcao[])
 {
     do
     {
@@ -96,10 +100,10 @@ void menuEntrar(int opcao[])
             exit(0);
 
         case 1: // Entra no menu Admin
-            menuAdmin(opcao);
+            menu_admin(opcao);
             break;
         case 2:
-            menuAnalista(opcao); // Entra no menu Analista
+            menu_analista(opcao); // Entra no menu Analista
         case 3: // Volta para o menu anterior
             return;
         default:
@@ -110,13 +114,13 @@ void menuEntrar(int opcao[])
     } while (opcao[MENU_ENTRAR] != 3);
 }
 
-void menuInicial(char ficheiroCSV[])
+void menu_inicial(char ficheiroCSV[])
 {
     ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
 
-    recebeCSV(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
+    recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
     int opcao[4];
     do
     {
@@ -132,7 +136,7 @@ void menuInicial(char ficheiroCSV[])
         case 0: // Sai do programa
             exit(0);
         case 1:
-            menuEntrar(opcao); // Entra com uma conta do tipo administrador ou analista
+            menu_entrar(opcao); // Entra com uma conta do tipo administrador ou analista
             break;
         default:
             printf("OPCAO INVALIDA!\n");

@@ -88,28 +88,28 @@ typedef struct elem_PRIORIDADE
 
 //! FUNÇÕES
 
-void recebeCSV(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Função que recebe o ficheiro csv introduzido pelo utilizador
+void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Função que recebe o ficheiro csv introduzido pelo utilizador
 
-PRIORIDADE criarPrioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Função para criar as várias prioridades recebidas do ficheiro csv
+PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Função para criar as várias prioridades recebidas do ficheiro csv
 
-void inserePrioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere no fim a prioridade recebida
+void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere no fim a prioridade recebida
 
-void imprimePrioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades existentes
+void imprime_prioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades existentes
 
-void menuInicial(); // Menu incial do programa
+void menu_inicial(char ficheiroSCV []); // Menu incial do programa
 
-void menuEntrar(int opcao[]);
+void menu_entrar(int opcao[]);
 
-void menuAnalista(int opcao[]);
+void menu_analista(int opcao[]);
 
-void menuAdmin(int opcao[]);
+void menu_admin(int opcao[]);
 
-void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Cria os utilizadores do programa e guarda no ficheiro users.txt
+UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
 
-void gravarUtilizador(ELEM_UTILIZADOR *iniLista, UTILIZADOR info); //Grava os utilizadores no ficheiro texto users.txt
+void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Insere os utilizadores na lista
 
-void inserirUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Insere os utilizadores na lista
+void gravar_utilizador(ELEM_UTILIZADOR *iniLista); //Grava os utilizadores no ficheiro texto users.txt
 
-int verifiqueUsername(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
+int verifique_username(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
 
-void carregarUser(ELEM_UTILIZADOR *iniLista, UTILIZADOR info); // Carrega os utilizadores do programa do ficheiro users.txt
+void carregar_user(ELEM_UTILIZADOR *iniLista); // Carrega os utilizadores do programa do ficheiro users.txt

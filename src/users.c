@@ -9,20 +9,22 @@
 //! HEADER
 #include "headers.h"
 
-void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info)
+UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista)
 {
+    UTILIZADOR info;
     int res = 0;
     ELEM_UTILIZADOR *aux = NULL;
-    
+
     printf("Introduza um username!\n");
     fflush(stdin);
     scanf("%s", info.username);
-    if (verifiqueUsername(*iniLista, info.username) == 1)
+    while (verifique_username(*iniLista, info.username) == 1)
     {
         printf("Username ja existente!\n");
-        return;
+        printf("\nIntroduza um username!\n");
+        fflush(stdin);
+        scanf("%s", info.username);
     }
-
     printf("Introduza um nome!\n");
     fflush(stdin);
     scanf("%[^\n]", info.nome);
@@ -32,7 +34,7 @@ void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTI
     scanf("%s", info.password);
 
     printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
-    scanf("%i", info.tipoID);
+    scanf("%d", info.tipoID);
     if (info.tipoID == 4)
     {
         strcpy(info.tipo, "Administrador");
@@ -44,48 +46,20 @@ void criarUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTI
     else
     {
         printf("OPCAO invalida!\n");
-        return;
+        exit(0);
     }
 
-    for (aux; aux != NULL; aux = aux->seguinte)
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         res++;
     }
 
     info.ID = res + 1;
 
-    inserirUtilizador(iniLista, fimLista, info);
-    gravarUtilizador((*iniLista), info);
+    return info;
 }
 
-void gravarUtilizador(ELEM_UTILIZADOR *iniLista, UTILIZADOR info)
-{
-    ELEM_UTILIZADOR *aux = NULL;
-    FILE *fp = NULL;
-
-    fp = fopen("files\\users.txt", "a"); // a - acrescenta ao ficheiro users.txt
-
-    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
-    {
-        printf("ERRO ao carregar o ficheiro.\n");
-        return;
-    }
-
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
-    {
-        fprintf(fp, "%d %s %s %s %s %d %d\n",
-                aux->info.ID,
-                aux->info.username,
-                aux->info.nome,
-                aux->info.password,
-                aux->info.tipo,
-                aux->info.tipoID,
-                aux->info.rank);
-    }
-    fclose(fp);
-}
-
-void inserirUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info)
+void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info)
 {
     ELEM_UTILIZADOR *novo = NULL;
 
@@ -114,7 +88,35 @@ void inserirUtilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, U
     }
 }
 
-int verifiqueUsername(ELEM_UTILIZADOR *iniLista, char username[])
+void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
+{
+    ELEM_UTILIZADOR *aux = NULL;
+    FILE *fp = NULL;
+
+    fp = fopen("files\\users.txt", "a"); // a - acrescenta ao ficheiro users.txt
+
+    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
+    {
+        printf("ERRO ao carregar o ficheiro.\n");
+        return;
+    }
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        fprintf(fp, "%d %s %s %s %s %d %d\n",
+                aux->info.ID,
+                aux->info.username,
+                aux->info.nome,
+                aux->info.password,
+                aux->info.tipo,
+                aux->info.tipoID,
+                aux->info.rank);
+    }
+
+    fclose(fp);
+}
+
+int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
 {
     ELEM_UTILIZADOR *aux = NULL;
 
@@ -135,7 +137,7 @@ int verifiqueUsername(ELEM_UTILIZADOR *iniLista, char username[])
     return 0;
 }
 
-void carregarUser(ELEM_UTILIZADOR *iniLista, UTILIZADOR info)
+void carregar_user(ELEM_UTILIZADOR *iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     int res = 0;
