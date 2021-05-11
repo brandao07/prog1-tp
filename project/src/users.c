@@ -73,7 +73,7 @@ void gravarUtilizador(ELEM_UTILIZADOR *iniLista, UTILIZADOR info)
 
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        fprintf(fp, "%d %s %s %s %s %i %i\n",
+        fprintf(fp, "%d %s %s %s %s %d %d\n",
                 aux->info.ID,
                 aux->info.username,
                 aux->info.nome,
@@ -153,7 +153,7 @@ void carregarUser(ELEM_UTILIZADOR *iniLista, UTILIZADOR info)
     // Percorre e lê o ficheiro users.txt
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        fscanf(fp, "%d %s %s %s %s %i %i",
+        fscanf(fp, "%d %s %s %s %s %d %d",
                aux->info.ID,
                aux->info.username,
                aux->info.nome,
@@ -164,7 +164,7 @@ void carregarUser(ELEM_UTILIZADOR *iniLista, UTILIZADOR info)
         res++;
     }
 
-    printf("Foram lidos %i com sucesso!\n", res);
+    printf("Foram lidos %d com sucesso!\n", res);
 
     fclose(fp);
 }

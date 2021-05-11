@@ -4,7 +4,7 @@
  ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
  ** Nome do ficheiro: dashboard.c
  ** Ficheiro C responsável pelos menus do programa
- *! MENU_INICIAL = 0 MENU_ADMIN = 1 MENU_ANALISTA = 2;
+ *! MENU_INICIAL = 0 MENU_ADMIN = 1 MENU_ANALISTA = 2 MENU_ENTRAR = 3
 \********************************************************************************/
 
 //! HEADER
