@@ -8,5 +8,4 @@ cd .\PROG1_PROJECT\project\src\
 //DIFICULDADES
 
 carregar ficheiro csv
-passar apontadores e duplo apontadores como argumentos de funçoes
-
+passar funções como parametros de uma outra função
