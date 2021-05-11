@@ -5,3 +5,8 @@ project/.vscode/launch.json
 project/.vscode/settings.json
 project/Makefile
 *.o
+*.exe
+project/Makefile
+*.json
+*.json
+*.exe

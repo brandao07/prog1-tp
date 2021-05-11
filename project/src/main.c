@@ -22,14 +22,14 @@ int main(int argc, char const *argv[])
     char ficheiroCSV[100];
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
-    
+
     // Inicializa os apontadores das estruturas das listas (UTILIZADOR CREDITO PRIORIDADE)
     /*LEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;*/
 
     // Atribuição do nome do ficheiro csv
-    menuInicial(ficheiroCSV); 
-    
+    menuInicial(ficheiroCSV);
+
     return 0;
 }
