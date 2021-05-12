@@ -73,11 +73,9 @@ int main(int argc, char const *argv[])
             case 3:
                 opcao = 2;
                 break;
-
             default:
                 break;
             }
-            break;
         default:
             break;
         }
