@@ -113,12 +113,6 @@ int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
 {
     ELEM_UTILIZADOR *aux = NULL;
 
-    if (iniLista == NULL)
-    {
-        printf("Lista vazia\n");
-        return 0;
-    }
-
     //Percorre a lista
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
