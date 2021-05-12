@@ -13,6 +13,11 @@
 //! MAIN
 int main(int argc, char const *argv[])
 {
+    ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
+    ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
+    ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
+
+    UTILIZADOR utilizador;
     // Teste para ver se os parâmetros introduzidos na linha de comandos foram lidos com sucesso pelo programa
     if (argc < 2)
     {
@@ -22,14 +27,61 @@ int main(int argc, char const *argv[])
     char ficheiroCSV[100];
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
+    recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
+    int opcao;
+    do
+    {
+        opcao = menu_inicial();
+        switch (opcao)
+        {
+        case 0:
+            exit(0);
+            break;
+        case 1:
+            switch (menu_entrar())
+            {
+            case 0:
+                exit(0);
+                break;
+            case 1:
+                switch (menu_admin())
+                {
+                case 0:
+                    exit(0);
+                    break;
+                case 1:
+                    utilizador = criar_utilizador(&iniListaUTILIZADOR);
+                    inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
+                    gravar_utilizador(iniListaUTILIZADOR);
+                    break;
 
-    // Inicializa os apontadores das estruturas das listas (UTILIZADOR CREDITO PRIORIDADE)
-    /*LEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
-    ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
-    ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;*/
+                default:
+                    break;
+                }
+                break;
+            case 2:
+                switch (menu_analista())
+                {
+                case 0:
+                    exit(0);
+                    break;
 
-    // Atribuição do nome do ficheiro csv
-    menu_inicial(ficheiroCSV);
+                default:
+                    break;
+                }
+                break;
+            case 3:
+                opcao = 2;
+                break;
+
+            default:
+                break;
+            }
+            break;
+        default:
+            break;
+        }
+    } while (opcao == 2);
 
     return 0;
 }

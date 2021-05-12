@@ -15,10 +15,6 @@
 //! ATRIBUIÇÃO DE VALORES
 #define MAX_GARANTIAS 5 // Número máximo de garantias
 #define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
-#define MENU_INICIAL 0
-#define MENU_ADMIN 1
-#define MENU_ANALISTA 2
-#define MENU_ENTRAR 3
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
@@ -96,13 +92,13 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
 
 void imprime_prioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades existentes
 
-void menu_inicial(char ficheiroSCV []); // Menu incial do programa
+int menu_inicial(); // Menu incial do programa
 
-void menu_entrar(int opcao[]);
+int menu_entrar();
 
-void menu_analista(int opcao[]);
+int menu_analista();
 
-void menu_admin(int opcao[]);
+int menu_admin();
 
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
 

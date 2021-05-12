@@ -4,14 +4,14 @@
  ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
  ** Nome do ficheiro: dashboard.c
  ** Ficheiro C responsável pelos menus do programa
- *! MENU_INICIAL = 0 MENU_ADMIN = 1 MENU_ANALISTA = 2 MENU_ENTRAR = 3
 \********************************************************************************/
 
 //! HEADER
 #include "headers.h"
 
-void menu_admin(int opcao[])
+int menu_admin()
 {
+    int opcao;
     UTILIZADOR info;
     do
     {
@@ -22,34 +22,20 @@ void menu_admin(int opcao[])
         printf("0 - Sair do programa\n");
         printf("*--------------------------------------*\n");
         printf("\nInsire opcao: ");
-        scanf("%d", &opcao[MENU_ADMIN]);
+        scanf("%d", &opcao);
 
-        switch (opcao[MENU_ADMIN])
+        if (0 >= opcao <= 3)
         {
-        case 0: // Sai do programa
-            exit(0);
-
-        case 1: // Criar utilizador
-            //info = criar_utilizador();
-            //inserir_utilizador(&iniLista,&fimLista,info);
-            //gravar_utilizador(iniLista);
-
-            printf("Utilizador criado com sucesso!\n");
-            break;
-        case 2:
-            break;
-        case 3: // Volta para o menu anterior
-            return;
-        default:
-            printf("OPCAO INVALIDA!\n");
-            break;
+            return opcao;
         }
+        printf("OPCAO INVALIDA!\n");
 
-    } while (opcao[MENU_ADMIN] != 0);
+        } while (opcao != 0);
 }
 
-void menu_analista(int opcao[])
+int menu_analista()
 {
+    int opcao;
     do
     {
         printf("\n*------------MENU ANALISTA---------------*\n");
@@ -60,29 +46,19 @@ void menu_analista(int opcao[])
         printf("*--------------------------------------*\n");
         printf("\nInsire opcao: ");
         fflush(stdin);
-        scanf("%d", &opcao[MENU_ANALISTA]);
+        scanf("%d", &opcao);
 
-        switch (opcao[MENU_ANALISTA])
+        if (0 >= opcao <= 3)
         {
-        case 0: // Sai do programa
-            exit(0);
-
-        case 1:
-            break;
-        case 2:
-            break;
-        case 3: // Volta para o menu anterior
-            return;
-        default:
-            printf("OPCAO INVALIDA!\n");
-            break;
+            return opcao;
         }
-
-    } while (opcao[MENU_ANALISTA] != 0);
+        printf("OPCAO INVALIDA!\n");
+    } while (opcao != 0);
 }
 
-void menu_entrar(int opcao[])
+int menu_entrar()
 {
+    int opcao;
     do
     {
         printf("\n*------------ENTRAR COMO:---------------*\n");
@@ -92,36 +68,19 @@ void menu_entrar(int opcao[])
         printf("0 - Sair do programa\n");
         printf("*--------------------------------------*\n");
         printf("\nInsire opcao: ");
-        scanf("%d", &opcao[MENU_ENTRAR]);
-
-        switch (opcao[MENU_ENTRAR])
+        fflush(stdin);
+        scanf("%d", &opcao);
+        if (0 >= opcao <= 3)
         {
-        case 0: // Sai do programa
-            exit(0);
-
-        case 1: // Entra no menu Admin
-            menu_admin(opcao);
-            break;
-        case 2:
-            menu_analista(opcao); // Entra no menu Analista
-        case 3: // Volta para o menu anterior
-            return;
-        default:
-            printf("OPCAO INVALIDA!\n");
-            system("cls");
-            break;
+            return opcao;
         }
-    } while (opcao[MENU_ENTRAR] != 3);
+        printf("OPCAO INVALIDA!\n");
+    } while (opcao != 3);
 }
 
-void menu_inicial(char ficheiroCSV[])
+int menu_inicial(char ficheiroCSV[])
 {
-    ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
-    ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
-    ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
-
-    recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
-    int opcao[4];
+    int opcao;
     do
     {
         printf("\n*------------MENU INICIAL---------------*\n");
@@ -129,18 +88,14 @@ void menu_inicial(char ficheiroCSV[])
         printf("0 - Sair do programa\n");
         printf("*--------------------------------------*\n");
         printf("\nInsire opcao: ");
-        scanf("%d", &opcao[MENU_INICIAL]);
-
-        switch (opcao[MENU_INICIAL])
+        fflush(stdin);
+        scanf("%d", &opcao);
+        // opcao >=0 && opcao <=1
+        if (0 >= opcao <= 1)
         {
-        case 0: // Sai do programa
-            exit(0);
-        case 1:
-            menu_entrar(opcao); // Entra com uma conta do tipo administrador ou analista
-            break;
-        default:
-            printf("OPCAO INVALIDA!\n");
+            return opcao;
         }
+        printf("OPCAO INVALIDA!\n");
 
-    } while (opcao[MENU_INICIAL] != 0);
+    } while (opcao != 0);
 }

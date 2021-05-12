@@ -93,7 +93,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
 
-    fp = fopen("files\\users.txt", "a"); // a - acrescenta ao ficheiro users.txt
+    fp = fopen("files\\users.dat", "wb"); // w - acrescenta ao ficheiro users.txt
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -103,14 +103,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
 
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        fprintf(fp, "%d %s %s %s %s %d %d\n",
-                aux->info.ID,
-                aux->info.username,
-                aux->info.nome,
-                aux->info.password,
-                aux->info.tipo,
-                aux->info.tipoID,
-                aux->info.rank);
+        fwrite(&(aux->info), 1, sizeof(UTILIZADOR), fp);
     }
 
     fclose(fp);
@@ -155,14 +148,7 @@ void carregar_user(ELEM_UTILIZADOR *iniLista)
     // Percorre e lê o ficheiro users.txt
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        fscanf(fp, "%d %s %s %s %s %d %d",
-               aux->info.ID,
-               aux->info.username,
-               aux->info.nome,
-               aux->info.password,
-               aux->info.tipo,
-               aux->info.tipoID,
-               aux->info.rank);
+        fread(&(aux->info), 1, sizeof(UTILIZADOR), fp);
         res++;
     }
 
