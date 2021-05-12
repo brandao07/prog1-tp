@@ -17,30 +17,30 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
 
     printf("Introduza um username!\n");
     fflush(stdin);
-    scanf("%s", info.username);
+    scanf("%s", &info.username);
     while (verifique_username(iniLista, info.username) == 1)
     {
         printf("Username ja existente!\n");
         printf("\nIntroduza um username!\n");
         fflush(stdin);
-        scanf("%s", info.username);
+        scanf("%s", &info.username);
     }
     printf("Introduza um nome!\n");
     fflush(stdin);
-    scanf("%[^\n]", info.nome);
+    scanf("%[^\n]", &info.nome);
 
     printf("Introduza uma password!\n");
     fflush(stdin);
-    scanf("%s", info.password);
+    scanf("%s", &info.password);
 
     printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
     fflush(stdin);
-    scanf("%d", info.tipoID);
+    scanf("%d", &info.tipoID);
     if (info.tipoID == 4)
     {
         strcpy(info.tipo, "Administrador");
     }
-    if (info.tipoID == 5)
+    else if (info.tipoID == 5)
     {
         strcpy(info.tipo, "Analista");
     }
@@ -49,6 +49,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
         printf("OPCAO invalida!\n");
         exit(0);
     }
+
 
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
