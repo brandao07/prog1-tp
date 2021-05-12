@@ -50,7 +50,6 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
         exit(0);
     }
 
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         res++;
