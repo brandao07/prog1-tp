@@ -9,7 +9,7 @@
 //! HEADER
 #include "headers.h"
 
-UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista)
+UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
 {
     UTILIZADOR info;
     int res = 0;
@@ -18,7 +18,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista)
     printf("Introduza um username!\n");
     fflush(stdin);
     scanf("%s", info.username);
-    while (verifique_username(*iniLista, info.username) == 1)
+    while (verifique_username(iniLista, info.username) == 1)
     {
         printf("Username ja existente!\n");
         printf("\nIntroduza um username!\n");
@@ -34,6 +34,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista)
     scanf("%s", info.password);
 
     printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
+    fflush(stdin);
     scanf("%d", info.tipoID);
     if (info.tipoID == 4)
     {
@@ -49,7 +50,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista)
         exit(0);
     }
 
-    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         res++;
     }

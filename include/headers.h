@@ -100,7 +100,7 @@ int menu_analista();
 
 int menu_admin();
 
-UTILIZADOR criar_utilizador(ELEM_UTILIZADOR **iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
+UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
 
 void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Insere os utilizadores na lista
 

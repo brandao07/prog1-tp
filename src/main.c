@@ -50,7 +50,7 @@ int main(int argc, char const *argv[])
                     exit(0);
                     break;
                 case 1:
-                    utilizador = criar_utilizador(&iniListaUTILIZADOR);
+                    utilizador = criar_utilizador(iniListaUTILIZADOR);
                     inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
                     gravar_utilizador(iniListaUTILIZADOR);
                     break;
