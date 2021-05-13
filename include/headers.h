@@ -114,4 +114,6 @@ int carregar_utilizador(ELEM_UTILIZADOR *iniLista); // Carrega os utilizadores d
 
 void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info);
 
-CREDITO criar_credito(ELEM_CREDITO *iniListaC, ELEM_PRIORIDADE *iniListaP);
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista);
+
+char carrega_prioridade(ELEM_PRIORIDADE *iniLista,float montante);

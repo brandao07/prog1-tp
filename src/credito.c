@@ -1,13 +1,9 @@
 #include "headers.h"
 
-CREDITO criar_credito(ELEM_CREDITO *iniListaC, ELEM_PRIORIDADE *iniListaP)
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
 {
     CREDITO info;
-    int res = 0;
     int garantiaOpcao[MAX_GARANTIAS_TIPO];
-    ELEM_CREDITO *auxC = NULL;
-    ELEM_PRIORIDADE *auxP = NULL;
-
     printf("Introduza nome:\n");
     fflush(stdin);
     scanf("%[^\n]", info.nome);
@@ -15,6 +11,7 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, ELEM_PRIORIDADE *iniListaP)
     fflush(stdin);
     scanf("%s", info.IBAN);
     printf("Quantas garantias?\n");
+    fflush(stdin);
     scanf("%d", &info.garantiaNumero);
     if (info.garantiaNumero > MAX_GARANTIAS)
     {
@@ -29,6 +26,7 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, ELEM_PRIORIDADE *iniListaP)
             printf("\n[1] - Fiador");
             printf("\n[2] - Depositos");
             printf("\n[3] - Produtos");
+            fflush(stdin);
             scanf("%d", &garantiaOpcao[i]);
             if (garantiaOpcao[i] == 0)
             {
@@ -50,9 +48,19 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, ELEM_PRIORIDADE *iniListaP)
             {
                 printf("OPCAO invalida!\n");
                 exit(0);
-            }            
+            }
             printf("Descricao sobre a proposta:\n");
-            scanf("%[^\n]",info.garantia[i].descricao);
-            
+            fflush(stdin);
+            scanf("%[^\n]", info.garantia[i].descricao);
+            printf("Valor:\n");
+            fflush(stdin);
+            scanf("%f", &info.garantia[i].valor);
         }
+        printf("Montante:\n");
+        scanf("%f", &info.montante);
+        strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante));
+        info.analise = 0;
+
+        return info;
     }
+}
