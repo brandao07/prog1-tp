@@ -39,7 +39,7 @@ int main(int argc, char const *argv[])
             break;
         case 1:
             //verifica_primeiro (iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
-            do{
+            do{ // Aqui wwewewewwewewe
                 switch (menu_entrar())
                 {
                 case 0:
@@ -62,11 +62,12 @@ int main(int argc, char const *argv[])
                             case 2:
                                 break;
                             case 3:
-                                opcao=3;
+                                opcao=2;
                                 break;
                         }
-                    }while(opcao = 3);
-                    break;
+                    } while (opcao==2);
+                    default:
+                    break;   
                 case 2:
                     switch (menu_analista())
                     {
@@ -79,22 +80,19 @@ int main(int argc, char const *argv[])
                     
                     case 2:
                         break;
-                    case 3:
+                    case 3: // case para entrar no menu entrar
                         opcao=2;
                         break;
                     }
                     break;
-                case 3:
+                case 3: // case para voltar para o menu inicial
                     opcao = 2;
                     break;
-                default:
-                    break;
                 }
-            }while (opcao=2);
-        default:
+            }while (opcao==2);
+            default:
             break;
         }
     } while (opcao == 2);
-
     return 0;
 }
