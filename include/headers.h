@@ -52,7 +52,9 @@ typedef struct credito
     int ID;               // Posição na fila
     char nome[100];
     char IBAN[50];
-    GARANTIA garantia; // Número máximo de garantias
+    int garantiaNumero;
+    GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias
+    float montante; // Montante pedido
     char prioridade[20];              // Carregada do ficheiro csv
     int analise;                      //* 0 - NÃO ANALISADA 1 - ANALISADA
 
@@ -108,4 +110,8 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista); //Grava os utilizadores no fi
 
 int verifique_username(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
 
-void carregar_user(ELEM_UTILIZADOR *iniLista); // Carrega os utilizadores do programa do ficheiro users.txt
+int carregar_utilizador(ELEM_UTILIZADOR *iniLista); // Carrega os utilizadores do programa do ficheiro users.txt
+
+void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info);
+
+CREDITO criar_credito(ELEM_CREDITO *iniListaC, ELEM_PRIORIDADE *iniListaP);

@@ -38,44 +38,59 @@ int main(int argc, char const *argv[])
             exit(0);
             break;
         case 1:
-            switch (menu_entrar())
-            {
-            case 0:
-                exit(0);
-                break;
-            case 1:
-                switch (menu_admin())
+            verifica_primeiro (iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
+            do{
+                switch (menu_entrar())
                 {
                 case 0:
                     exit(0);
                     break;
                 case 1:
-                    utilizador = criar_utilizador(iniListaUTILIZADOR);
-                    inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
-                    gravar_utilizador(iniListaUTILIZADOR);
+                    do{
+                        switch (menu_admin())
+                        {
+                            case 0:
+                                exit(0);
+                                break;
+                            case 1:
+                                utilizador = criar_utilizador(iniListaUTILIZADOR);
+                                inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
+                                gravar_utilizador(iniListaUTILIZADOR);
+                                break;
+                            default:
+                                break;
+                            case 2:
+                                break;
+                            case 3:
+                                opcao=3;
+                                break;
+                        }
+                    }while(opcao = 3);
                     break;
+                case 2:
+                    switch (menu_analista())
+                    {
+                    case 0:
+                        exit(0);
+                        break;
 
+                    default:
+                        break;
+                    
+                    case 2:
+                        break;
+                    case 3:
+                        opcao=2;
+                        break;
+                    }
+                    break;
+                case 3:
+                    opcao = 2;
+                    break;
                 default:
                     break;
                 }
-                break;
-            case 2:
-                switch (menu_analista())
-                {
-                case 0:
-                    exit(0);
-                    break;
-
-                default:
-                    break;
-                }
-                break;
-            case 3:
-                opcao = 2;
-                break;
-            default:
-                break;
-            }
+            }while (opcao=2);
         default:
             break;
         }

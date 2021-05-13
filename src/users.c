@@ -125,14 +125,14 @@ int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
     return 0;
 }
 
-void carregar_user(ELEM_UTILIZADOR *iniLista)
+int carregar_utilizador(ELEM_UTILIZADOR *iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     int res = 0;
 
     FILE *fp = NULL;
 
-    fp = fopen("files\\users.txt", "r"); // r - apenas lê do ficheiro
+    fp = fopen("files\\users.dat", "rb"); // rb - apenas lê do ficheiro
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -147,7 +147,24 @@ void carregar_user(ELEM_UTILIZADOR *iniLista)
         res++;
     }
 
+    if (iniLista==NULL)
+    {
+        return -1;
+    }
     printf("Foram lidos %d com sucesso!\n", res);
 
     fclose(fp);
+    return 0;
+}
+
+void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info){
+
+    UTILIZADOR utilizador;
+
+    if (carregar_utilizador(iniListaUTILIZADOR)==-1)
+    {
+        utilizador = criar_utilizador(iniListaUTILIZADOR);
+        inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
+        gravar_utilizador(iniListaUTILIZADOR);
+    }
 }
