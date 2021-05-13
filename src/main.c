@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
             exit(0);
             break;
         case 1:
-            verifica_primeiro (iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
+            //verifica_primeiro (iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
             do{
                 switch (menu_entrar())
                 {
