@@ -13,24 +13,17 @@ int menu_admin()
 {
     int opcao;
     UTILIZADOR info;
-    do
-    {
-        printf("\n*------------MENU ADMIN---------------*\n");
-        printf("1 - Criar utilizador\n");
-        printf("2 - ...\n");
-        printf("\n3 - Voltar para o menu anterior\n");
-        printf("0 - Sair do programa\n");
-        printf("*--------------------------------------*\n");
-        printf("\nInsire opcao: ");
-        scanf("%d", &opcao);
 
-        if (0 >= opcao <= 3)
-        {
-            return opcao;
-        }
-        printf("OPCAO INVALIDA!\n");
+    printf("\n*------------MENU ADMIN---------------*\n");
+    printf("1 - Criar utilizador\n");
+    printf("2 - ...\n");
+    printf("\n3 - Voltar para o menu anterior\n");
+    printf("0 - Sair do programa\n");
+    printf("*--------------------------------------*\n");
+    printf("\nInsire opcao: ");
+    scanf("%d", &opcao);
 
-        } while (opcao != 0);
+    return opcao;
 }
 
 int menu_analista()
@@ -53,7 +46,7 @@ int menu_analista()
             return opcao;
         }
         printf("OPCAO INVALIDA!\n");
-    } while (opcao != 0);
+    } while (opcao != 3);
 }
 
 int menu_entrar()

@@ -44,7 +44,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
             {
                 strcpy(info.garantia[i].tipo, "Produtos");
             }
-            else if (garantiaOpcao[i] != 0 && garantiaOpcao[i] != 1 && garantiaOpcao[i] != 2 && garantiaOpcao[i] != 3)
+            else if (garantiaOpcao[i] != 0 || garantiaOpcao[i] != 1 || garantiaOpcao[i] != 2 || garantiaOpcao[i] || 3)
             {
                 printf("OPCAO invalida!\n");
                 exit(0);

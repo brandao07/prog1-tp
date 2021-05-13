@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
     recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
-    int opcao;
+    int opcao, opcao_admin, opcao_entrar, opcao_analista;
     do
     {
         opcao = menu_inicial();
@@ -38,60 +38,70 @@ int main(int argc, char const *argv[])
             exit(0);
             break;
         case 1:
-            //verifica_primeiro (iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
+            verifica_primeiro (iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
             do
             {
-                switch (menu_entrar())
+                opcao_entrar = menu_entrar();
+                switch (opcao_entrar)
                 {
                 case 0:
                     exit(0);
                     break;
                 case 1:
-
-                    switch (menu_admin())
+                    do
                     {
-                    case 0:
-                        exit(0);
-                        break;
-                    case 1:
-                        utilizador = criar_utilizador(iniListaUTILIZADOR);
-                        inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
-                        gravar_utilizador(iniListaUTILIZADOR);
-                        break;
-                    default:
-                        break;
-
-                    case 2:
-                        break;
-                    case 3:
-                        opcao = 2;
-                        break;
-                    }
+                        opcao_admin = menu_admin();
+                        switch (opcao_admin)
+                        {
+                        case 0:
+                            exit(0);
+                            break;
+                        case 1:
+                            utilizador = criar_utilizador(iniListaUTILIZADOR);
+                            inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
+                            gravar_utilizador(iniListaUTILIZADOR);
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            opcao_admin = 4;
+                            break;
+                        default:
+                            printf("OPCAO invalida!\n");
+                            opcao_admin = -1;
+                            break;
+                        }
+                    } while (opcao_admin == -1 || (opcao_admin > 0 && opcao_admin < 3));
                     break;
 
                 case 2:
-                    switch (menu_analista())
+                    do
                     {
-                    case 0:
-                        exit(0);
-                        break;
+                        opcao_analista = menu_analista();
+                        switch (opcao_analista)
+                        {
+                        case 0:
+                            exit(0);
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
 
-                    case 2:
-                        break;
-                    case 3:
-                        opcao = 2;
-                        break;
-                    }
+                        case 2:
+                            break;
+                        case 3:
+                            opcao_analista = 4;
+                            break;
+                        }
+                    } while (opcao_analista > 0 && opcao_analista < 3);
                     break;
                 case 3:
-                    opcao = 1;
+                    opcao_entrar = 4;
                     break;
                 }
-            } while (opcao == 2);
+            } while (opcao_entrar > 0 && opcao_entrar < 3);
         default:
+            printf("Introduziu a opcao errada! 2");
             break;
         }
     } while (opcao == 1);

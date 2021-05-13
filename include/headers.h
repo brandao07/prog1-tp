@@ -110,7 +110,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista); //Grava os utilizadores no fi
 
 int verifique_username(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
 
-int carregar_utilizador(ELEM_UTILIZADOR *iniLista); // Carrega os utilizadores do programa do ficheiro users.txt
+int carregar_utilizador(ELEM_UTILIZADOR **iniLista); // Carrega os utilizadores do programa do ficheiro users.txt
 
 void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info);
 

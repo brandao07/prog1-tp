@@ -76,7 +76,7 @@ void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, 
     novo->anterior = NULL;
     novo->seguinte = NULL;
 
-    if (*fimLista == NULL) // Caso a lista esteja vazia atribui o primeiro elemento da lista ao elemento criado
+    if (*iniLista == NULL) // Caso a lista esteja vazia atribui o primeiro elemento da lista ao elemento criado
     {
         *iniLista = novo;
         *fimLista = novo;
@@ -94,7 +94,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
 
-    fp = fopen("files\\users.dat", "wb"); // w - acrescenta ao ficheiro users.txt
+    fp = fopen("files\\users.dat", "w+b"); // w - acrescenta ao ficheiro users.txt
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -104,7 +104,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
 
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        fwrite(&(aux->info), 1, sizeof(UTILIZADOR), fp);
+        fwrite(&(aux->info), sizeof(UTILIZADOR), 1, fp);
     }
 
     fclose(fp);
@@ -125,29 +125,50 @@ int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
     return 0;
 }
 
-int carregar_utilizador(ELEM_UTILIZADOR *iniLista)
+int carregar_utilizador(ELEM_UTILIZADOR **iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
+    ELEM_UTILIZADOR *aux2 = NULL;
     int res = 0;
 
     FILE *fp = NULL;
 
-    fp = fopen("files\\users.dat", "rb"); // rb - apenas lê do ficheiro
+    fp = fopen("files\\users.dat", "r+b"); // rb - apenas lê do ficheiro
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("ERRO ao carregar o ficheiro.\n");
-        return;
+
+        return -1;
     }
 
     // Percorre e lê o ficheiro users.txt
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    /*  for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        fread(&(aux->info), 1, sizeof(UTILIZADOR), fp);
+        fread(&(aux->info), sizeof(UTILIZADOR), 1, fp);
         res++;
+    }*/
+
+    aux = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));
+    aux->seguinte=NULL;
+    aux->anterior=NULL;
+    while (fread(&(aux->info), sizeof(UTILIZADOR), 1, fp) == 1)
+    {
+        if (*iniLista == NULL)
+        {
+            *iniLista = aux;
+        }
+        else
+        {
+            aux->seguinte=*iniLista;
+            *iniLista=aux;
+            aux->anterior=*iniLista;
+        }
+        aux=aux->seguinte;
+        aux = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));    
     }
 
-    if (iniLista==NULL)
+    if (iniLista == NULL)
     {
         return -1;
     }
@@ -157,11 +178,12 @@ int carregar_utilizador(ELEM_UTILIZADOR *iniLista)
     return 0;
 }
 
-void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info){
+void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info)
+{
 
     UTILIZADOR utilizador;
 
-    if (carregar_utilizador(iniListaUTILIZADOR)==-1)
+    if (carregar_utilizador(&iniListaUTILIZADOR) == -1)
     {
         utilizador = criar_utilizador(iniListaUTILIZADOR);
         inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
