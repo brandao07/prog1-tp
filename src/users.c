@@ -39,10 +39,12 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     if (info.tipoID == 4)
     {
         strcpy(info.tipo, "Administrador");
+        info.rank = -99;
     }
     else if (info.tipoID == 5)
     {
         strcpy(info.tipo, "Analista");
+        info.rank = 0;
     }
     else
     {
@@ -56,7 +58,6 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     }
 
     info.ID = res + 1;
-
     return info;
 }
 
@@ -68,7 +69,7 @@ void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, 
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (UTILIZADOR)
     if (novo == NULL)
     {
-        printf("FALTA de memória!\n");
+        printf("FALTA de memoria!\n");
         return;
     }
 
@@ -150,8 +151,8 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista)
     }*/
 
     aux = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));
-    aux->seguinte=NULL;
-    aux->anterior=NULL;
+    aux->seguinte = NULL;
+    aux->anterior = NULL;
     while (fread(&(aux->info), sizeof(UTILIZADOR), 1, fp) == 1)
     {
         if (*iniLista == NULL)
@@ -160,12 +161,12 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista)
         }
         else
         {
-            aux->seguinte=*iniLista;
-            *iniLista=aux;
-            aux->anterior=*iniLista;
+            aux->seguinte = *iniLista;
+            *iniLista = aux;
+            aux->anterior = *iniLista;
         }
-        aux=aux->seguinte;
-        aux = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));    
+        aux = aux->seguinte;
+        aux = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));
     }
 
     if (iniLista == NULL)

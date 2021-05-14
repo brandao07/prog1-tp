@@ -28,17 +28,17 @@ int main(int argc, char const *argv[])
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
     recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
-    int opcao, opcao_admin, opcao_entrar, opcao_analista;
+    int opcao_inicial, opcao_entrar, opcao_admin, opcao_analista;
     do
     {
-        opcao = menu_inicial();
-        switch (opcao)
+        opcao_inicial = menu_inicial();
+        switch (opcao_inicial)
         {
         case 0:
             exit(0);
             break;
         case 1:
-            verifica_primeiro (iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
+            verifica_primeiro(iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
             do
             {
                 opcao_entrar = menu_entrar();
@@ -84,7 +84,7 @@ int main(int argc, char const *argv[])
                             exit(0);
                             break;
 
-                        default:
+                        case 1:
                             break;
 
                         case 2:
@@ -92,18 +92,26 @@ int main(int argc, char const *argv[])
                         case 3:
                             opcao_analista = 4;
                             break;
+
+                        default:
+                            printf("OPCAO invalida!\n");
+                            opcao_analista = -1;
+                            break;
                         }
-                    } while (opcao_analista > 0 && opcao_analista < 3);
+                    } while (opcao_analista == -1 || (opcao_analista > 0 && opcao_analista < 3));
                     break;
                 case 3:
                     opcao_entrar = 4;
                     break;
+                default:
+                    printf("OPCAO invalida!\n");
+                    opcao_entrar = -1;
+                    break;
                 }
-            } while (opcao_entrar > 0 && opcao_entrar < 3);
+            } while (opcao_entrar == -1 || (opcao_entrar > 0 && opcao_entrar < 3));
         default:
-            printf("Introduziu a opcao errada! 2");
             break;
         }
-    } while (opcao == 1);
+    } while (opcao_inicial == 1);
     return 0;
 }

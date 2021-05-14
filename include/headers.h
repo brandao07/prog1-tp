@@ -53,7 +53,7 @@ typedef struct credito
     char nome[100];
     char IBAN[50];
     int garantiaNumero;
-    GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias
+    GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias 5
     float montante; // Montante pedido
     char prioridade[20];              // Carregada do ficheiro csv
     int analise;                      //* 0 - NÃO ANALISADA 1 - ANALISADA
@@ -96,11 +96,11 @@ void imprime_prioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã tod
 
 int menu_inicial(); // Menu incial do programa
 
-int menu_entrar();
+int menu_entrar(); // Menu secundário do programa
 
-int menu_analista();
+int menu_analista(); // Menu do analista
 
-int menu_admin();
+int menu_admin(); // Menu do administrador
 
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
 
@@ -114,6 +114,6 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista); // Carrega os utilizadores 
 
 void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info);
 
-CREDITO criar_credito(ELEM_PRIORIDADE *iniLista);
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
 
-char carrega_prioridade(ELEM_PRIORIDADE *iniLista,float montante);
+char carrega_prioridade(ELEM_PRIORIDADE *iniLista,float montante); // Compara montantes

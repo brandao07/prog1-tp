@@ -106,7 +106,7 @@ char carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
     ELEM_PRIORIDADE *aux = NULL;
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        if (montante >=prioridade.montanteInferior || montante <prioridade.montanteSuperior)
+        if (montante >= prioridade.montanteInferior && montante < prioridade.montanteSuperior)
         {
             return prioridade.nome;
         }
