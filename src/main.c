@@ -28,11 +28,11 @@ int main(int argc, char const *argv[])
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
     recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
-    int opcao_inicial, opcao_entrar, opcao_admin, opcao_analista;
+    int opcao[4]; //MENU INICIAL 0 MENU ENTRAR 1 MENU ADMIN 2 MENU ANALISTA 3
     do
     {
-        opcao_inicial = menu_inicial();
-        switch (opcao_inicial)
+        opcao[MENU_INICIAL] = menu_inicial();
+        switch (opcao[MENU_INICIAL])
         {
         case 0:
             exit(0);
@@ -41,8 +41,8 @@ int main(int argc, char const *argv[])
             verifica_primeiro(iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
             do
             {
-                opcao_entrar = menu_entrar();
-                switch (opcao_entrar)
+                opcao[MENU_ENTRAR] = menu_entrar();
+                switch (opcao[MENU_ENTRAR])
                 {
                 case 0:
                     exit(0);
@@ -50,8 +50,8 @@ int main(int argc, char const *argv[])
                 case 1:
                     do
                     {
-                        opcao_admin = menu_admin();
-                        switch (opcao_admin)
+                        opcao[MENU_ADMIN] = menu_admin();
+                        switch (opcao[MENU_ADMIN])
                         {
                         case 0:
                             exit(0);
@@ -64,21 +64,21 @@ int main(int argc, char const *argv[])
                         case 2:
                             break;
                         case 3:
-                            opcao_admin = 4;
+                            opcao[MENU_ADMIN] = 4;
                             break;
                         default:
                             printf("OPCAO invalida!\n");
-                            opcao_admin = -1;
+                            opcao[MENU_ADMIN] = -1;
                             break;
                         }
-                    } while (opcao_admin == -1 || (opcao_admin > 0 && opcao_admin < 3));
+                    } while (opcao[MENU_ADMIN] == -1 || (opcao[MENU_ADMIN] > 0 && opcao[MENU_ADMIN] < 3));
                     break;
 
                 case 2:
                     do
                     {
-                        opcao_analista = menu_analista();
-                        switch (opcao_analista)
+                        opcao[MENU_ANALISTA] = menu_analista();
+                        switch (opcao[MENU_ANALISTA])
                         {
                         case 0:
                             exit(0);
@@ -90,28 +90,28 @@ int main(int argc, char const *argv[])
                         case 2:
                             break;
                         case 3:
-                            opcao_analista = 4;
+                            opcao[MENU_ANALISTA] = 4;
                             break;
 
                         default:
                             printf("OPCAO invalida!\n");
-                            opcao_analista = -1;
+                            opcao[MENU_ANALISTA] = -1;
                             break;
                         }
-                    } while (opcao_analista == -1 || (opcao_analista > 0 && opcao_analista < 3));
+                    } while (opcao[MENU_ANALISTA] == -1 || (opcao[MENU_ANALISTA] > 0 && opcao[MENU_ANALISTA] < 3));
                     break;
                 case 3:
-                    opcao_entrar = 4;
+                    opcao[MENU_ENTRAR] = 4;
                     break;
                 default:
                     printf("OPCAO invalida!\n");
-                    opcao_entrar = -1;
+                    opcao[MENU_ENTRAR] = -1;
                     break;
                 }
-            } while (opcao_entrar == -1 || (opcao_entrar > 0 && opcao_entrar < 3));
+            } while (opcao[MENU_ENTRAR] == -1 || (opcao[MENU_ENTRAR] > 0 && opcao[MENU_ENTRAR] < 3));
         default:
             break;
         }
-    } while (opcao_inicial == 1);
+    } while (opcao[MENU_INICIAL] == 1);
     return 0;
 }

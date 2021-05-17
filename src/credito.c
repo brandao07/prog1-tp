@@ -1,3 +1,12 @@
+/*********************************************************************************************\ 
+ ** EI - Programação 1
+ ** PL1 - Gestão Propostas de Crédito
+ ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
+ ** Nome do ficheiro: credito.c
+ ** Ficheiro C responsável por todas as operações relacionadas com as propostas de crédito
+\***********************************************************************************************/
+
+//! HEADER
 #include "headers.h"
 
 CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)

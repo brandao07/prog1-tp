@@ -2,7 +2,7 @@
  ** EI - Programação 1
  ** PL1 - Gestão Propostas de Crédito
  ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
- ** Nome do ficheiro: headers.h
+ ** Nome do ficheiro: users.c
  ** Ficheiro C responsável pelo funcionamento dos utilizadores
 \********************************************************************************/
 
@@ -138,7 +138,7 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista)
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
-        printf("ERRO ao carregar o ficheiro.\n");
+        printf("Ficheiro inexistente.\n");
 
         return -1;
     }

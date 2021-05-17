@@ -15,6 +15,10 @@
 //! ATRIBUIÇÃO DE VALORES
 #define MAX_GARANTIAS 5 // Número máximo de garantias
 #define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
+#define MENU_INICIAL 0
+#define MENU_ENTRAR 1
+#define MENU_ADMIN 2
+#define MENU_ANALISTA 3
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
