@@ -12,7 +12,7 @@
 CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista)
 {
     CREDITO info;
-    int garantiaOpcao[MAX_GARANTIAS_TIPO];
+    int garantiaOpcao;
     printf("Introduza nome:\n");
     fflush(stdin);
     scanf("%[^\n]", info.nome);
@@ -36,31 +36,31 @@ CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista)
             printf("\n[2] - Depositos");
             printf("\n[3] - Produtos");
             fflush(stdin);
-            scanf("%d", &garantiaOpcao[i]);
-            if (garantiaOpcao[i] == 0)
+            scanf("%d", &garantiaOpcao);
+            if (garantiaOpcao == 0)
             {
                 strcpy(info.garantia[i].tipo, "Imovel");
             }
-            else if (garantiaOpcao[i] == 1)
+            else if (garantiaOpcao == 1)
             {
                 strcpy(info.garantia[i].tipo, "Fiador");
             }
-            else if (garantiaOpcao[i] == 2)
+            else if (garantiaOpcao == 2)
             {
                 strcpy(info.garantia[i].tipo, "Depositos");
             }
-            else if (garantiaOpcao[i] == 3)
+            else if (garantiaOpcao == 3)
             {
                 strcpy(info.garantia[i].tipo, "Produtos");
             }
-            else if (garantiaOpcao[i] != 0 || garantiaOpcao[i] != 1 || garantiaOpcao[i] != 2 || garantiaOpcao[i] || 3)
+            else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
             {
                 printf("OPCAO invalida!\n");
                 exit(0);
             }
             printf("Descricao sobre a proposta:\n");
             fflush(stdin);
-            scanf("%[^\n]", info.garantia[i].descricao);
+            scanf("%[^\n]", &info.garantia[i].descricao);
             printf("Valor:\n");
             fflush(stdin);
             scanf("%f", &info.garantia[i].valor);
@@ -171,7 +171,7 @@ void imprime_credito(ELEM_CREDITO *iniLista, int id)
     }
 }
 
-int altera_nome(ELEM_CREDITO **iniLista, int id)
+void altera_nome(ELEM_CREDITO **iniLista, int id)
 {
     ELEM_CREDITO *aux = NULL;
     int resposta;
@@ -181,13 +181,14 @@ int altera_nome(ELEM_CREDITO **iniLista, int id)
     {
         if (id == aux->info.ID)
         {
+            printf("Proposta #%d\n", aux->info.numeroSequencial);
             printf("Nome atual: %s\n", aux->info.nome);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
             scanf("%d", &resposta);
             if (resposta == 0)
             {
-                return -1;
+                return;
             }
             if (resposta == 1)
             {
@@ -205,7 +206,7 @@ int altera_nome(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-int altera_iban(ELEM_CREDITO **iniLista, int id)
+void altera_iban(ELEM_CREDITO **iniLista, int id)
 {
     ELEM_CREDITO *aux = NULL;
     int resposta;
@@ -213,15 +214,16 @@ int altera_iban(ELEM_CREDITO **iniLista, int id)
 
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
-        if (id == aux->info.IBAN)
+        if (id == aux->info.ID)
         {
+            printf("Proposta #%d\n", aux->info.numeroSequencial);
             printf("IBAN atual: %s\n", aux->info.IBAN);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
             scanf("%d", &resposta);
             if (resposta == 0)
             {
-                return -1;
+                return;
             }
             if (resposta == 1)
             {
@@ -239,23 +241,24 @@ int altera_iban(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-int altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
-{ //Esta mal 
+void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
+{
     ELEM_CREDITO *aux = NULL;
     int resposta;
     int novo;
 
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
-        if (id == aux->info.garantiaNumero)
+        if (id == aux->info.ID)
         {
-            printf("Numero de garantias atuais: %s\n", aux->info.garantiaNumero);
+            printf("Proposta #%d\n", aux->info.numeroSequencial);
+            printf("Numero de garantias atuais: %d\n", aux->info.garantiaNumero);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
             scanf("%d", &resposta);
             if (resposta == 0)
             {
-                return -1;
+                return;
             }
             if (resposta == 1)
             {
@@ -263,7 +266,7 @@ int altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
                 fflush(stdin);
                 scanf("%d", novo);
 
-                strcpy(aux->info.garantiaNumero, novo);
+                aux->info.garantiaNumero = novo;
             }
         }
         else
@@ -273,3 +276,211 @@ int altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
     }
 }
 
+void altera_garantias(ELEM_CREDITO **iniLista, int id)
+{
+    ELEM_CREDITO *aux = NULL;
+    ELEM_CREDITO *aux2 = NULL;
+    int resposta[2];
+    int opcao, garantiaOpcao;
+    int novo[MAX_GARANTIAS];
+
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (id == aux->info.ID)
+        {
+            printf("Proposta #%d\n", aux->info.numeroSequencial);
+            printf("Numero de garantias atual: %d\n", aux->info.garantiaNumero);
+            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            fflush(stdin);
+            scanf("%d", &resposta[0]);
+            if (resposta[0] == 0)
+            {
+                return;
+            }
+            if (resposta[1] == 1)
+            {
+                do
+                {
+                    printf("\n*------------ALTERAR GARANTIAS---------------*\n");
+                    printf("1 - Alterar #1 garantia\n");
+                    printf("2 - Alterar #2 garantia\n");
+                    printf("3 - Alterar #3 garantia\n");
+                    printf("4 - Alterar #4 garantia\n");
+                    printf("5 - Alterar #5 garantia\n");
+                    printf("6 - Listar garantias\n");
+                    printf("\n7 - Voltar para o menu anterior\n");
+                    printf("0 - Sair do programa\n");
+                    printf("*-----------------------------------------------*\n");
+                    printf("\nInsire opcao: ");
+                    fflush(stdin);
+                    scanf("%d", &opcao);
+                    switch (opcao)
+                    {
+                    case 1:
+                        if (aux->info.garantiaNumero < 1)
+                        {
+                            printf("Esta proposta nao possui garantias!\n");
+                            printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
+                            fflush(stdin);
+                            scanf("%d", &resposta[1]);
+                            if (resposta[1] == 0)
+                            {
+                                return;
+                            }
+                        }
+                        printf("Tipo de garantia?\n");
+                        printf("\n[0] - Imovel");
+                        printf("\n[1] - Fiador");
+                        printf("\n[2] - Depositos");
+                        printf("\n[3] - Produtos");
+                        fflush(stdin);
+                        scanf("%d", &garantiaOpcao);
+                        if (garantiaOpcao == 0)
+                        {
+                            strcpy(aux->info.garantia[0].tipo, "Imovel");
+                        }
+                        else if (garantiaOpcao == 1)
+                        {
+                            strcpy(aux->info.garantia[0].tipo, "Fiador");
+                        }
+                        else if (garantiaOpcao == 2)
+                        {
+                            strcpy(aux->info.garantia[0].tipo, "Depositos");
+                        }
+                        else if (garantiaOpcao == 3)
+                        {
+                            strcpy(aux->info.garantia[0].tipo, "Produtos");
+                        }
+                        else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
+                        {
+                            printf("OPCAO invalida!\n");
+                            exit(0);
+                        }
+                        printf("Descricao sobre a proposta:\n");
+                        fflush(stdin);
+                        scanf("%[^\n]", &aux->info.garantia[0].descricao);
+                        printf("Valor:\n");
+                        fflush(stdin);
+                        scanf("%f", &aux->info.garantia[0].valor);
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+                        for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+                        {
+                            for (int i = 0; i < aux->info.garantiaNumero; i++)
+                            {
+                                printf("\n*------------GARANTIAS----------------*\n");
+                                printf("\nGarantia #%i\n", i + 1);
+                                printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
+                                       aux->info.garantia[i].tipo,
+                                       aux->info.garantia[i].descricao,
+                                       aux->info.garantia[i].valor);
+                                printf("*--------------------------------------*\n");
+                                system("pause");
+                            }
+                        }
+                        break;
+                    default:
+                        printf("OPCAO invalida!\n");
+                        break;
+                    }
+
+                } while (0 < opcao < 7);
+            }
+        }
+        else
+        {
+            printf("Utilizador nao encontrado!\n");
+        }
+    }
+}
+
+void altera_montante(ELEM_CREDITO **iniLista, int id)
+{
+    ELEM_CREDITO *aux = NULL;
+    int resposta;
+    float novo;
+
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (id == aux->info.ID)
+        {
+            printf("Proposta #%d\n", aux->info.numeroSequencial);
+            printf("Montante atual: %.2f\n", aux->info.montante);
+            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            fflush(stdin);
+            scanf("%d", &resposta);
+            if (resposta == 0)
+            {
+                return;
+            }
+            if (resposta == 1)
+            {
+                printf("Insira o novo montante: \n");
+                fflush(stdin);
+                scanf("%f", novo);
+
+                aux->info.montante = novo;
+            }
+        }
+        else
+        {
+            printf("Utilizador nao encontrado!\n");
+        }
+    }
+}
+
+void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
+{
+    ELEM_CREDITO *aux = NULL;
+    int resposta;
+    int novo; //* NEGATIVA OU POSITIVA
+
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (id == aux->info.ID)
+        {
+            printf("Situacao atual: %s\n", aux->info.analise.situacao);
+            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            fflush(stdin);
+            scanf("%d", &resposta);
+            if (resposta == 0)
+            {
+                return;
+            }
+            if (resposta == 1)
+            {
+                printf("Insira a nova situacao:\n**0-NEGATIVO**\n**1-POSITIVO**\n");
+                fflush(stdin);
+                scanf("%s", novo);
+                switch (novo)
+                {
+                case 0:
+                    strcpy(aux->info.analise.situacao, "Negativo");
+                    break;
+                case 1:
+                    strcpy(aux->info.analise.situacao, "Positivo");
+                    break;
+                default:
+                    printf("OPCAO invalida!\n");
+                    break;
+                }
+            }
+        }
+        else
+        {
+            printf("Utilizador nao encontrado!\n");
+        }
+    }
+}

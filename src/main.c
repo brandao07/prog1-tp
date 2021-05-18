@@ -104,9 +104,11 @@ int main(int argc, char const *argv[])
                                         break;
 
                                     case 5: //Alterar o montante
+                                        altera_montante(iniListaCREDITO, id);
                                         break;
 
                                     case 6: //Alterar erro na analise
+
                                         break;
 
                                     case 7: //Voltar ao menu anterior

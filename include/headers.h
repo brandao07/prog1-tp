@@ -53,8 +53,8 @@ typedef struct garantia
 // Estrutura para a anlise de uma dada proposta
 typedef struct analise
 {
-    int valor;
-    char situacao[20];
+    int valor; //* 0 - NÃO ANALISADA 1 - ANALISADA
+    char situacao[20];  //* NEGATIVA OU POSITIVA 
     char data [30];
 
 } ANALISE;
@@ -70,7 +70,7 @@ typedef struct credito
     GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias 5
     float montante;                   // Montante pedido
     char prioridade[20];              // Carregada do ficheiro csv
-    ANALISE analise;                      //* 0 - NÃO ANALISADA 1 - ANALISADA
+    ANALISE analise;                      
 
 } CREDITO;
 
@@ -144,8 +144,10 @@ void dequeue_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Remov
 
 void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã uma Proposta de crédito juntamente com as suas garantias e análise
 
-int altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome 
+void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome 
 
-int altera_iban(ELEM_CREDITO **iniLista, int id); //ALtera o IBAN
+void altera_iban(ELEM_CREDITO **iniLista, int id); //ALtera o IBAN
 
-int altera_numero_garantias(ELEM_CREDITO **iniLista, int id); //Altera o numero de garantias
+void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); //Altera o numero de garantias
+
+void altera_montante(ELEM_CREDITO **iniLista, int id); //Altera o montante
