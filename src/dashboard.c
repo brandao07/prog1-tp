@@ -9,14 +9,39 @@
 //! HEADER
 #include "headers.h"
 
+int menu_altera()
+{
+    int opcao;
+
+    printf("\n*------------MENU ALTERA---------------*\n");
+    printf("1 - Alterar o nome\n");
+    printf("2 - Alterar IBAN\n");
+    printf("3 - Alterar o numero de garantias\n");
+    printf("4 - Alterar as garantias\n");
+    printf("5 - Alterar o montante\n");
+    printf("6 - Alterar erro na analise\n");
+    printf("\n7 - Voltar ao menu anterior\n");
+    printf("0 - Sair do programa\n");
+    printf("*--------------------------------------*\n");
+    printf("\nInsira opcao: ");
+    fflush(stdin);
+    scanf("%d", &opcao);
+
+    return opcao;
+}
+
 int menu_admin()
 {
     int opcao;
 
     printf("\n*------------MENU ADMIN---------------*\n");
     printf("1 - Criar utilizador\n");
-    printf("2 - ...\n");
-    printf("\n3 - Voltar para o menu anterior\n");
+    printf("2 - Remover utilizador\n");
+    printf("3 - Inserir proposta de credito\n");
+    printf("4 - Alterar proposta de credito\n");
+    printf("5 - Apagar proposta de credito\n");
+    printf("6 - Pesquisa proposta de credito\n");
+    printf("\n7 - Voltar para o menu anterior\n");
     printf("0 - Sair do programa\n");
     printf("*--------------------------------------*\n");
     printf("\nInsire opcao: ");

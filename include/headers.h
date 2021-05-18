@@ -13,12 +13,13 @@
 #include <time.h>
 
 //! ATRIBUIÇÃO DE VALORES
-#define MAX_GARANTIAS 5 // Número máximo de garantias
+#define MAX_GARANTIAS 5      // Número máximo de garantias
 #define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
 #define MENU_INICIAL 0
 #define MENU_ENTRAR 1
 #define MENU_ADMIN 2
 #define MENU_ANALISTA 3
+#define MENU_ALTERA 4
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
@@ -28,9 +29,9 @@ typedef struct utilizador
     char username[20];
     char nome[100];
     char password[20];
-    char tipo[20]; 
+    char tipo[20];
     int tipoID; //* 4 - Administrador 5 - Analista
-    int rank; // Número de propostas de crédito analisadas
+    int rank;   // Número de propostas de crédito analisadas
 } UTILIZADOR;
 
 // Estrutura para as prioridades
@@ -49,6 +50,15 @@ typedef struct garantia
 
 } GARANTIA;
 
+// Estrutura para a anlise de uma dada proposta
+typedef struct analise
+{
+    int valor;
+    char situacao[20];
+    char data [30];
+
+} ANALISE;
+
 // Estruturas de uma propostas de crédito
 typedef struct credito
 {
@@ -58,9 +68,9 @@ typedef struct credito
     char IBAN[50];
     int garantiaNumero;
     GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias 5
-    float montante; // Montante pedido
+    float montante;                   // Montante pedido
     char prioridade[20];              // Carregada do ficheiro csv
-    int analise;                      //* 0 - NÃO ANALISADA 1 - ANALISADA
+    ANALISE analise;                      //* 0 - NÃO ANALISADA 1 - ANALISADA
 
 } CREDITO;
 
@@ -106,6 +116,8 @@ int menu_analista(); // Menu do analista
 
 int menu_admin(); // Menu do administrador
 
+int menu_altera();//Menu das alteracoes das propostas de credito
+
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
 
 void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Insere os utilizadores na lista
@@ -118,6 +130,22 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista); // Carrega os utilizadores 
 
 void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info);
 
-CREDITO criar_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
+CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
 
-char carrega_prioridade(ELEM_PRIORIDADE *iniLista,float montante); // Compara montantes
+char carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // Compara montantes
+
+int login_utilizador(ELEM_UTILIZADOR *iniLista); // Verifica se o login foi efetuado com sucesso
+
+int remove_utilizador (ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR**fimLista); // Remove um utilizador
+
+void enqueue_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO info); // Insere um elemento no fim da fila
+
+void dequeue_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Remove o primeiro elemento da fila
+
+void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã uma Proposta de crédito juntamente com as suas garantias e análise
+
+int altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome 
+
+int altera_iban(ELEM_CREDITO **iniLista, int id); //ALtera o IBAN
+
+int altera_numero_garantias(ELEM_CREDITO **iniLista, int id); //Altera o numero de garantias

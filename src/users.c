@@ -191,3 +191,82 @@ void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fim
         gravar_utilizador(iniListaUTILIZADOR);
     }
 }
+
+int login_utilizador(ELEM_UTILIZADOR *iniLista)
+{
+    ELEM_UTILIZADOR *aux = NULL;
+    char username[20], password[20];
+
+    printf("Username: ");
+    fflush(stdin);
+    scanf("%s", username);
+
+    printf("Password: ");
+    fflush(stdin);
+    scanf("%s", password);
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        if (strcmp(username, aux->info.username) == 0)
+        {
+            if (strcmp(password, aux->info.password) == 0)
+            {
+                printf("Login efetuado com sucesso!!\n");
+                return 0;
+            }
+        }
+    }
+    printf("Os dados de login nao sao validos !!\n");
+    return -1;
+}
+
+int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
+{
+    char username[20];
+    ELEM_UTILIZADOR *aux = *iniLista;
+
+    printf("Insira o username a ser removido: ");
+    fflush(stdin);
+    scanf("%s", username);
+
+    while (aux != NULL && aux->info.username != username)
+    {
+        aux = aux->seguinte;
+    }
+
+    if (aux == NULL) // não existe elemento num ou a lista é vazia
+    {
+        printf("Lista vazia!");
+        return -1;
+    }
+
+    if (aux->anterior == NULL) // vai remover o 1º elemento
+    {
+        *iniLista = aux->seguinte;
+        if (*iniLista != NULL)
+        {
+            (*iniLista)->anterior = NULL;
+        }
+    }
+    else
+    {
+        aux->anterior->seguinte = aux->seguinte;
+    }
+
+    if (aux->seguinte == NULL) // vai remover o ultimo elemento
+    {
+        *fimLista = aux->anterior;
+        if (*fimLista != NULL)
+        {
+            (*fimLista)->seguinte = NULL;
+        }
+    }
+    else
+    {
+        aux->seguinte->anterior = aux->anterior;
+    }
+
+    free(aux);
+
+    return 0;
+}
