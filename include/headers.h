@@ -53,9 +53,9 @@ typedef struct garantia
 // Estrutura para a anlise de uma dada proposta
 typedef struct analise
 {
-    int valor; //* 0 - NÃO ANALISADA 1 - ANALISADA
-    char situacao[20];  //* NEGATIVA OU POSITIVA 
-    char data [30];
+    int valor;         //* 0 - NÃO ANALISADA 1 - ANALISADA
+    char situacao[20]; //* NEGATIVA OU POSITIVA
+    char data[30];
 
 } ANALISE;
 
@@ -70,7 +70,7 @@ typedef struct credito
     GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias 5
     float montante;                   // Montante pedido
     char prioridade[20];              // Carregada do ficheiro csv
-    ANALISE analise;                      
+    int valor;
 
 } CREDITO;
 
@@ -82,10 +82,11 @@ typedef struct elem_UTILIZADOR
     struct elem_UTILIZADOR *seguinte; // Aponta para o nó (UTILIAZDOR) seguinte
 } ELEM_UTILIZADOR;
 
-// Estrutura da lista dos CRÉDITOS
+// Estrutura da lista dos CRÉDITOS //* Análise = 1
 typedef struct elem_CREDITO
 {
     CREDITO info;
+    ANALISE analise;
     struct elem_CREDITO *anterior; // Aponta para o nó (CREDITO) anterior
     struct elem_CREDITO *seguinte; // Aponta para o nó (CREDITO) seguinte
 } ELEM_CREDITO;
@@ -97,6 +98,13 @@ typedef struct elem_PRIORIDADE
     struct elem_PRIORIDADE *anterior; // Aponta para o nó (PRIORIDADE) anterior
     struct elem_PRIORIDADE *seguinte; // Aponta para o nó (PRIORIDADE) seguinte
 } ELEM_PRIORIDADE;
+
+// Estrutura para a fila de processamento //* Análise = 0
+typedef struct queue_CREDITO
+{
+    CREDITO info;
+    struct elem_CREDITO *seguinte;
+} QUEUE_CREDITO;
 
 //! FUNÇÕES
 
@@ -118,35 +126,35 @@ int menu_admin(); // Menu do administrador
 
 int menu_altera_garantias(); // Menu para alterar as garantias
 
-int menu_altera();//Menu das alteracoes das propostas de credito
+int menu_altera(); //Menu das alteracoes das propostas de credito
 
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
 
 void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Insere os utilizadores na lista
 
-void gravar_utilizador(ELEM_UTILIZADOR *iniLista); //Grava os utilizadores no ficheiro texto users.txt
+void gravar_utilizador(ELEM_UTILIZADOR **iniLista); //Grava os utilizadores no ficheiro texto users.txt
 
 int verifique_username(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
 
-int carregar_utilizador(ELEM_UTILIZADOR **iniLista); // Carrega os utilizadores do programa do ficheiro users.txt
+int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista); // Carrega os utilizadores do programa do ficheiro users.txt
 
-void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info);
+void verifica_primeiro(ELEM_UTILIZADOR **iniListaUTILIZADOR, ELEM_UTILIZADOR **fimListaUTILIZADOR, UTILIZADOR info);
 
 CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
 
-char carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // Compara montantes
+char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // Compara montantes
 
-int login_utilizador(ELEM_UTILIZADOR *iniLista); // Verifica se o login foi efetuado com sucesso
+int login_utilizador(ELEM_UTILIZADOR **iniLista); // Verifica se o login foi efetuado com sucesso
 
-int remove_utilizador (ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR**fimLista); // Remove um utilizador
+int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista); // Remove um utilizador
 
-void enqueue_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO info); // Insere um elemento no fim da fila
+void enqueue_credito(QUEUE_CREDITO **iniLista, QUEUE_CREDITO **fimLista, CREDITO info); // Insere um elemento no fim da fila
 
-void dequeue_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Remove o primeiro elemento da fila
+void dequeue_credito(QUEUE_CREDITO **iniLista, QUEUE_CREDITO **fimLista); // Remove o primeiro elemento da fila
 
 void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã uma Proposta de crédito juntamente com as suas garantias e análise
 
-void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome 
+void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome
 
 void altera_iban(ELEM_CREDITO **iniLista, int id); // Altera o IBAN
 

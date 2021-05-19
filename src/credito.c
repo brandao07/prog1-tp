@@ -13,6 +13,9 @@ CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista)
 {
     CREDITO info;
     int garantiaOpcao;
+    printf("Introduza identificador:\n");
+    fflush(stdin);
+    scanf("%d",info.ID);
     printf("Introduza nome:\n");
     fflush(stdin);
     scanf("%[^\n]", info.nome);
@@ -68,47 +71,7 @@ CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista)
         printf("Montante:\n");
         scanf("%f", &info.montante);
         strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante));
-        info.analise.valor = 0;
-
         return info;
-    }
-}
-
-void enqueue_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO info)
-{
-    ELEM_CREDITO *novo = NULL;
-    novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
-    //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
-    if (novo == NULL)
-    {
-        printf("FALTA de memoria!\n");
-        return;
-    }
-    novo->info = info;
-    novo->seguinte = NULL;
-    if ((*iniLista == NULL) && (*fimLista == NULL))
-    {
-        *iniLista = *fimLista = novo;
-    }
-    else
-    {
-        (*fimLista)->seguinte = novo;
-        *fimLista = novo;
-    }
-}
-
-void dequeue_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
-{
-    ELEM_CREDITO *temp = NULL;
-    temp = *iniLista;
-    if ((*iniLista == NULL) && (*fimLista == NULL))
-    {
-        printf("Fila vazia!\n");
-    }
-    else
-    {
-        *iniLista = (*iniLista)->seguinte;
-        free(temp);
     }
 }
 
@@ -148,16 +111,9 @@ void imprime_credito(ELEM_CREDITO *iniLista, int id)
                 }
                 printf("\n*------------ANALISE----------------*\n");
                 printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
-                if (aux->info.analise.valor == 0)
-                {
-                    printf("\tEstado da proposta: NAO analisada\n");
-                }
-                else
-                {
-                    printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tData: %s\n",
-                           aux->info.analise.situacao,
-                           aux->info.analise.data);
-                }
+                printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tData: %s\n",
+                       aux->analise.situacao,
+                       aux->analise.data);
                 printf("*--------------------------------------*\n");
                 system("pause");
                 return;
@@ -301,7 +257,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
             {
                 do
                 {
-                   opcao=menu_altera_garantias();
+                    opcao = menu_altera_garantias();
                     switch (opcao)
                     {
                     case 1:
@@ -615,7 +571,7 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
     {
         if (id == aux->info.ID)
         {
-            printf("Situacao atual: %s\n", aux->info.analise.situacao);
+            printf("Situacao atual: %s\n", aux->analise.situacao);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
             scanf("%d", &resposta);
@@ -631,10 +587,10 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
                 switch (novo)
                 {
                 case 0:
-                    strcpy(aux->info.analise.situacao, "Negativo");
+                    strcpy(aux->analise.situacao, "Negativo");
                     break;
                 case 1:
-                    strcpy(aux->info.analise.situacao, "Positivo");
+                    strcpy(aux->analise.situacao, "Positivo");
                     break;
                 default:
                     printf("OPCAO invalida!\n");

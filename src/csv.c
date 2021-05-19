@@ -100,7 +100,7 @@ void imprime_prioridades(ELEM_PRIORIDADE *iniLista)
     printf("*--------------------------------------*\n");
 }
 
-char carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
+char* carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
 {
     PRIORIDADE prioridade;
     ELEM_PRIORIDADE *aux = NULL;
@@ -111,4 +111,5 @@ char carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
             return prioridade.nome;
         }
     }
+    return NULL;
 }

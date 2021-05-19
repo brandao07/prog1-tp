@@ -14,16 +14,16 @@
 int main(int argc, char const *argv[])
 {
     ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
-    ELEM_CREDITO *iniListaCREDITO = NULL;
-    ELEM_CREDITO *fimListaCREDITO = NULL;
+    ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
+    QUEUE_CREDITO *iniQueueCREDITO = NULL, *fimQueueCREDITO = NULL;
     UTILIZADOR utilizador;
     int id;
     // Teste para ver se os parâmetros introduzidos na linha de comandos foram lidos com sucesso pelo programa
     if (argc < 2)
     {
         printf("FALTAM argumentos para iniciar o programa.\n");
-        return -1;
+        return;
     }
     char ficheiroCSV[100];
     // Atribuição do nome do ficheiro csv
@@ -39,7 +39,7 @@ int main(int argc, char const *argv[])
             exit(0);
             break;
         case 1:
-            verifica_primeiro(iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
+            verifica_primeiro(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
             do
             {
                 opcao[MENU_ENTRAR] = menu_entrar();
@@ -49,8 +49,8 @@ int main(int argc, char const *argv[])
                     exit(0);
                     break;
                 case 1:
-                    login_utilizador(iniListaUTILIZADOR);
-                    if (login_utilizador == 0)
+    
+                    if (login_utilizador(&iniListaUTILIZADOR) == 0)
                     {
                         do
                         {
@@ -143,8 +143,7 @@ int main(int argc, char const *argv[])
                     break;
 
                 case 2:
-                    login_utilizador(iniListaUTILIZADOR);
-                    if (login_utilizador == 0)
+                    if (login_utilizador(iniListaUTILIZADOR) == 0)
                     {
                         do
                         {

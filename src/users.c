@@ -90,7 +90,7 @@ void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, 
     }
 }
 
-void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
+void gravar_utilizador(ELEM_UTILIZADOR **iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
@@ -126,10 +126,9 @@ int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
     return 0;
 }
 
-int carregar_utilizador(ELEM_UTILIZADOR **iniLista)
+int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
 {
-    ELEM_UTILIZADOR *aux = NULL;
-    ELEM_UTILIZADOR *aux2 = NULL;
+    UTILIZADOR info;
     int res = 0;
 
     FILE *fp = NULL;
@@ -142,57 +141,36 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista)
 
         return -1;
     }
-
-    // Percorre e lê o ficheiro users.txt
-    /*  for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    while (fread(&info, sizeof(UTILIZADOR), 1, fp) == 1)
     {
-        fread(&(aux->info), sizeof(UTILIZADOR), 1, fp);
+        inserir_utilizador(&iniLista, &fimLista, info);
         res++;
-    }*/
-
-    aux = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));
-    aux->seguinte = NULL;
-    aux->anterior = NULL;
-    while (fread(&(aux->info), sizeof(UTILIZADOR), 1, fp) == 1)
-    {
-        if (*iniLista == NULL)
-        {
-            *iniLista = aux;
-        }
-        else
-        {
-            aux->seguinte = *iniLista;
-            *iniLista = aux;
-            aux->anterior = *iniLista;
-        }
-        aux = aux->seguinte;
-        aux = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));
     }
 
     if (iniLista == NULL)
     {
         return -1;
     }
-    printf("Foram lidos %d com sucesso!\n", res);
+    printf("Foram lidos %d  utilizadores com sucesso!\n", res);
 
     fclose(fp);
     return 0;
 }
 
-void verifica_primeiro(ELEM_UTILIZADOR *iniListaUTILIZADOR, ELEM_UTILIZADOR *fimListaUTILIZADOR, UTILIZADOR info)
+void verifica_primeiro(ELEM_UTILIZADOR **iniListaUTILIZADOR, ELEM_UTILIZADOR **fimListaUTILIZADOR, UTILIZADOR info)
 {
 
     UTILIZADOR utilizador;
 
-    if (carregar_utilizador(&iniListaUTILIZADOR) == -1)
+    if (carregar_utilizador(iniListaUTILIZADOR, fimListaUTILIZADOR) == -1)
     {
         utilizador = criar_utilizador(iniListaUTILIZADOR);
-        inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
+        inserir_utilizador(iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
         gravar_utilizador(iniListaUTILIZADOR);
     }
 }
 
-int login_utilizador(ELEM_UTILIZADOR *iniLista)
+int login_utilizador(ELEM_UTILIZADOR **iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     char username[20], password[20];
