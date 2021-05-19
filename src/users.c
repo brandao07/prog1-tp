@@ -15,21 +15,21 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     int res = 0;
     ELEM_UTILIZADOR *aux = NULL;
 
-    printf("Introduza um username!\n");
+    printf("Introduza um username:\n");
     fflush(stdin);
     scanf("%s", info.username);
     while (verifique_username(iniLista, info.username) == 1)
     {
         printf("Username ja existente!\n");
-        printf("\nIntroduza um username!\n");
+        printf("\nIntroduza um username:\n");
         fflush(stdin);
         scanf("%s", info.username);
     }
-    printf("Introduza um nome!\n");
+    printf("Introduza um nome:\n");
     fflush(stdin);
     scanf("%[^\n]", info.nome);
 
-    printf("Introduza uma password!\n");
+    printf("Introduza uma password:\n");
     fflush(stdin);
     scanf("%s", info.password);
 
