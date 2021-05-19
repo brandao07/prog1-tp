@@ -9,6 +9,27 @@
 //! HEADER
 #include "headers.h"
 
+int menu_altera_garantias()
+{
+    int opcao;
+
+    printf("\n*------------ALTERAR GARANTIAS---------------*\n");
+    printf("1 - Alterar #1 garantia\n");
+    printf("2 - Alterar #2 garantia\n");
+    printf("3 - Alterar #3 garantia\n");
+    printf("4 - Alterar #4 garantia\n");
+    printf("5 - Alterar #5 garantia\n");
+    printf("6 - Listar garantias\n");
+    printf("\n7 - Voltar para o menu anterior\n");
+    printf("0 - Sair do programa\n");
+    printf("*-----------------------------------------------*\n");
+    printf("\nInsire opcao: ");
+    fflush(stdin);
+    scanf("%d", &opcao);
+
+    return opcao;
+}
+
 int menu_altera()
 {
     int opcao;

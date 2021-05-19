@@ -301,19 +301,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
             {
                 do
                 {
-                    printf("\n*------------ALTERAR GARANTIAS---------------*\n");
-                    printf("1 - Alterar #1 garantia\n");
-                    printf("2 - Alterar #2 garantia\n");
-                    printf("3 - Alterar #3 garantia\n");
-                    printf("4 - Alterar #4 garantia\n");
-                    printf("5 - Alterar #5 garantia\n");
-                    printf("6 - Listar garantias\n");
-                    printf("\n7 - Voltar para o menu anterior\n");
-                    printf("0 - Sair do programa\n");
-                    printf("*-----------------------------------------------*\n");
-                    printf("\nInsire opcao: ");
-                    fflush(stdin);
-                    scanf("%d", &opcao);
+                   opcao=menu_altera_garantias();
                     switch (opcao)
                     {
                     case 1:
@@ -358,22 +346,198 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
-                        scanf("%[^\n]", &aux->info.garantia[0].descricao);
+                        scanf("%[^\n]", &(aux->info.garantia[0].descricao));
                         printf("Valor:\n");
                         fflush(stdin);
-                        scanf("%f", &aux->info.garantia[0].valor);
+                        scanf("%f", &(aux->info.garantia[0].valor));
                         break;
                     case 2:
-
+                        if (aux->info.garantiaNumero < 2)
+                        {
+                            printf("Esta proposta apenas possui 1 garantia!\n");
+                            printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
+                            fflush(stdin);
+                            scanf("%d", &resposta[1]);
+                            if (resposta[1] == 0)
+                            {
+                                return;
+                            }
+                        }
+                        printf("Tipo de garantia?\n");
+                        printf("\n[0] - Imovel");
+                        printf("\n[1] - Fiador");
+                        printf("\n[2] - Depositos");
+                        printf("\n[3] - Produtos");
+                        fflush(stdin);
+                        scanf("%d", &garantiaOpcao);
+                        if (garantiaOpcao == 0)
+                        {
+                            strcpy(aux->info.garantia[1].tipo, "Imovel");
+                        }
+                        else if (garantiaOpcao == 1)
+                        {
+                            strcpy(aux->info.garantia[1].tipo, "Fiador");
+                        }
+                        else if (garantiaOpcao == 2)
+                        {
+                            strcpy(aux->info.garantia[1].tipo, "Depositos");
+                        }
+                        else if (garantiaOpcao == 3)
+                        {
+                            strcpy(aux->info.garantia[1].tipo, "Produtos");
+                        }
+                        else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
+                        {
+                            printf("OPCAO invalida!\n");
+                            exit(0);
+                        }
+                        printf("Descricao sobre a proposta:\n");
+                        fflush(stdin);
+                        scanf("%[^\n]", &(aux->info.garantia[1].descricao));
+                        printf("Valor:\n");
+                        fflush(stdin);
+                        scanf("%f", &(aux->info.garantia[1].valor));
                         break;
                     case 3:
-
+                        if (aux->info.garantiaNumero < 3)
+                        {
+                            printf("Esta proposta apenas possui 2 garantias!\n");
+                            printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
+                            fflush(stdin);
+                            scanf("%d", &resposta[1]);
+                            if (resposta[1] == 0)
+                            {
+                                return;
+                            }
+                        }
+                        printf("Tipo de garantia?\n");
+                        printf("\n[0] - Imovel");
+                        printf("\n[1] - Fiador");
+                        printf("\n[2] - Depositos");
+                        printf("\n[3] - Produtos");
+                        fflush(stdin);
+                        scanf("%d", &garantiaOpcao);
+                        if (garantiaOpcao == 0)
+                        {
+                            strcpy(aux->info.garantia[2].tipo, "Imovel");
+                        }
+                        else if (garantiaOpcao == 1)
+                        {
+                            strcpy(aux->info.garantia[2].tipo, "Fiador");
+                        }
+                        else if (garantiaOpcao == 2)
+                        {
+                            strcpy(aux->info.garantia[2].tipo, "Depositos");
+                        }
+                        else if (garantiaOpcao == 3)
+                        {
+                            strcpy(aux->info.garantia[2].tipo, "Produtos");
+                        }
+                        else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
+                        {
+                            printf("OPCAO invalida!\n");
+                            exit(0);
+                        }
+                        printf("Descricao sobre a proposta:\n");
+                        fflush(stdin);
+                        scanf("%[^\n]", &(aux->info.garantia[2].descricao));
+                        printf("Valor:\n");
+                        fflush(stdin);
+                        scanf("%f", &(aux->info.garantia[2].valor));
                         break;
                     case 4:
-
+                        if (aux->info.garantiaNumero < 4)
+                        {
+                            printf("Esta proposta apenas possui 3 garantias!\n");
+                            printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
+                            fflush(stdin);
+                            scanf("%d", &resposta[1]);
+                            if (resposta[1] == 0)
+                            {
+                                return;
+                            }
+                        }
+                        printf("Tipo de garantia?\n");
+                        printf("\n[0] - Imovel");
+                        printf("\n[1] - Fiador");
+                        printf("\n[2] - Depositos");
+                        printf("\n[3] - Produtos");
+                        fflush(stdin);
+                        scanf("%d", &garantiaOpcao);
+                        if (garantiaOpcao == 0)
+                        {
+                            strcpy(aux->info.garantia[3].tipo, "Imovel");
+                        }
+                        else if (garantiaOpcao == 1)
+                        {
+                            strcpy(aux->info.garantia[3].tipo, "Fiador");
+                        }
+                        else if (garantiaOpcao == 2)
+                        {
+                            strcpy(aux->info.garantia[3].tipo, "Depositos");
+                        }
+                        else if (garantiaOpcao == 3)
+                        {
+                            strcpy(aux->info.garantia[3].tipo, "Produtos");
+                        }
+                        else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
+                        {
+                            printf("OPCAO invalida!\n");
+                            exit(0);
+                        }
+                        printf("Descricao sobre a proposta:\n");
+                        fflush(stdin);
+                        scanf("%[^\n]", &(aux->info.garantia[3].descricao));
+                        printf("Valor:\n");
+                        fflush(stdin);
+                        scanf("%f", &(aux->info.garantia[3].valor));
                         break;
                     case 5:
-
+                        if (aux->info.garantiaNumero < 5)
+                        {
+                            printf("Esta proposta apenas possui 4 garantias!\n");
+                            printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
+                            fflush(stdin);
+                            scanf("%d", &resposta[1]);
+                            if (resposta[1] == 0)
+                            {
+                                return;
+                            }
+                        }
+                        printf("Tipo de garantia?\n");
+                        printf("\n[0] - Imovel");
+                        printf("\n[1] - Fiador");
+                        printf("\n[2] - Depositos");
+                        printf("\n[3] - Produtos");
+                        fflush(stdin);
+                        scanf("%d", &garantiaOpcao);
+                        if (garantiaOpcao == 0)
+                        {
+                            strcpy(aux->info.garantia[4].tipo, "Imovel");
+                        }
+                        else if (garantiaOpcao == 1)
+                        {
+                            strcpy(aux->info.garantia[4].tipo, "Fiador");
+                        }
+                        else if (garantiaOpcao == 2)
+                        {
+                            strcpy(aux->info.garantia[4].tipo, "Depositos");
+                        }
+                        else if (garantiaOpcao == 3)
+                        {
+                            strcpy(aux->info.garantia[4].tipo, "Produtos");
+                        }
+                        else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
+                        {
+                            printf("OPCAO invalida!\n");
+                            exit(0);
+                        }
+                        printf("Descricao sobre a proposta:\n");
+                        fflush(stdin);
+                        scanf("%[^\n]", &(aux->info.garantia[4].descricao));
+                        printf("Valor:\n");
+                        fflush(stdin);
+                        scanf("%f", &(aux->info.garantia[4].valor));
                         break;
                     case 6:
                         for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
@@ -478,6 +642,7 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
                 }
             }
         }
+        //TODO: FALTA A CENA DA DATA
         else
         {
             printf("Utilizador nao encontrado!\n");

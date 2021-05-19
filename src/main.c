@@ -81,10 +81,10 @@ int main(int argc, char const *argv[])
 
                                 do
                                 {
-                                    opcao[MENU_ALTERA]=menu_altera();
+                                    opcao[MENU_ALTERA] = menu_altera();
                                     switch (opcao[MENU_ALTERA])
                                     {
-                                    case 0:  // sair 
+                                    case 0: // sair
                                         exit(0);
                                         break;
 
@@ -100,7 +100,7 @@ int main(int argc, char const *argv[])
                                         break;
 
                                     case 4: //Aletrar as garantias
-                                        
+                                        altera_garantias(&iniListaCREDITO, id);
                                         break;
 
                                     case 5: //Alterar o montante
@@ -112,17 +112,17 @@ int main(int argc, char const *argv[])
                                         break;
 
                                     case 7: //Voltar ao menu anterior
-                                        opcao[MENU_ALTERA]=8;
+                                        opcao[MENU_ALTERA] = 8;
                                         break;
-                                    
+
                                     default:
 
                                         printf("OPCAO invalida!\n");
                                         opcao[MENU_ALTERA] = -1;
                                         break;
                                     }
-                                //! FALTA GRAVAR NO FICHEIRO
-                                }while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 7));
+                                    //! FALTA GRAVAR NO FICHEIRO
+                                } while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 7));
                                 break;
 
                             case 5: //Apagar proposta de credito

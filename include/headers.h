@@ -116,6 +116,8 @@ int menu_analista(); // Menu do analista
 
 int menu_admin(); // Menu do administrador
 
+int menu_altera_garantias(); // Menu para alterar as garantias
+
 int menu_altera();//Menu das alteracoes das propostas de credito
 
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
@@ -146,8 +148,10 @@ void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã um
 
 void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome 
 
-void altera_iban(ELEM_CREDITO **iniLista, int id); //ALtera o IBAN
+void altera_iban(ELEM_CREDITO **iniLista, int id); // Altera o IBAN
 
-void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); //Altera o numero de garantias
+void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); // Altera o numero de garantias
+
+void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 
 void altera_montante(ELEM_CREDITO **iniLista, int id); //Altera o montante
