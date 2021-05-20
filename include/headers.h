@@ -163,3 +163,9 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); // Altera o numer
 void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 
 void altera_montante(ELEM_CREDITO **iniLista, int id); //Altera o montante
+
+void altera_garantias(ELEM_CREDITO **iniLista, int id); //Altera as garantias
+
+int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); //Apagar proposta de credito
+
+int pesquisar_credito (ELEM_CREDITO *iniLista); //Pesquisar proposta de credito pelo nome

@@ -605,3 +605,111 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
         }
     }
 }
+
+int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
+{
+    int id;
+    ELEM_UTILIZADOR *aux = *iniLista;
+
+    printf("Insira o ID da proposta de credito a ser removida: ");
+    fflush(stdin);
+    scanf("%d", id);
+
+    while (aux != NULL && aux->info.ID != id)
+    {
+        aux = aux->seguinte;
+    }
+
+    if (aux == NULL) // não existe elemento ou a lista é vazia
+    {
+        printf("Lista vazia !!\n");
+        return -1;
+    }
+
+    if (aux->anterior == NULL) // vai remover o 1º elemento
+    {
+        *iniLista = aux->seguinte;
+        if (*iniLista != NULL)
+        {
+            (*iniLista)->anterior = NULL;
+        }
+    }
+    else
+    {
+        aux->anterior->seguinte = aux->seguinte;
+    }
+
+    if (aux->seguinte == NULL) // vai remover o ultimo elemento
+    {
+        *fimLista = aux->anterior;
+        if (*fimLista != NULL)
+        {
+            (*fimLista)->seguinte = NULL;
+        }
+    }
+    else
+    {
+        aux->seguinte->anterior = aux->anterior;
+    }
+
+    free(aux);
+
+    return 0;
+}
+
+int pesquisar_credito (ELEM_CREDITO *iniLista)
+{
+    char nome[100];
+    ELEM_CREDITO *aux=NULL;
+
+    if(iniLista==NULL)
+    {
+        printf("Nao existem propostas de credito registadas!!\n");
+        return -1;
+    }
+
+    printf("Insira o nome da proposta de credito a pesquisar: \n");
+    fflush(stdin);
+    scanf("%s", nome);
+
+    for(aux=iniLista; aux!=NULL; aux=aux->seguinte)
+    {
+        if(strcmp(aux->info.nome, nome)==0)
+        {
+            printf("\n*------------PROPOSTA----------------*\n");
+            printf("\nProposta #%d\n", aux->info.numeroSequencial);
+            printf("\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
+                    aux->info.nome,
+                    aux->info.IBAN,
+                    aux->info.montante,
+                    aux->info.prioridade);
+            printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
+            printf("*--------------------------------------*\n");
+            system("pause");
+            for (int i = 0; i < aux->info.garantiaNumero; i++)
+            {
+                printf("\n*------------GARANTIAS----------------*\n");
+                printf("\nGarantia #%i\n", i + 1);
+                printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
+                       aux->info.garantia[i].tipo,
+                       aux->info.garantia[i].descricao,
+                       aux->info.garantia[i].valor);
+                printf("*--------------------------------------*\n");
+                system("pause");
+            }
+                printf("\n*------------ANALISE----------------*\n");
+                printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
+                printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tData: %s\n",
+                       aux->analise.situacao,
+                       aux->analise.data);
+                printf("*--------------------------------------*\n");
+
+            return 0;
+        }
+    }
+
+    printf("A proposta de credito cujo nome e %s nao se encontra registado", nome);
+    return -1;
+}
+
+

@@ -104,11 +104,11 @@ int main(int argc, char const *argv[])
                                         break;
 
                                     case 5: //Alterar o montante
-                                        altera_montante(iniListaCREDITO, id);
+                                        altera_montante(&iniListaCREDITO, id);
                                         break;
 
                                     case 6: //Alterar erro na analise
-
+                                        altera_garantias(&iniListaCREDITO, id);
                                         break;
 
                                     case 7: //Voltar ao menu anterior
@@ -121,14 +121,18 @@ int main(int argc, char const *argv[])
                                         opcao[MENU_ALTERA] = -1;
                                         break;
                                     }
-                                    //! FALTA GRAVAR NO FICHEIRO
+                                    //? FALTA GRAVAR NO FICHEIRO
                                 } while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 7));
                                 break;
 
                             case 5: //Apagar proposta de credito
+                                apagar_credito (&iniListaCREDITO, &fimListaCREDITO);
                                 break;
 
                             case 6: //Pesquisa proposta de credito
+                                //? Fiz apenas a listagem por NOME é o que pede naquelas listagens
+                                //* Podem ter varaias proposta com o mesmo nome temos de ver se a funcao resulta
+                                pesquisar_credito (iniListaCREDITO);
                                 break;
                             case 7: //Voltar
                                 opcao[MENU_ADMIN] = 8;
