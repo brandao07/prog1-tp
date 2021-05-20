@@ -14,12 +14,13 @@
 
 //! ATRIBUIÇÃO DE VALORES
 #define MAX_GARANTIAS 5      // Número máximo de garantias
-#define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
+//#define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
 #define MENU_INICIAL 0
 #define MENU_ENTRAR 1
 #define MENU_ADMIN 2
 #define MENU_ANALISTA 3
 #define MENU_ALTERA 4
+#define MENU_LISTAR 5
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
@@ -47,16 +48,14 @@ typedef struct garantia
     char tipo[20]; // Imóvel Fiador Depósitos Produtos
     char descricao[200];
     float valor;
-
 } GARANTIA;
 
 // Estrutura para a anlise de uma dada proposta
 typedef struct analise
 {
-    int valor;         //* 0 - NÃO ANALISADA 1 - ANALISADA
+    int utilizador; // = ao ID do utilizador que a analisou
     char situacao[20]; //* NEGATIVA OU POSITIVA
     char data[30];
-
 } ANALISE;
 
 // Estruturas de uma propostas de crédito
@@ -70,8 +69,6 @@ typedef struct credito
     GARANTIA garantia[MAX_GARANTIAS]; // Número máximo de garantias 5
     float montante;                   // Montante pedido
     char prioridade[20];              // Carregada do ficheiro csv
-    int valor;
-
 } CREDITO;
 
 // Estrutura da lista dos UTILIZADORES
@@ -82,11 +79,11 @@ typedef struct elem_UTILIZADOR
     struct elem_UTILIZADOR *seguinte; // Aponta para o nó (UTILIAZDOR) seguinte
 } ELEM_UTILIZADOR;
 
-// Estrutura da lista dos CRÉDITOS //* Análise = 1
+// Estrutura da lista dos CRÉDITOS //* Analisadas 
 typedef struct elem_CREDITO
 {
     CREDITO info;
-    ANALISE analise;
+    ANALISE analise; // informação da análise
     struct elem_CREDITO *anterior; // Aponta para o nó (CREDITO) anterior
     struct elem_CREDITO *seguinte; // Aponta para o nó (CREDITO) seguinte
 } ELEM_CREDITO;
@@ -99,22 +96,40 @@ typedef struct elem_PRIORIDADE
     struct elem_PRIORIDADE *seguinte; // Aponta para o nó (PRIORIDADE) seguinte
 } ELEM_PRIORIDADE;
 
-// Estrutura para a fila de processamento //* Análise = 0
+// Estrutura para a fila de processamento //* Falta Análise
 typedef struct queue_CREDITO
 {
     CREDITO info;
-    struct elem_CREDITO *seguinte;
+    struct elem_CREDITO *seguinte; // Aponta para o nó (CREDITO) seguinte
 } QUEUE_CREDITO;
 
-//! FUNÇÕES
+//! FUNÇÕES USERS.C
 
-void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Função que recebe o ficheiro csv introduzido pelo utilizador
+UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
 
-PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Função para criar as várias prioridades recebidas do ficheiro csv
+void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR *info); //Insere os utilizadores na lista
 
-void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere no fim a prioridade recebida
+void gravar_utilizador(ELEM_UTILIZADOR *iniLista); //Grava os utilizadores no ficheiro texto users.txt
 
-void imprime_prioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades existentes
+int verifique_username(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
+
+int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista); // Carrega os utilizadores do programa do ficheiro users.txt
+
+UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista); // Verifica se o login foi efetuado com sucesso
+
+int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista); // Remove um utilizador
+
+//! FUNÇÕES QUEUE.C
+
+void enqueue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, CREDITO info); // Insere um elemento no fim da fila
+
+void dequeue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue); // Remove o primeiro elemento da fila
+
+void gravar_queue(QUEUE_CREDITO **iniQueue); // Gravar no ficheiro queue.dat
+
+void listar_por_analisar (QUEUE_CREDITO *iniQueue); //Listar propostas por analisar 
+
+//!FUNÇÕES DASHBOARD.C
 
 int menu_inicial(); // Menu incial do programa
 
@@ -126,31 +141,25 @@ int menu_admin(); // Menu do administrador
 
 int menu_altera_garantias(); // Menu para alterar as garantias
 
-int menu_altera(); //Menu das alteracoes das propostas de credito
+int menu_altera(); // Menu das alteracoes das propostas de credito
 
-UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
+int menu_listar(); // Menu para listar
 
-void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info); //Insere os utilizadores na lista
+//!FUNÇÕES DO CSV.C
 
-void gravar_utilizador(ELEM_UTILIZADOR **iniLista); //Grava os utilizadores no ficheiro texto users.txt
+void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]);
 
-int verifique_username(ELEM_UTILIZADOR *iniLista, char username[]); //Verifica se o username já existe
+PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior);
 
-int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista); // Carrega os utilizadores do programa do ficheiro users.txt
+void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info);
 
-void verifica_primeiro(ELEM_UTILIZADOR **iniListaUTILIZADOR, ELEM_UTILIZADOR **fimListaUTILIZADOR, UTILIZADOR info);
+void imprime_prioridades(ELEM_PRIORIDADE *iniLista);
 
-CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
+char* carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante);
 
-char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // Compara montantes
+//!FUNÇÕES DO CREDITO.C
 
-int login_utilizador(ELEM_UTILIZADOR **iniLista); // Verifica se o login foi efetuado com sucesso
-
-int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista); // Remove um utilizador
-
-void enqueue_credito(QUEUE_CREDITO **iniLista, QUEUE_CREDITO **fimLista, CREDITO info); // Insere um elemento no fim da fila
-
-void dequeue_credito(QUEUE_CREDITO **iniLista, QUEUE_CREDITO **fimLista); // Remove o primeiro elemento da fila
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
 
 void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã uma Proposta de crédito juntamente com as suas garantias e análise
 
@@ -162,10 +171,20 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); // Altera o numer
 
 void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 
-void altera_montante(ELEM_CREDITO **iniLista, int id); //Altera o montante
+void altera_montante(ELEM_CREDITO **iniLista, int id); // Altera o montante
 
-void altera_garantias(ELEM_CREDITO **iniLista, int id); //Altera as garantias
+void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 
-int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); //Apagar proposta de credito
+int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Apagar proposta de credito
 
-int pesquisar_credito (ELEM_CREDITO *iniLista); //Pesquisar proposta de credito pelo nome
+void pesquisar_credito (ELEM_CREDITO *iniLista); // Pesquisar proposta de credito pelo nome
+
+void listar_analisadas (ELEM_CREDITO *iniLista); //Listar as propostas de credito analisadas
+
+void listar_prioridade(ELEM_CREDITO *iniLista); //Listar propostas de credito por prioridade 
+
+void listar_acima_montante(ELEM_CREDITO *iniLista); //Listar proposta de credito acima de um determinado montante
+
+void listar_credito(ELEM_CREDITO *aux);
+
+void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue);

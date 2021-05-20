@@ -61,7 +61,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     return info;
 }
 
-void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR info)
+void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR *info)
 {
     ELEM_UTILIZADOR *novo = NULL;
 
@@ -73,7 +73,7 @@ void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, 
         return;
     }
 
-    novo->info = info; // Atribuição do utilizador recebido
+    novo->info = *info; // Atribuição do utilizador recebido
     novo->anterior = NULL;
     novo->seguinte = NULL;
 
@@ -90,7 +90,7 @@ void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, 
     }
 }
 
-void gravar_utilizador(ELEM_UTILIZADOR **iniLista)
+void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
@@ -103,13 +103,16 @@ void gravar_utilizador(ELEM_UTILIZADOR **iniLista)
         return;
     }
 
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    aux = iniLista;
+    while (aux != NULL)
     {
         fwrite(&(aux->info), sizeof(UTILIZADOR), 1, fp);
+        aux = aux->seguinte;
     }
 
     fclose(fp);
 }
+
 
 int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
 {
@@ -143,7 +146,7 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     }
     while (fread(&info, sizeof(UTILIZADOR), 1, fp) == 1)
     {
-        inserir_utilizador(&iniLista, &fimLista, info);
+        inserir_utilizador(iniLista, fimLista, &info);
         res++;
     }
 
@@ -157,20 +160,7 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     return 0;
 }
 
-void verifica_primeiro(ELEM_UTILIZADOR **iniListaUTILIZADOR, ELEM_UTILIZADOR **fimListaUTILIZADOR, UTILIZADOR info)
-{
-
-    UTILIZADOR utilizador;
-
-    if (carregar_utilizador(iniListaUTILIZADOR, fimListaUTILIZADOR) == -1)
-    {
-        utilizador = criar_utilizador(iniListaUTILIZADOR);
-        inserir_utilizador(iniListaUTILIZADOR, fimListaUTILIZADOR, utilizador);
-        gravar_utilizador(iniListaUTILIZADOR);
-    }
-}
-
-int login_utilizador(ELEM_UTILIZADOR **iniLista)
+UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     char username[20], password[20];
@@ -190,12 +180,12 @@ int login_utilizador(ELEM_UTILIZADOR **iniLista)
             if (strcmp(password, aux->info.password) == 0)
             {
                 printf("Login efetuado com sucesso!!\n");
-                return 0;
+                return aux->info;
             }
         }
     }
     printf("Os dados de login nao sao validos !!\n");
-    return -1;
+    return;
 }
 
 int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)

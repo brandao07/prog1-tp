@@ -9,13 +9,46 @@
 //! HEADER
 #include "headers.h"
 
-CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista)
+void listar_credito(ELEM_CREDITO *aux)
+{
+    printf("\n*------------PROPOSTA----------------*\n");
+    printf("\nProposta #%d\n", aux->info.numeroSequencial);
+    printf("\tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
+           aux->info.ID,
+           aux->info.nome,
+           aux->info.IBAN,
+           aux->info.montante,
+           aux->info.prioridade);
+    printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
+    printf("*--------------------------------------*\n");
+    system("pause");
+    for (int i = 0; i < aux->info.garantiaNumero; i++)
+    {
+        printf("\n*------------GARANTIAS----------------*\n");
+        printf("\nGarantia #%i\n", i + 1);
+        printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
+               aux->info.garantia[i].tipo,
+               aux->info.garantia[i].descricao,
+               aux->info.garantia[i].valor);
+        printf("*--------------------------------------*\n");
+        system("pause");
+    }
+    printf("\n*------------ANALISE----------------*\n");
+    printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
+    printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tData: %s\n",
+           aux->analise.situacao,
+           aux->analise.data);
+    printf("*--------------------------------------*\n");
+    system("pause");
+}
+
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
 {
     CREDITO info;
     int garantiaOpcao;
     printf("Introduza identificador:\n");
     fflush(stdin);
-    scanf("%d",info.ID);
+    scanf("%d", info.ID);
     printf("Introduza nome:\n");
     fflush(stdin);
     scanf("%[^\n]", info.nome);
@@ -77,6 +110,7 @@ CREDITO inserir_credito(ELEM_PRIORIDADE *iniLista)
 
 void imprime_credito(ELEM_CREDITO *iniLista, int id)
 {
+    int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     if (iniLista == NULL)
     {
@@ -88,47 +122,20 @@ void imprime_credito(ELEM_CREDITO *iniLista, int id)
         {
             if (aux->info.ID == id)
             {
-                printf("\n*------------PROPOSTA----------------*\n");
-                printf("\nProposta #%d\n", aux->info.numeroSequencial);
-                printf("\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
-                       aux->info.nome,
-                       aux->info.IBAN,
-                       aux->info.montante,
-                       aux->info.prioridade);
-                printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
-                printf("*--------------------------------------*\n");
-                system("pause");
-                for (int i = 0; i < aux->info.garantiaNumero; i++)
-                {
-                    printf("\n*------------GARANTIAS----------------*\n");
-                    printf("\nGarantia #%i\n", i + 1);
-                    printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
-                           aux->info.garantia[i].tipo,
-                           aux->info.garantia[i].descricao,
-                           aux->info.garantia[i].valor);
-                    printf("*--------------------------------------*\n");
-                    system("pause");
-                }
-                printf("\n*------------ANALISE----------------*\n");
-                printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
-                printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tData: %s\n",
-                       aux->analise.situacao,
-                       aux->analise.data);
-                printf("*--------------------------------------*\n");
-                system("pause");
-                return;
+                listar_credito(aux);
+                ctrl = 1;
             }
-            else
-            {
-                printf("Proposta nao encontrada!\n");
-                return;
-            }
+        }
+        if (ctrl == 0)
+        {
+            printf("Proposta nao encontrada!\n");
         }
     }
 }
 
 void altera_nome(ELEM_CREDITO **iniLista, int id)
 {
+    int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
     char novo[100];
@@ -154,16 +161,18 @@ void altera_nome(ELEM_CREDITO **iniLista, int id)
 
                 strcpy(aux->info.nome, novo);
             }
+            ctrl = 1;
         }
-        else
-        {
-            printf("Utilizador nao encontrado!\n");
-        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
     }
 }
 
 void altera_iban(ELEM_CREDITO **iniLista, int id)
 {
+    int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
     char novo[50];
@@ -189,16 +198,18 @@ void altera_iban(ELEM_CREDITO **iniLista, int id)
 
                 strcpy(aux->info.IBAN, novo);
             }
+            ctrl = 1;
         }
-        else
-        {
-            printf("Utilizador nao encontrado!\n");
-        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
     }
 }
 
 void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
 {
+    int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
     int novo;
@@ -224,8 +235,9 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
 
                 aux->info.garantiaNumero = novo;
             }
+            ctrl = 1;
         }
-        else
+        if (ctrl == 0)
         {
             printf("Utilizador nao encontrado!\n");
         }
@@ -235,7 +247,7 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
 void altera_garantias(ELEM_CREDITO **iniLista, int id)
 {
     ELEM_CREDITO *aux = NULL;
-    ELEM_CREDITO *aux2 = NULL;
+    int ctrl = 0;
     int resposta[2];
     int opcao, garantiaOpcao;
     int novo[MAX_GARANTIAS];
@@ -518,16 +530,18 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
 
                 } while (0 < opcao < 7);
             }
+            ctrl = 1;
         }
-        else
-        {
-            printf("Utilizador nao encontrado!\n");
-        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
     }
 }
 
 void altera_montante(ELEM_CREDITO **iniLista, int id)
 {
+    int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
     float novo;
@@ -554,15 +568,17 @@ void altera_montante(ELEM_CREDITO **iniLista, int id)
                 aux->info.montante = novo;
             }
         }
-        else
-        {
-            printf("Utilizador nao encontrado!\n");
-        }
+        ctrl = 1;
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
     }
 }
 
 void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
 {
+    int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
     int novo; //* NEGATIVA OU POSITIVA
@@ -598,15 +614,16 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
                 }
             }
         }
+        ctrl = 1;
         //TODO: FALTA A CENA DA DATA
-        else
-        {
-            printf("Utilizador nao encontrado!\n");
-        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
     }
 }
 
-int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
+int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
 {
     int id;
     ELEM_UTILIZADOR *aux = *iniLista;
@@ -657,59 +674,177 @@ int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     return 0;
 }
 
-int pesquisar_credito (ELEM_CREDITO *iniLista)
+void pesquisar_credito(ELEM_CREDITO *iniLista)
 {
+    int ctrl = 0;
     char nome[100];
-    ELEM_CREDITO *aux=NULL;
+    ELEM_CREDITO *aux = NULL;
 
-    if(iniLista==NULL)
+    if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
-        return -1;
+        return;
     }
 
     printf("Insira o nome da proposta de credito a pesquisar: \n");
     fflush(stdin);
-    scanf("%s", nome);
+    scanf("%[^\n]", nome);
 
-    for(aux=iniLista; aux!=NULL; aux=aux->seguinte)
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        if(strcmp(aux->info.nome, nome)==0)
+        if (strcmp(aux->info.nome, nome) == 0)
         {
-            printf("\n*------------PROPOSTA----------------*\n");
-            printf("\nProposta #%d\n", aux->info.numeroSequencial);
-            printf("\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
-                    aux->info.nome,
-                    aux->info.IBAN,
-                    aux->info.montante,
-                    aux->info.prioridade);
-            printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
-            printf("*--------------------------------------*\n");
-            system("pause");
-            for (int i = 0; i < aux->info.garantiaNumero; i++)
-            {
-                printf("\n*------------GARANTIAS----------------*\n");
-                printf("\nGarantia #%i\n", i + 1);
-                printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
-                       aux->info.garantia[i].tipo,
-                       aux->info.garantia[i].descricao,
-                       aux->info.garantia[i].valor);
-                printf("*--------------------------------------*\n");
-                system("pause");
-            }
-                printf("\n*------------ANALISE----------------*\n");
-                printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
-                printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tData: %s\n",
-                       aux->analise.situacao,
-                       aux->analise.data);
-                printf("*--------------------------------------*\n");
-
-            return 0;
+            listar_credito(aux);
+            ctrl = 1;
         }
     }
-
-    printf("A proposta de credito cujo nome e %s nao se encontra registado", nome);
-    return -1;
+    if (ctrl == 0)
+    {
+        printf("A proposta de credito cujo nome e %s nao se encontra registado", nome);
+    }
 }
 
+void listar_analisadas(ELEM_CREDITO *iniLista)
+{
+    ELEM_CREDITO *aux = NULL;
+    int ctrl = 0;
+    int id;
 
+    printf("Insira o ID: ");
+    fflush(stdin);
+    scanf("%d", id);
+
+    if (iniLista == NULL)
+    {
+        printf("Nao existem propostas de credito registadas!!\n");
+        return;
+    }
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        if (aux->info.ID == id)
+        {
+            listar_credito(aux);
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Nao foram encontradas propostas de credito analisadas por este ID(%d)!", id);
+    }
+}
+
+void listar_prioridade(ELEM_CREDITO *iniLista)
+{
+    int ctrl = 0;
+    char prioridade[20];
+    ELEM_CREDITO *aux = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Nao existem propostas de credito registadas!!\n");
+        return;
+    }
+
+    printf("Insira o tipo de prioridade que pretende listar: \n");
+    fflush(stdin);
+    scanf("%s", prioridade);
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        if (strcmp(aux->info.prioridade, prioridade) == 0)
+        {
+            listar_credito(aux);
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("O tipo de prioridade que pretende listar(%s) nao se encontra registado", prioridade);
+    }
+}
+
+void listar_acima_montante(ELEM_CREDITO *iniLista)
+{
+    float montante;
+    int ctrl = 0;
+    ELEM_CREDITO *aux = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Nao existem propostas de credito registadas!!\n");
+        return;
+    }
+
+    printf("Insira o montante para que as propostas acima desse valor sejam listada: \n");
+    fflush(stdin);
+    scanf("%d", &montante);
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        if (aux->info.montante > montante)
+        {
+            listar_credito(aux);
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Nao foram registadas propostas com valor acima de %.2f!", montante);
+    }
+}
+
+void listar_por_utilizador(ELEM_CREDITO *iniLista)
+{
+    int id;
+    int ctrl = 0;
+    ELEM_CREDITO *aux = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Nao existem propostas de credito registadas!!\n");
+        return;
+    }
+
+    printf("Insira o ID: \n");
+    fflush(stdin);
+    scanf("%d", &id);
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        if (aux->analise.utilizador == id)
+        {
+            listar_credito(aux);
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Nao foram registadas propostas com valor acima de !");
+    }
+}
+
+void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue)
+{
+    ELEM_CREDITO *novo = NULL;
+    novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
+    //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
+    if (novo == NULL)
+    {
+        printf("FALTA de memoria!\n");
+        return;
+    }
+    novo = iniQueue;
+    if (*iniLista == NULL)
+    {
+        *iniLista = novo;
+        *fimLista = novo;
+    }
+    else
+    {
+        novo->anterior = *fimLista;
+        (*fimLista)->seguinte = novo;
+        *fimLista = novo;
+    }
+    dequeue_credito(iniQueue, fimQueue);
+}

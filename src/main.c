@@ -17,7 +17,9 @@ int main(int argc, char const *argv[])
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
     QUEUE_CREDITO *iniQueueCREDITO = NULL, *fimQueueCREDITO = NULL;
+    UTILIZADOR sessao;
     UTILIZADOR utilizador;
+    CREDITO credito;
     int id;
     // Teste para ver se os parâmetros introduzidos na linha de comandos foram lidos com sucesso pelo programa
     if (argc < 2)
@@ -29,7 +31,7 @@ int main(int argc, char const *argv[])
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
     recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
-    int opcao[5];                                                      //MENU INICIAL 0 MENU ENTRAR 1 MENU ADMIN 2 MENU ANALISTA 3
+    int opcao[6];                                                      //MENU INICIAL 0 MENU ENTRAR 1 MENU ADMIN 2 MENU ANALISTA 3 MENU ALTERA 4 MENU LISTAR 5
     do
     {
         opcao[MENU_INICIAL] = menu_inicial();
@@ -39,7 +41,13 @@ int main(int argc, char const *argv[])
             exit(0);
             break;
         case 1:
-            verifica_primeiro(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
+            //verifica_primeiro(&iniListaUTILIZADOR, &fimListaUTILIZADOR);
+            if (carregar_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR) == -1)
+            {
+                utilizador = criar_utilizador(iniListaUTILIZADOR);
+                inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
+                gravar_utilizador(iniListaUTILIZADOR);
+            }
             do
             {
                 opcao[MENU_ENTRAR] = menu_entrar();
@@ -49,8 +57,8 @@ int main(int argc, char const *argv[])
                     exit(0);
                     break;
                 case 1:
-    
-                    if (login_utilizador(&iniListaUTILIZADOR) == 0)
+                    sessao = login_utilizador(&iniListaUTILIZADOR);
+                    if (sessao.ID != NULL)
                     {
                         do
                         {
@@ -62,7 +70,7 @@ int main(int argc, char const *argv[])
                                 break;
                             case 1: //Inserir utilizador
                                 utilizador = criar_utilizador(iniListaUTILIZADOR);
-                                inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, utilizador);
+                                inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
                                 gravar_utilizador(iniListaUTILIZADOR);
                                 break;
 
@@ -71,7 +79,9 @@ int main(int argc, char const *argv[])
                                 break;
 
                             case 3: //Inserir proposta de credito
-                                inserir_credito(iniListaCREDITO);
+                                credito = criar_credito(iniListaPRIORIDADE);
+                                enqueue_credito(&iniQueueCREDITO, &fimQueueCREDITO, credito);
+                                gravar_queue(iniQueueCREDITO);
                                 break;
 
                             case 4: //Alterar proposta de credito
@@ -116,7 +126,6 @@ int main(int argc, char const *argv[])
                                         break;
 
                                     default:
-
                                         printf("OPCAO invalida!\n");
                                         opcao[MENU_ALTERA] = -1;
                                         break;
@@ -126,28 +135,72 @@ int main(int argc, char const *argv[])
                                 break;
 
                             case 5: //Apagar proposta de credito
-                                apagar_credito (&iniListaCREDITO, &fimListaCREDITO);
+                                apagar_credito(&iniListaCREDITO, &fimListaCREDITO);
                                 break;
 
                             case 6: //Pesquisa proposta de credito
                                 //? Fiz apenas a listagem por NOME é o que pede naquelas listagens
                                 //* Podem ter varaias proposta com o mesmo nome temos de ver se a funcao resulta
-                                pesquisar_credito (iniListaCREDITO);
+                                pesquisar_credito(iniListaCREDITO);
                                 break;
-                            case 7: //Voltar
-                                opcao[MENU_ADMIN] = 8;
+
+                            case 7: //Menu Listagens
+                                do
+                                {
+                                    opcao[MENU_LISTAR] = menu_listar();
+                                    switch (opcao[MENU_LISTAR])
+                                    {
+                                    case 0: //sair
+                                        exit(0);
+                                        break;
+
+                                    case 1: //Listar proposta de credito por analisar
+                                        listar_por_analisar(iniQueueCREDITO);
+                                        break;
+
+                                    case 2: //Listar proposta de credito analisada
+                                        listar_analisadas(iniListaCREDITO);
+                                        break;
+
+                                    case 3: //Listar proposta de credito por uma determinada prioridade
+                                        listar_prioridade(iniListaCREDITO);
+                                        break;
+
+                                    case 4: //Listar proposta de credito acima de um determinado montante
+                                        listar_acima_montante(iniListaCREDITO);
+                                        break;
+
+                                    case 5: //Listar proposta de credito analisada por um determinado utilizador
+                                        break;
+
+                                    case 6: //Voltar ao menu anterior
+                                        opcao[MENU_LISTAR] = 7;
+                                        break;
+
+                                    default:
+                                        printf("OPCAO invalida!\n");
+                                        opcao[MENU_LISTAR] = -1;
+                                        break;
+                                    }
+
+                                } while (opcao[MENU_LISTAR] = -1 || (opcao[MENU_LISTAR] > 0 && opcao[MENU_LISTAR] < 6));
+                                break;
+
+                            case 8: //Voltar
+                                opcao[MENU_ADMIN] = 9;
                                 break;
                             default:
                                 printf("OPCAO invalida!\n");
                                 opcao[MENU_ADMIN] = -1;
                                 break;
                             }
-                        } while (opcao[MENU_ADMIN] == -1 || (opcao[MENU_ADMIN] > 0 && opcao[MENU_ADMIN] < 7));
+                        } while (opcao[MENU_ADMIN] == -1 || (opcao[MENU_ADMIN] > 0 && opcao[MENU_ADMIN] < 8));
                     }
                     break;
 
                 case 2:
-                    if (login_utilizador(iniListaUTILIZADOR) == 0)
+                    sessao = login_utilizador(&iniListaUTILIZADOR);
+                    if (sessao.ID != NULL)
                     {
                         do
                         {

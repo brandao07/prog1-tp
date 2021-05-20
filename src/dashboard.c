@@ -9,6 +9,26 @@
 //! HEADER
 #include "headers.h"
 
+int menu_listar()
+{
+    int opcao;
+
+    printf("\n*--------------------------MENU LISTAR--------------------------------*\n");
+    printf("1 - Listar as propostas de credito por analisar\n");
+    printf("2 - Listar as propostas de credito analisadas\n");
+    printf("3 - Listar as propostas de credito por uma prioridade\n");
+    printf("4 - Listar as propostas de credito acima de um determinado montante\n");
+    printf("5 - Listar todas as propostas de crédito analisadas por um determinado utilizador\n");
+    printf("\n6 - Voltar para o menu anterior\n");
+    printf("0 - Sair do programa\n");
+    printf("*--------------------------------------------------------------------------*\n");
+    printf("\nInsire opcao: ");
+    fflush(stdin);
+    scanf("%d", &opcao);
+
+    return opcao;
+}
+
 int menu_altera_garantias()
 {
     int opcao;
@@ -81,7 +101,7 @@ int menu_analista()
     printf("2 - ...\n");
     printf("\n3 - Voltar para o menu anterior\n");
     printf("0 - Sair do programa\n");
-    printf("*--------------------------------------*\n");
+    printf("*------------------------------------------*\n");
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
@@ -98,7 +118,7 @@ int menu_entrar()
     printf("2 - Analista \n");
     printf("\n3 - Voltar para o menu anterior\n");
     printf("0 - Sair do programa\n");
-    printf("*--------------------------------------*\n");
+    printf("*-----------------------------------------*\n");
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
