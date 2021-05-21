@@ -10,4 +10,5 @@ cd .\PROG1_PROJECT\project\src\
 carregar ficheiro csv
 passar funções como parametros de uma outra função
 gravar e receber dados de um ficheiro binario com listas ligadas
-ordenar listas ligadas
+ordenar listas ligada
+array de queues 

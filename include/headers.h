@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
 //! ATRIBUIÇÃO DE VALORES
 #define MAX_GARANTIAS 5      // Número máximo de garantias
@@ -186,7 +185,21 @@ int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Apagar
 
 void pesquisar_credito (ELEM_CREDITO *iniLista); // Pesquisar proposta de credito pelo nome
 
-void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue);
+void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao);
+
+void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b);
+
+void bubbleSort_situacao(ELEM_CREDITO *iniLista);
+
+void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b);
+
+void bubbleSort_montante(ELEM_CREDITO *iniLista);
+
+void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b);
+
+void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao);
+
+void bubbleSort_data(ELEM_CREDITO *iniLista);
 
 //! FUNÇÕES LISTAGENS.C
 
@@ -199,3 +212,7 @@ void listar_acima_montante(ELEM_CREDITO *iniLista); // Listar proposta de credit
 void listar_credito(ELEM_CREDITO *aux); //Lista credito
 
 void listar_por_analisar (QUEUE_CREDITO *iniQueue); //Listar propostas por analisar 
+
+void listar_todas_ordenadas(ELEM_CREDITO *iniLista); // Listar todas as propostas por um determinado utilizador ordenadas por data de análise e depois por situação positiva/negativa
+
+void bubbleSort_listas_credito(ELEM_CREDITO *iniLista); // Ordena as listas

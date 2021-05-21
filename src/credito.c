@@ -619,7 +619,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     return 0;
 }
 
-void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue)
+void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
 {
     ELEM_CREDITO *novo = NULL;
     novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
@@ -642,11 +642,127 @@ void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CRED
         *fimLista = novo;
     }
     dequeue_credito(iniQueue, fimQueue);
-    analisar_credito(iniLista, fimLista);
+    analisar_credito(iniLista, fimLista, iniListaU,sessao);
 }
 
-void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
-{
+void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
+{   
     ANALISE info;
+
 }
 
+void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b)
+{
+    float temp = a->info.montante;
+    a->info.montante = b->info.montante;
+    b->info.montante = temp;
+}
+
+void bubbleSort_montante(ELEM_CREDITO *iniLista)
+{
+    int trocada, i;
+    ELEM_CREDITO *x = NULL;
+    ELEM_CREDITO *y = NULL;
+    if (iniLista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+    else
+    {
+        do
+        {
+            trocada = 0;
+            x = iniLista;
+            while (x->seguinte != y)
+            {
+                if (x->info.montante > x->seguinte->info.montante)
+                {
+                    troca(x, x->seguinte);
+                    trocada = 1;
+                }
+                x = x->seguinte;
+            }
+            y = x;
+
+        } while (trocada);
+    }
+}
+
+void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b)
+{
+    char temp[20];
+    strcpy(temp, a->analise.situacao);
+    strcpy(a->analise.situacao, b->analise.situacao);
+    strcpy(b->analise.situacao, temp);
+}
+
+void bubbleSort_situacao(ELEM_CREDITO *iniLista)
+{
+    int trocada, i;
+    ELEM_CREDITO *x = NULL;
+    ELEM_CREDITO *y = NULL;
+    if (iniLista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+    else
+    {
+        do
+        {
+            trocada = 0;
+            x = iniLista;
+            while (x->seguinte != y)
+            {
+                if (strcmp(x->analise.situacao, x->seguinte->analise.situacao) > 0)
+                {
+                    troca(x, x->seguinte);
+                    trocada = 1;
+                }
+                x = x->seguinte;
+            }
+            y = x;
+
+        } while (trocada);
+    }
+}
+
+void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b)
+{
+    char temp[20];
+    strcpy(temp, a->analise.data);
+    strcpy(a->analise.data, b->analise.data);
+    strcpy(b->analise.data, temp);
+}
+
+void bubbleSort_data(ELEM_CREDITO *iniLista)
+{
+    int trocada, i;
+    ELEM_CREDITO *x = NULL;
+    ELEM_CREDITO *y = NULL;
+    if (iniLista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+    else
+    {
+        do
+        {
+            trocada = 0;
+            x = iniLista;
+            while (x->seguinte != y)
+            {
+                if (strcmp(x->analise.data, x->seguinte->analise.data) > 0)
+                {
+                    troca_data(x, x->seguinte);
+                    trocada = 1;
+                }
+                x = x->seguinte;
+            }
+            y = x;
+
+        } while (trocada);
+    }
+}

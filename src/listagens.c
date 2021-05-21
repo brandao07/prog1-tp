@@ -261,3 +261,36 @@ void listar_por_analisar(QUEUE_CREDITO *iniQueue)
         }
     }
 }
+
+void bubbleSort_listas_credito(ELEM_CREDITO *iniLista)
+{
+    ELEM_CREDITO *aux = NULL;
+    int ctrl = 0;
+    int id;
+
+    printf("Insira o ID: ");
+    fflush(stdin);
+    scanf("%d", &id);
+
+    if (iniLista == NULL)
+    {
+        printf("Nao existem propostas de credito registadas!!\n");
+        return;
+    }
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        if (aux->info.ID == id)
+        {
+            bubbleSort_data(iniLista);
+            bubbleSort_situacao(iniLista);
+            listar_credito(aux);
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Nao foram encontradas propostas de credito analisadas por este ID(%d)!", id);
+    }
+
+}

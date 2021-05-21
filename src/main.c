@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
     QUEUE_CREDITO *iniQueueCREDITO = NULL, *fimQueueCREDITO = NULL;
-    UTILIZADOR sessao, utilizador;
+    UTILIZADOR sessao, utilizador; // sessao = para o programa saber quem é que está com a sessão iniciada
     CREDITO credito;
     int id;
     // Teste para ver se os parâmetros introduzidos na linha de comandos foram lidos com sucesso pelo programa
@@ -57,7 +57,7 @@ int main(int argc, char const *argv[])
                     break;
                 case 1:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
-                    if (sessao.ID == 4)
+                    if (sessao.tipoID == 4)
                     {
                         do
                         {
@@ -170,6 +170,7 @@ int main(int argc, char const *argv[])
                                         break;
 
                                     case 5: //Listar proposta de credito analisada por um determinado utilizador
+                                        listar_todas_ordenadas(iniListaCREDITO);
                                         break;
 
                                     case 6: //Voltar ao menu anterior
@@ -199,7 +200,7 @@ int main(int argc, char const *argv[])
 
                 case 2:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
-                    if (sessao.ID == 5)
+                    if (sessao.tipoID == 5)
                     {
                         do
                         {
@@ -210,10 +211,12 @@ int main(int argc, char const *argv[])
                                 exit(0);
                                 break;
 
-                            case 1:
+                            case 1: //Analisar proposta de credito
+                                insere_credito(&iniListaCREDITO, &fimListaCREDITO, &iniQueueCREDITO, &fimQueueCREDITO, &iniListaUTILIZADOR, sessao);
                                 break;
 
-                            case 2:
+                            case 2: //? Array de lista
+                                //...
                                 break;
                             case 3:
                                 opcao[MENU_ANALISTA] = 4;
