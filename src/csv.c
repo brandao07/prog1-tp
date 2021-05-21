@@ -113,3 +113,21 @@ char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
     }
     return NULL;
 }
+
+int conta_prioridade(ELEM_PRIORIDADE *iniLista)
+{
+    int res = 0;
+    ELEM_PRIORIDADE *aux = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        res++;
+    }
+    return res;
+}

@@ -7,7 +7,6 @@
 \***********************************************************************************************/
 #include "headers.h"
 
-
 void enqueue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, CREDITO info)
 {
     QUEUE_CREDITO *novo = NULL;
@@ -23,7 +22,7 @@ void enqueue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, CREDITO
     if ((*iniQueue == NULL) && (*fimQueue == NULL))
     {
         *iniQueue = *fimQueue = novo;
-    } 
+    }
     else
     {
         (*fimQueue)->seguinte = novo;
@@ -31,7 +30,22 @@ void enqueue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, CREDITO
     }
 }
 
-void gravar_queue(QUEUE_CREDITO **iniQueue)
+void dequeue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue)
+{
+    QUEUE_CREDITO *temp = NULL;
+    temp = *iniQueue;
+    if ((*iniQueue == NULL) && (*fimQueue == NULL))
+    {
+        printf("Fila vazia!\n");
+    }
+    else
+    {
+        *iniQueue = (*iniQueue)->seguinte;
+        free(temp);
+    }
+}
+
+void gravar_queue(QUEUE_CREDITO *iniQueue)
 {
     QUEUE_CREDITO *aux = NULL;
     FILE *fp = NULL;
@@ -50,72 +64,4 @@ void gravar_queue(QUEUE_CREDITO **iniQueue)
     }
 
     fclose(fp);
-}
-
-void dequeue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue)
-{
-    QUEUE_CREDITO *temp = NULL;
-    temp = *iniQueue;
-    if ((*iniQueue == NULL) && (*fimQueue == NULL))
-    {
-        printf("Fila vazia!\n");
-    }
-    else
-    {
-        *iniQueue = (*iniQueue)->seguinte;
-        free(temp);
-    }
-}
-
-void listar_por_analisar(QUEUE_CREDITO *iniQueue)
-{
-    int ctrl = 0;
-    int id;
-    QUEUE_CREDITO *aux = NULL;
-
-    printf("Insira o ID: ");
-    fflush(stdin);
-    scanf("%d", id);
-
-    if (iniQueue == NULL)
-    {
-        printf("Lista vazia!\n");
-        return;
-    }
-    else
-    {
-        for (aux = iniQueue; aux != NULL; aux = aux->seguinte)
-        {
-            if (aux->info.ID == id)
-            {
-                printf("\n*------------PROPOSTA----------------*\n");
-                printf("\nProposta #%d\n", aux->info.numeroSequencial);
-                printf("\tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
-                       aux->info.ID,
-                       aux->info.nome,
-                       aux->info.IBAN,
-                       aux->info.montante,
-                       aux->info.prioridade);
-                printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
-                printf("*--------------------------------------*\n");
-                system("pause");
-                for (int i = 0; i < aux->info.garantiaNumero; i++)
-                {
-                    printf("\n*------------GARANTIAS----------------*\n");
-                    printf("\nGarantia #%i\n", i + 1);
-                    printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
-                           aux->info.garantia[i].tipo,
-                           aux->info.garantia[i].descricao,
-                           aux->info.garantia[i].valor);
-                    printf("*--------------------------------------*\n");
-                    system("pause");
-                }
-                ctrl = 1;
-            }
-        }
-        if (ctrl == 0)
-        {
-            printf("Proposta nao encontrada!\n");
-        }
-    }
 }

@@ -55,6 +55,7 @@ typedef struct analise
 {
     int utilizador; // = ao ID do utilizador que a analisou
     char situacao[20]; //* NEGATIVA OU POSITIVA
+    char justificacao[200];
     char data[30];
 } ANALISE;
 
@@ -103,6 +104,12 @@ typedef struct queue_CREDITO
     struct elem_CREDITO *seguinte; // Aponta para o nó (CREDITO) seguinte
 } QUEUE_CREDITO;
 
+// Estrutura para array de várias filas de processamento 
+/*typedef struct queues{
+    QUEUE_CREDITO info;
+    struct queues *seguinte;
+} QUEUES;*/
+
 //! FUNÇÕES USERS.C
 
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista); //Cria os utilizadores do programa e guarda no ficheiro users.txt
@@ -125,9 +132,7 @@ void enqueue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, CREDITO
 
 void dequeue_credito(QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue); // Remove o primeiro elemento da fila
 
-void gravar_queue(QUEUE_CREDITO **iniQueue); // Gravar no ficheiro queue.dat
-
-void listar_por_analisar (QUEUE_CREDITO *iniQueue); //Listar propostas por analisar 
+void gravar_queue(QUEUE_CREDITO *iniQueue); // Gravar no ficheiro queue.dat
 
 //!FUNÇÕES DASHBOARD.C
 
@@ -144,6 +149,8 @@ int menu_altera_garantias(); // Menu para alterar as garantias
 int menu_altera(); // Menu das alteracoes das propostas de credito
 
 int menu_listar(); // Menu para listar
+
+void ajuda(); // Apoio ao utilizador
 
 //!FUNÇÕES DO CSV.C
 
@@ -179,12 +186,16 @@ int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Apagar
 
 void pesquisar_credito (ELEM_CREDITO *iniLista); // Pesquisar proposta de credito pelo nome
 
-void listar_analisadas (ELEM_CREDITO *iniLista); //Listar as propostas de credito analisadas
-
-void listar_prioridade(ELEM_CREDITO *iniLista); //Listar propostas de credito por prioridade 
-
-void listar_acima_montante(ELEM_CREDITO *iniLista); //Listar proposta de credito acima de um determinado montante
-
-void listar_credito(ELEM_CREDITO *aux);
-
 void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue);
+
+//! FUNÇÕES LISTAGENS.C
+
+void listar_analisadas (ELEM_CREDITO *iniLista); // Listar as propostas de credito analisadas
+
+void listar_prioridade(ELEM_CREDITO *iniLista); // Listar propostas de credito por prioridade 
+
+void listar_acima_montante(ELEM_CREDITO *iniLista); // Listar proposta de credito acima de um determinado montante
+
+void listar_credito(ELEM_CREDITO *aux); //Lista credito
+
+void listar_por_analisar (QUEUE_CREDITO *iniQueue); //Listar propostas por analisar 

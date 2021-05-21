@@ -17,8 +17,7 @@ int main(int argc, char const *argv[])
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
     QUEUE_CREDITO *iniQueueCREDITO = NULL, *fimQueueCREDITO = NULL;
-    UTILIZADOR sessao;
-    UTILIZADOR utilizador;
+    UTILIZADOR sessao, utilizador;
     CREDITO credito;
     int id;
     // Teste para ver se os parâmetros introduzidos na linha de comandos foram lidos com sucesso pelo programa
@@ -58,7 +57,7 @@ int main(int argc, char const *argv[])
                     break;
                 case 1:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
-                    if (sessao.ID != NULL)
+                    if (sessao.ID == 4)
                     {
                         do
                         {
@@ -85,9 +84,9 @@ int main(int argc, char const *argv[])
                                 break;
 
                             case 4: //Alterar proposta de credito
-                                printf("Insira o ID: ");
+                                printf("\nInsira o ID: ");
                                 fflush(stdin);
-                                scanf("%d", id);
+                                scanf("%d", &id);
 
                                 do
                                 {
@@ -200,7 +199,7 @@ int main(int argc, char const *argv[])
 
                 case 2:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
-                    if (sessao.ID != NULL)
+                    if (sessao.ID == 5)
                     {
                         do
                         {
@@ -237,9 +236,13 @@ int main(int argc, char const *argv[])
                     break;
                 }
             } while (opcao[MENU_ENTRAR] == -1 || (opcao[MENU_ENTRAR] > 0 && opcao[MENU_ENTRAR] < 3));
+            break;
+        case 2:
+            ajuda();
+            break;
         default:
             break;
         }
-    } while (opcao[MENU_INICIAL] == 1);
+    } while (opcao[MENU_INICIAL] == 1 || opcao[MENU_INICIAL] == 2);
     return 0;
 }

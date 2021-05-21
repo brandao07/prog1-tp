@@ -12,7 +12,7 @@
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
 {
     UTILIZADOR info;
-    int res = 0;
+    int res = 1;
     ELEM_UTILIZADOR *aux = NULL;
 
     printf("Introduza um username:\n");
@@ -39,7 +39,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     if (info.tipoID == 4)
     {
         strcpy(info.tipo, "Administrador");
-        info.rank = -99;
+        info.rank = NULL;
     }
     else if (info.tipoID == 5)
     {
@@ -57,7 +57,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
         res++;
     }
 
-    info.ID = res + 1;
+    info.ID = res;
     return info;
 }
 
@@ -95,7 +95,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
 
-    fp = fopen("files\\users.dat", "w+b"); // w - acrescenta ao ficheiro users.txt
+    fp = fopen("files/users.dat", "w+b"); // w - acrescenta ao ficheiro users.txt
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -112,7 +112,6 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
 
     fclose(fp);
 }
-
 
 int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
 {
@@ -136,7 +135,7 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
 
     FILE *fp = NULL;
 
-    fp = fopen("files\\users.dat", "r+b"); // rb - apenas lê do ficheiro
+    fp = fopen("files/users.dat", "r+b"); // rb - apenas lê do ficheiro
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -173,7 +172,7 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
     fflush(stdin);
     scanf("%s", password);
 
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    for (aux = *iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (strcmp(username, aux->info.username) == 0)
         {
@@ -185,7 +184,8 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
         }
     }
     printf("Os dados de login nao sao validos !!\n");
-    return;
+    system("pause");
+    exit(0);
 }
 
 int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)

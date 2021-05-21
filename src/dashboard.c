@@ -82,7 +82,8 @@ int menu_admin()
     printf("4 - Alterar proposta de credito\n");
     printf("5 - Apagar proposta de credito\n");
     printf("6 - Pesquisa proposta de credito\n");
-    printf("\n7 - Voltar para o menu anterior\n");
+    printf("7 - Menu de listagens\n");
+    printf("\n8 - Voltar ao menu anterior\n");
     printf("0 - Sair do programa\n");
     printf("*--------------------------------------*\n");
     printf("\nInsire opcao: ");
@@ -132,11 +133,25 @@ int menu_inicial()
 
     printf("\n*------------MENU INICIAL---------------*\n");
     printf("1 - Entrar \n");
-    printf("0 - Sair do programa\n");
+    printf("2 - Ajuda\n");
+    printf("\n0 - Sair do programa\n");
     printf("*--------------------------------------*\n");
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
 
     return opcao;
+}
+
+void ajuda()
+{
+    printf("\n*--------------------------------------AJUDA-------------------------------------------------*\n");
+    printf("# Caso seja a primeira vez que usa este programa, por favor insira um ficheiro do tipo .csv\n");
+    printf("#\n");
+    printf("#\n");
+    printf("#\n");
+    printf("# Para mais informacao nao hesite em contactar!\n");
+    printf("\n*------------------------------------------------------------------------------------------------*\n");
+    printf("\nCopyright: Andre Brandao e Diogo Campos IPVC - ESTG\n");
+    system("pause");
 }
