@@ -109,7 +109,7 @@ char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
         if (montante >= prioridade.montanteInferior && montante < prioridade.montanteSuperior)
         {
             return prioridade.nome;
-        }
+        }       
     }
     return NULL;
 }

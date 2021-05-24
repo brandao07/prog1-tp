@@ -201,6 +201,9 @@ void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTI
 
 void bubbleSort_data(ELEM_CREDITO *iniLista);
 
+void ini_array(ELEM_CREDITO *array[], int qtd);
+
+
 //! FUNÇÕES LISTAGENS.C
 
 void listar_analisadas (ELEM_CREDITO *iniLista); // Listar as propostas de credito analisadas

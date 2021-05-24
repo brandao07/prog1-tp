@@ -645,10 +645,26 @@ void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CRED
     analisar_credito(iniLista, fimLista, iniListaU,sessao);
 }
 
+void ini_array(ELEM_CREDITO *array[], int qtd){
+    int i=0;
+
+    for(i=0; i<qtd;i++){
+        array[i]=NULL;
+    }
+}
+
 void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
 {   
     ANALISE info;
+    char prioridade[20];
+    ELEM_CREDITO *aux=NULL;
 
+    printf("Introduza o tipo de prioridade que pretende analisar: \n");
+    gets(prioridade);
+
+    if(strcmp(prioridade, aux->info.prioridade)==0){
+
+    }
 }
 
 void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b)
