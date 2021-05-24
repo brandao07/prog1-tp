@@ -645,7 +645,7 @@ void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CRED
     analisar_credito(iniLista, fimLista, iniListaU,sessao);
 }
 
-void ini_array(ELEM_CREDITO *array[], int qtd){
+void ini_array(ELEM_CREDITO *array[], int qtd){//Acho que este qtd pode ser a funçao contador de prioridades que esta no ficheiro csv
     int i=0;
 
     for(i=0; i<qtd;i++){
