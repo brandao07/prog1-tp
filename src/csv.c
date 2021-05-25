@@ -97,7 +97,7 @@ void imprime_prioridades(ELEM_PRIORIDADE *iniLista)
                aux->info.montanteInferior,
                aux->info.montanteSuperior);
     }
-    printf("*--------------------------------------*\n");
+    printf("*---------------------------------------*\n");
 }
 
 char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
@@ -121,7 +121,7 @@ int conta_prioridade(ELEM_PRIORIDADE *iniLista)
 
     if (iniLista == NULL)
     {
-        printf("Lista vazia!\n");
+        printf("Sem prioridades!\n");
         return;
     }
 
