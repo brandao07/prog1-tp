@@ -64,17 +64,14 @@ void pesquisar_credito(ELEM_CREDITO *iniLista)
     int ctrl = 0;
     char nome[100];
     ELEM_CREDITO *aux = NULL;
-
     if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
         return;
     }
-
     printf("Insira o nome da proposta de credito a pesquisar: \n");
     fflush(stdin);
     scanf("%[^\n]", nome);
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (strcmp(aux->info.nome, nome) == 0)
@@ -94,17 +91,14 @@ void listar_analisadas(ELEM_CREDITO *iniLista)
     ELEM_CREDITO *aux = NULL;
     int ctrl = 0;
     int id;
-
     printf("Insira o ID: ");
     fflush(stdin);
     scanf("%d", &id);
-
     if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
         return;
     }
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (aux->info.ID == id)
@@ -124,17 +118,14 @@ void listar_prioridade(ELEM_CREDITO *iniLista)
     int ctrl = 0;
     char prioridade[20];
     ELEM_CREDITO *aux = NULL;
-
     if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
         return;
     }
-
     printf("Insira o tipo de prioridade que pretende listar: \n");
     fflush(stdin);
     scanf("%s", prioridade);
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (strcmp(aux->info.prioridade, prioridade) == 0)
@@ -154,17 +145,14 @@ void listar_acima_montante(ELEM_CREDITO *iniLista)
     float montante;
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
-
     if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
         return;
     }
-
     printf("Insira o montante para que as propostas acima desse valor sejam listada: \n");
     fflush(stdin);
     scanf("%f", &montante);
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (aux->info.montante > montante)
@@ -184,17 +172,14 @@ void listar_por_utilizador(ELEM_CREDITO *iniLista)
     int id;
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
-
     if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
         return;
     }
-
     printf("Insira o ID: \n");
     fflush(stdin);
     scanf("%d", &id);
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (aux->analise.utilizador == id)
@@ -214,11 +199,9 @@ void listar_por_analisar(QUEUE_CREDITO *iniQueue)
     int ctrl = 0;
     int id;
     QUEUE_CREDITO *aux = NULL;
-
     printf("Insira o ID: ");
     fflush(stdin);
     scanf("%d", id);
-
     if (iniQueue == NULL)
     {
         printf("Lista vazia!\n");
@@ -267,17 +250,14 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista)
     ELEM_CREDITO *aux = NULL;
     int ctrl = 0;
     int id;
-
     printf("Insira o ID: ");
     fflush(stdin);
     scanf("%d", &id);
-
     if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
         return;
     }
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (aux->info.ID == id)
@@ -292,5 +272,4 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista)
     {
         printf("Nao foram encontradas propostas de credito analisadas por este ID(%d)!", id);
     }
-
 }

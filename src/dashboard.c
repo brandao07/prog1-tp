@@ -12,7 +12,6 @@
 int menu_listar()
 {
     int opcao;
-
     printf("\n*--------------------------MENU LISTAR--------------------------------*\n");
     printf("1 - Listar as propostas de credito por analisar\n");
     printf("2 - Listar as propostas de credito analisadas\n");
@@ -25,14 +24,12 @@ int menu_listar()
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
-
     return opcao;
 }
 
 int menu_altera_garantias()
 {
     int opcao;
-
     printf("\n*------------ALTERAR GARANTIAS---------------*\n");
     printf("1 - Alterar #1 garantia\n");
     printf("2 - Alterar #2 garantia\n");
@@ -46,14 +43,12 @@ int menu_altera_garantias()
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
-
     return opcao;
 }
 
 int menu_altera()
 {
     int opcao;
-
     printf("\n*------------MENU ALTERA---------------*\n");
     printf("1 - Alterar o nome\n");
     printf("2 - Alterar IBAN\n");
@@ -67,14 +62,12 @@ int menu_altera()
     printf("\nInsira opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
-
     return opcao;
 }
 
 int menu_admin()
 {
     int opcao;
-
     printf("\n*------------MENU ADMIN---------------*\n");
     printf("1 - Criar utilizador\n");
     printf("2 - Remover utilizador\n");
@@ -89,14 +82,12 @@ int menu_admin()
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
-
     return opcao;
 }
 
 int menu_analista()
 {
     int opcao;
-
     printf("\n*------------MENU ANALISTA---------------*\n");
     printf("1 - ...\n");
     printf("2 - ...\n");
@@ -106,14 +97,12 @@ int menu_analista()
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
-
     return opcao;
 }
 
 int menu_entrar()
 {
     int opcao;
-
     printf("\n*------------ENTRAR COMO:---------------*\n");
     printf("1 - Administrador\n");
     printf("2 - Analista \n");
@@ -123,14 +112,12 @@ int menu_entrar()
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
-
     return opcao;
 }
 
 int menu_inicial()
 {
     int opcao;
-
     printf("\n*------------MENU INICIAL---------------*\n");
     printf("1 - Entrar \n");
     printf("2 - Ajuda\n");
@@ -139,7 +126,6 @@ int menu_inicial()
     printf("\nInsire opcao: ");
     fflush(stdin);
     scanf("%d", &opcao);
-
     return opcao;
 }
 
@@ -147,9 +133,9 @@ void ajuda()
 {
     printf("\n*--------------------------------------AJUDA-------------------------------------------------*\n");
     printf("# Caso seja a primeira vez que usa este programa, por favor insira um ficheiro do tipo .csv\n");
-    printf("#\n");
-    printf("#\n");
-    printf("#\n");
+    printf("# O programa nao aceita \"Enters\" para mudar de linha.\n");
+    printf("# O primeiro administrador sera o primeiro utilizador registado no programa.\n");
+    printf("# Quaso se esqueceu da sua palavra-passe ou username, por favor contacte um administrador.\n");
     printf("# Para mais informacao nao hesite em contactar!\n");
     printf("\n*------------------------------------------------------------------------------------------------*\n");
     printf("\nCopyright: Andre Brandao e Diogo Campos IPVC - ESTG\n");

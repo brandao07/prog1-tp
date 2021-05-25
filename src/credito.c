@@ -82,7 +82,6 @@ void altera_nome(ELEM_CREDITO **iniLista, int id)
     ELEM_CREDITO *aux = NULL;
     int resposta;
     char novo[100];
-
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -119,7 +118,6 @@ void altera_iban(ELEM_CREDITO **iniLista, int id)
     ELEM_CREDITO *aux = NULL;
     int resposta;
     char novo[50];
-
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -156,7 +154,6 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
     ELEM_CREDITO *aux = NULL;
     int resposta;
     int novo;
-
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -175,7 +172,6 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
                 printf("Insira o novo numero de garantias: \n");
                 fflush(stdin);
                 scanf("%d", &novo);
-
                 aux->info.garantiaNumero = novo;
             }
             ctrl = 1;
@@ -193,7 +189,6 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
     int ctrl = 0;
     int resposta[2];
     int opcao, garantiaOpcao;
-
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -487,7 +482,6 @@ void altera_montante(ELEM_CREDITO **iniLista, int id)
     ELEM_CREDITO *aux = NULL;
     int resposta;
     float novo;
-
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -524,7 +518,6 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
     ELEM_CREDITO *aux = NULL;
     int resposta;
     int novo; //* NEGATIVA OU POSITIVA
-
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -545,10 +538,10 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
                 switch (novo)
                 {
                 case 0:
-                    strcpy(aux->analise.situacao, "Negativo");
+                    strcpy(aux->analise.situacao, "Negativa");
                     break;
                 case 1:
-                    strcpy(aux->analise.situacao, "Positivo");
+                    strcpy(aux->analise.situacao, "Positiva");
                     break;
                 default:
                     printf("OPCAO invalida!\n");
@@ -557,10 +550,12 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
                 printf("Insira uma nova justificacao:\n");
                 fflush(stdin);
                 scanf("%[^\n]", aux->analise.justificacao);
+                printf("Insira uma nova data (DD-MM-YYYY): \n");
+                fflush(stdin);
+                scanf("%[^\n]", aux->analise.data);
             }
             ctrl = 1;
         }
-        //TODO: FALTA A CENA DA DATA
     }
     if (ctrl == 0)
     {
@@ -572,22 +567,18 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
 {
     int id;
     ELEM_CREDITO *aux = *iniLista;
-
     printf("Insira o ID da proposta de credito a ser removida: ");
     fflush(stdin);
     scanf("%d", &id);
-
     while (aux != NULL && aux->info.ID != id)
     {
         aux = aux->seguinte;
     }
-
     if (aux == NULL) // não existe elemento ou a lista é vazia
     {
         printf("Lista vazia !!\n");
         return -1;
     }
-
     if (aux->anterior == NULL) // vai remover o 1º elemento
     {
         *iniLista = aux->seguinte;
@@ -613,14 +604,13 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     {
         aux->seguinte->anterior = aux->anterior;
     }
-
     free(aux);
-
     return 0;
 }
 
 void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
 {
+    char prioridade[20];
     CREDITO info;
     ELEM_CREDITO *novo = NULL;
     novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
@@ -630,8 +620,19 @@ void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CRED
         printf("FALTA de memoria!\n");
         return;
     }
+    printf("Introduza o tipo de prioridade que pretende analisar: \n");
+    fflush(stdin);
+    scanf("%s", &prioridade);
+    /*
+    Tem agora de verificar em qual das listas 
+    é que se encontra a prioridade strcmp com for
+    */
+    /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
+    novo no que sera inserido no fim da lista de propostas de credito*/
     info = (*iniQueue)->info;
     novo->info = info;
+    novo->anterior = NULL;
+    novo->seguinte = NULL;
     if (*fimLista == NULL)
     {
         *iniLista = novo;
@@ -644,32 +645,71 @@ void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CRED
         *fimLista = novo;
     }
     dequeue_credito(iniQueue, fimQueue);
-    analisar_credito(iniLista, fimLista, iniListaU, sessao);
+    analisar_credito(fimLista, iniListaU, sessao);
 }
 
-void ini_array(ELEM_PRIORIDADE *iniLista, ELEM_CREDITO *array[])
-{ ////Acho que este qtd pode ser a funçao contador de prioridades que esta no ficheiro csv
-    int i = 0;
-    int qtd = conta_prioridade(iniLista);
-    for (i = 0; i < qtd; i++)
-    {
-        array[i] = NULL; //? array de queues
-    }
-}
-
-void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
+void ini_array(QUEUE_CREDITO *queues[], int qtd)
 {
-    ANALISE info;
-    char prioridade[20];
-    ELEM_CREDITO *aux = NULL;
-
-    printf("Introduza o tipo de prioridade que pretende analisar: \n");
-    fflush(stdin);
-    scanf("%s", &prioridade);
-
-    if (strcmp(prioridade, aux->info.prioridade) == 0)
+    for (int i = 0; i < qtd; i++)
     {
+        queues[i] = NULL; //? array de queues
     }
+}
+
+void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao)
+{
+    int situacao;
+    ANALISE info;
+    ELEM_UTILIZADOR *aux = NULL;
+    strcpy(info.utilizador, sessao.username);
+    printf("Situacao da analise\n [0] - Negativa\n [1] - Positiva\n");
+    fflush(stdin);
+    scanf("%d", situacao);
+    if (situacao == 0)
+    {
+        strcpy(info.situacao, "Negativa");
+    }
+    else if (situacao == 1)
+    {
+        strcpy(info.situacao, "Positiva");
+    }
+    else
+    {
+        printf("OPCAO invalida!\n");
+        exit(0);
+    }
+    printf("Introduza uma justificacao:\n");
+    fflush(stdin);
+    scanf("%[^\n]", info.justificacao);
+    printf("Introduza uma data (DD-MM-YYYY):\n");
+    fflush(stdin);
+    scanf("%[^\n]", info.data);
+    (*fimLista)->analise = info;
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (sessao.ID == aux->info.ID)
+        {
+            aux->info.rank++; // adicionar pontos após ter analisado uma proposta
+        }
+    }
+}
+
+void gravar_credito(ELEM_CREDITO *iniLista)
+{
+    ELEM_CREDITO *aux = NULL;
+    FILE *fp = NULL;
+    fp = fopen("files\\propostas.dat", "w+b"); // w - acrescenta ao ficheiro propostas.dat
+
+    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
+    {
+        printf("ERRO ao carregar o ficheiro.\n");
+        return;
+    }
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        fwrite(&(aux->info), sizeof(CREDITO), 1, fp);
+    }
+    fclose(fp);
 }
 
 void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b)
@@ -705,7 +745,6 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista)
                 x = x->seguinte;
             }
             y = x;
-
         } while (trocada);
     }
 }
@@ -744,7 +783,6 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista)
                 x = x->seguinte;
             }
             y = x;
-
         } while (trocada);
     }
 }
@@ -783,7 +821,6 @@ void bubbleSort_data(ELEM_CREDITO *iniLista)
                 x = x->seguinte;
             }
             y = x;
-
         } while (trocada);
     }
 }

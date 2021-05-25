@@ -49,19 +49,16 @@ void gravar_queue(QUEUE_CREDITO *iniQueue)
 {
     QUEUE_CREDITO *aux = NULL;
     FILE *fp = NULL;
-
-    fp = fopen("files\\queue.dat", "w+b"); // w - acrescenta ao ficheiro users.txt
+    fp = fopen("files\\queue.dat", "w+b"); // w - acrescenta ao ficheiro queue.dat
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("ERRO ao carregar o ficheiro.\n");
         return;
     }
-
     for (aux = iniQueue; aux != NULL; aux = aux->seguinte)
     {
         fwrite(&(aux->info), sizeof(CREDITO), 1, fp);
     }
-
     fclose(fp);
 }

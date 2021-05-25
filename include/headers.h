@@ -27,7 +27,7 @@ typedef struct utilizador
 {
     int ID;
     char username[20];
-    char nome[100];
+    char nome[50];
     char password[20];
     char tipo[20];
     int tipoID; //* 4 - Administrador 5 - Analista
@@ -52,7 +52,7 @@ typedef struct garantia
 // Estrutura para a anlise de uma dada proposta
 typedef struct analise
 {
-    int utilizador; // = ao ID do utilizador que a analisou
+    char utilizador[20]; // = ao username do utilizador que a analisou
     char situacao[20]; //* NEGATIVA OU POSITIVA
     char justificacao[200];
     char data[30];
@@ -153,17 +153,17 @@ void ajuda(); // Apoio ao utilizador
 
 //!FUNÇÕES DO CSV.C
 
-void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]);
+void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Separa as strings recebidas do ficheiro CSV em três variáveis linha a linha
 
-PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior);
+PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior); // Cria uma prioridade (uma prioridade corresponde a 1 linha do ficheiro CSV)
 
-void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info);
+void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere prioridade criada na lista PRIORIDADE
 
-void imprime_prioridades(ELEM_PRIORIDADE *iniLista);
+void imprime_prioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades carregadas pelo programa
 
-char* carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante);
+char* carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // Insere prioridade em uma proposta de crédito
 
-int conta_prioridade(ELEM_PRIORIDADE *iniLista);
+int conta_prioridade(ELEM_PRIORIDADE *iniLista); // Conta o número de prioridades
 
 //!FUNÇÕES DO CREDITO.C
 
@@ -187,24 +187,25 @@ int apagar_credito (ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Apagar
 
 void pesquisar_credito (ELEM_CREDITO *iniLista); // Pesquisar proposta de credito pelo nome
 
-void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao);
+void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
 
-void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b);
+void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao); // Insere análise na proposta de crédito
 
-void bubbleSort_situacao(ELEM_CREDITO *iniLista);
+void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_situacao
 
-void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b);
+void bubbleSort_situacao(ELEM_CREDITO *iniLista); // ordena propostas de crédito por situação
 
-void bubbleSort_montante(ELEM_CREDITO *iniLista);
+void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_montante
 
-void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b);
+void bubbleSort_montante(ELEM_CREDITO *iniLista); // ordena propostas de crédito por montante 
 
-void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao);
+void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_data
 
-void bubbleSort_data(ELEM_CREDITO *iniLista);
+void bubbleSort_data(ELEM_CREDITO *iniLista); // ordena propostas de crédito por data
 
-void ini_array(ELEM_PRIORIDADE *iniLista, ELEM_CREDITO *array[]);
+void ini_array(QUEUE_CREDITO *queues[], int qtd); // inicizaliza um array de filas de processamento 
 
+void gravar_credito(ELEM_CREDITO *iniLista); // grava no ficheiro propostas.dat
 
 //! FUNÇÕES LISTAGENS.C
 

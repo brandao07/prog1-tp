@@ -12,9 +12,8 @@
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
 {
     UTILIZADOR info;
-    int res = 1;
+    int res = 0;
     ELEM_UTILIZADOR *aux = NULL;
-
     printf("Introduza um username:\n");
     fflush(stdin);
     scanf("%s", info.username);
@@ -28,11 +27,9 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     printf("Introduza um nome:\n");
     fflush(stdin);
     scanf("%[^\n]", info.nome);
-
     printf("Introduza uma password:\n");
     fflush(stdin);
     scanf("%s", info.password);
-
     printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
     fflush(stdin);
     scanf("%d", &info.tipoID);
@@ -51,12 +48,10 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
         printf("OPCAO invalida!\n");
         exit(0);
     }
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         res++;
     }
-
     info.ID = res;
     return info;
 }
@@ -64,7 +59,6 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
 void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR *info)
 {
     ELEM_UTILIZADOR *novo = NULL;
-
     novo = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (UTILIZADOR)
     if (novo == NULL)
@@ -72,7 +66,6 @@ void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, 
         printf("FALTA de memoria!\n");
         return;
     }
-
     novo->info = *info; // Atribuição do utilizador recebido
     novo->anterior = NULL;
     novo->seguinte = NULL;
@@ -94,29 +87,25 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
-
-    fp = fopen("files/users.dat", "w+b"); // w - acrescenta ao ficheiro users.txt
+    fp = fopen("files/users.dat", "w+b"); // w - acrescenta ao ficheiro users.dat
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("ERRO ao carregar o ficheiro.\n");
         return;
     }
-
     aux = iniLista;
     while (aux != NULL)
     {
         fwrite(&(aux->info), sizeof(UTILIZADOR), 1, fp);
         aux = aux->seguinte;
     }
-
     fclose(fp);
 }
 
 int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
 {
     ELEM_UTILIZADOR *aux = NULL;
-
     //Percorre a lista
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
@@ -132,11 +121,8 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
 {
     UTILIZADOR info;
     int res = 0;
-
     FILE *fp = NULL;
-
     fp = fopen("files/users.dat", "r+b"); // rb - apenas lê do ficheiro
-
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("Ficheiro inexistente.\n");
@@ -154,7 +140,6 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
         return -1;
     }
     printf("Foram lidos %d  utilizadores com sucesso!\n", res);
-
     fclose(fp);
     return 0;
 }
@@ -167,11 +152,9 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
     printf("Username: ");
     fflush(stdin);
     scanf("%s", username);
-
     printf("Password: ");
     fflush(stdin);
     scanf("%s", password);
-
     for (aux = *iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (strcmp(username, aux->info.username) == 0)
@@ -196,18 +179,15 @@ int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     printf("Insira o username a ser removido: ");
     fflush(stdin);
     scanf("%s", username);
-
     while (aux != NULL && aux->info.username != username)
     {
         aux = aux->seguinte;
     }
-
     if (aux == NULL) // não existe elemento num ou a lista é vazia
     {
         printf("Lista vazia!");
         return -1;
     }
-
     if (aux->anterior == NULL) // vai remover o 1º elemento
     {
         *iniLista = aux->seguinte;
@@ -220,7 +200,6 @@ int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     {
         aux->anterior->seguinte = aux->seguinte;
     }
-
     if (aux->seguinte == NULL) // vai remover o ultimo elemento
     {
         *fimLista = aux->anterior;
@@ -233,8 +212,6 @@ int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     {
         aux->seguinte->anterior = aux->anterior;
     }
-
     free(aux);
-
     return 0;
 }

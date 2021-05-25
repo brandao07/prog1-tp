@@ -16,9 +16,7 @@ void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char fic
     char tamanhoCSV[100], prioridade[50], *ptr = NULL, *token = NULL;
     float montanteInferior, montanteSuperior;
     FILE *fp = NULL;
-
     fp = fopen(ficheiroCSV, "r"); // r - apenas lê do ficheiro
-
     // Teste para ver se houve problema ao carregar o ficheiro
     if (fp == NULL)
     {
@@ -42,7 +40,6 @@ void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char fic
 PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior)
 {
     PRIORIDADE info;
-
     //Atribuição da informação recebida para a estrutura PRIORIDADE
     strcpy(info.nome, prioridade);
     info.montanteInferior = montanteInferior;
@@ -53,7 +50,6 @@ PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montant
 void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info)
 {
     ELEM_PRIORIDADE *novo = NULL;
-
     novo = (ELEM_PRIORIDADE *)calloc(1, sizeof(ELEM_PRIORIDADE));
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (PRIORIDADE)
     if (novo == NULL)
@@ -61,11 +57,9 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
         printf("FALTA de memoria!\n");
         return;
     }
-
     novo->info = info; // Atribuição da prioridade recebida
     novo->anterior = NULL;
     novo->seguinte = NULL;
-
     if (*fimLista == NULL) // Caso a lista esteja vazia atribui o primeiro elemento da lista ao elemento criado
     {
         *iniLista = novo;
@@ -82,13 +76,11 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
 void imprime_prioridades(ELEM_PRIORIDADE *iniLista)
 {
     ELEM_PRIORIDADE *aux = NULL;
-
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
         return;
     }
-
     printf("\n*------------PRIORIDADES---------------*\n");
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
@@ -118,13 +110,11 @@ int conta_prioridade(ELEM_PRIORIDADE *iniLista)
 {
     int res = 0;
     ELEM_PRIORIDADE *aux = NULL;
-
     if (iniLista == NULL)
     {
         printf("Sem prioridades!\n");
         return;
     }
-
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         res++;
