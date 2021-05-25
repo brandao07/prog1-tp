@@ -163,6 +163,8 @@ void imprime_prioridades(ELEM_PRIORIDADE *iniLista);
 
 char* carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante);
 
+int conta_prioridade(ELEM_PRIORIDADE *iniLista);
+
 //!FUNÇÕES DO CREDITO.C
 
 CREDITO criar_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
@@ -201,7 +203,7 @@ void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTI
 
 void bubbleSort_data(ELEM_CREDITO *iniLista);
 
-void ini_array(ELEM_CREDITO *array[], int qtd);
+void ini_array(ELEM_PRIORIDADE *iniLista, ELEM_CREDITO *array[]);
 
 
 //! FUNÇÕES LISTAGENS.C

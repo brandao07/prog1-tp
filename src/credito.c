@@ -642,28 +642,31 @@ void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CRED
         *fimLista = novo;
     }
     dequeue_credito(iniQueue, fimQueue);
-    analisar_credito(iniLista, fimLista, iniListaU,sessao);
+    analisar_credito(iniLista, fimLista, iniListaU, sessao);
 }
 
-void ini_array(ELEM_CREDITO *array[], int qtd){//Acho que este qtd pode ser a funçao contador de prioridades que esta no ficheiro csv
-    int i=0;
-
-    for(i=0; i<qtd;i++){
-        array[i]=NULL;
+void ini_array(ELEM_PRIORIDADE *iniLista, ELEM_CREDITO *array[])
+{ ////Acho que este qtd pode ser a funçao contador de prioridades que esta no ficheiro csv
+    int i = 0;
+    int qtd = conta_prioridade(iniLista);
+    for (i = 0; i < qtd; i++)
+    {
+        array[i] = NULL; //? array de queues
     }
 }
 
 void analisar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
-{   
+{
     ANALISE info;
     char prioridade[20];
-    ELEM_CREDITO *aux=NULL;
+    ELEM_CREDITO *aux = NULL;
 
     printf("Introduza o tipo de prioridade que pretende analisar: \n");
-    gets(prioridade);
+    fflush(stdin);
+    scanf("%s", &prioridade);
 
-    if(strcmp(prioridade, aux->info.prioridade)==0){
-
+    if (strcmp(prioridade, aux->info.prioridade) == 0)
+    {
     }
 }
 
