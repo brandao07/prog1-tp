@@ -621,6 +621,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
 
 void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
 {
+    CREDITO info;
     ELEM_CREDITO *novo = NULL;
     novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
@@ -629,8 +630,9 @@ void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CRED
         printf("FALTA de memoria!\n");
         return;
     }
-    //novo = *iniQueue;
-    if (*iniLista == NULL)
+    info = (*iniQueue)->info;
+    novo->info = info;
+    if (*fimLista == NULL)
     {
         *iniLista = novo;
         *fimLista = novo;
