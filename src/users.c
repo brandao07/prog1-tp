@@ -46,7 +46,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     else
     {
         printf("OPCAO invalida!\n");
-        exit(0);
+        return;
     }
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
@@ -87,7 +87,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
-    fp = fopen("files/users.dat", "w+b"); // w - acrescenta ao ficheiro users.dat
+    fp = fopen("files/users.dat", "w+b");
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -122,7 +122,7 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     UTILIZADOR info;
     int res = 0;
     FILE *fp = NULL;
-    fp = fopen("files/users.dat", "r+b"); // rb - apenas lê do ficheiro
+    fp = fopen("files/users.dat", "r+b");
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("Ficheiro inexistente.\n");
@@ -167,8 +167,8 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
         }
     }
     printf("Os dados de login nao sao validos !!\n");
-    system("pause");
-    exit(0);
+    //system("pause");
+    return;
 }
 
 int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)

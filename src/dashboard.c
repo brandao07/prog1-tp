@@ -18,7 +18,8 @@ int menu_listar()
     printf("3 - Listar as propostas de credito por uma prioridade\n");
     printf("4 - Listar as propostas de credito acima de um determinado montante\n");
     printf("5 - Listar todas as propostas de crédito analisadas por um determinado utilizador\n");
-    printf("\n6 - Voltar para o menu anterior\n");
+    printf("6 - Listar ranking de analistas\n");
+    printf("\n7 - Voltar para o menu anterior\n");
     printf("0 - Sair do programa\n");
     printf("*--------------------------------------------------------------------------*\n");
     printf("\nInsire opcao: ");
@@ -75,8 +76,9 @@ int menu_admin()
     printf("4 - Alterar proposta de credito\n");
     printf("5 - Apagar proposta de credito\n");
     printf("6 - Pesquisa proposta de credito\n");
-    printf("7 - Menu de listagens\n");
-    printf("\n8 - Voltar ao menu anterior\n");
+    printf("7 - Relatorio das propostas de credito\n");
+    printf("8 - Menu de listagens\n");
+    printf("\n9 - Voltar ao menu anterior\n");
     printf("0 - Sair do programa\n");
     printf("*--------------------------------------*\n");
     printf("\nInsire opcao: ");
@@ -89,9 +91,8 @@ int menu_analista()
 {
     int opcao;
     printf("\n*------------MENU ANALISTA---------------*\n");
-    printf("1 - ...\n");
-    printf("2 - ...\n");
-    printf("\n3 - Voltar para o menu anterior\n");
+    printf("1 - Analisar proposta de credito\n");
+    printf("\n2 - Voltar para o menu anterior\n");
     printf("0 - Sair do programa\n");
     printf("*------------------------------------------*\n");
     printf("\nInsire opcao: ");

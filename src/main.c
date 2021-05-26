@@ -27,6 +27,7 @@ int main(int argc, char const *argv[])
     if (argc < 2)
     {
         printf("Programa sem ficheiro CSV!\n\n");
+        // Função carregar prioridades //? FALTA
     }
     carregar_queues(&iniQueue);
     // Atribuição do nome do ficheiro csv
@@ -53,6 +54,9 @@ int main(int argc, char const *argv[])
                 switch (opcao[MENU_ENTRAR])
                 {
                 case 0:
+                    gravar_credito(iniListaCREDITO);
+                    gravar_utilizador(iniListaUTILIZADOR);
+                    gravar_queues(iniQueue);
                     exit(0);
                 case 1:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
@@ -64,6 +68,9 @@ int main(int argc, char const *argv[])
                             switch (opcao[MENU_ADMIN])
                             {
                             case 0: //Sair
+                                gravar_credito(iniListaCREDITO);
+                                gravar_utilizador(iniListaUTILIZADOR);
+                                gravar_queues(iniQueue);
                                 exit(0);
                                 break;
                             case 1: //Inserir utilizador
@@ -87,6 +94,9 @@ int main(int argc, char const *argv[])
                                     switch (opcao[MENU_ALTERA])
                                     {
                                     case 0: // sair
+                                        gravar_credito(iniListaCREDITO);
+                                        gravar_utilizador(iniListaUTILIZADOR);
+                                        gravar_queues(iniQueue);
                                         exit(0);
                                         break;
                                     case 1: //Alterar o nome
@@ -121,17 +131,21 @@ int main(int argc, char const *argv[])
                                 apagar_credito(&iniListaCREDITO, &fimListaCREDITO);
                                 break;
                             case 6: //Pesquisa proposta de credito
-                                //? Fiz apenas a listagem por NOME é o que pede naquelas listagens
-                                //* Podem ter varaias proposta com o mesmo nome temos de ver se a funcao resulta
                                 pesquisar_credito(iniListaCREDITO);
                                 break;
-                            case 7: //Menu Listagens
+                            case 7:
+                                //? FALTA JUSTIFICAÇÂO MONTANTE
+                                break;
+                            case 8: //Menu Listagens
                                 do
                                 {
                                     opcao[MENU_LISTAR] = menu_listar();
                                     switch (opcao[MENU_LISTAR])
                                     {
-                                    case 0: //sair
+                                    case 0: //Sair
+                                        gravar_credito(iniListaCREDITO);
+                                        gravar_utilizador(iniListaUTILIZADOR);
+                                        gravar_queues(iniQueue);
                                         exit(0);
                                         break;
                                     case 1: //Listar proposta de credito por analisar
@@ -149,25 +163,28 @@ int main(int argc, char const *argv[])
                                     case 5: //Listar proposta de credito analisada por um determinado utilizador
                                         bubbleSort_listas_credito(iniListaCREDITO);
                                         break;
-                                    case 6: //Voltar ao menu anterior
-                                        opcao[MENU_LISTAR] = 7;
+                                    case 6:
+                                        //? FALTA RANKING
+                                        break;
+                                    case 7: //Voltar ao menu anterior
+                                        opcao[MENU_LISTAR] = 8;
                                         break;
                                     default:
                                         printf("OPCAO invalida!\n");
                                         opcao[MENU_LISTAR] = -1;
                                         break;
                                     }
-                                } while (opcao[MENU_LISTAR] = -1 || (opcao[MENU_LISTAR] > 0 && opcao[MENU_LISTAR] < 6));
+                                } while (opcao[MENU_LISTAR] = -1 || (opcao[MENU_LISTAR] > 0 && opcao[MENU_LISTAR] < 7));
                                 break;
-                            case 8: //Voltar
-                                opcao[MENU_ADMIN] = 9;
+                            case 9: //Voltar
+                                opcao[MENU_ADMIN] = 10;
                                 break;
                             default:
                                 printf("OPCAO invalida!\n");
                                 opcao[MENU_ADMIN] = -1;
                                 break;
                             }
-                        } while (opcao[MENU_ADMIN] == -1 || (opcao[MENU_ADMIN] > 0 && opcao[MENU_ADMIN] < 8));
+                        } while (opcao[MENU_ADMIN] == -1 || (opcao[MENU_ADMIN] > 0 && opcao[MENU_ADMIN] < 9));
                     }
                     break;
 
@@ -180,7 +197,10 @@ int main(int argc, char const *argv[])
                             opcao[MENU_ANALISTA] = menu_analista();
                             switch (opcao[MENU_ANALISTA])
                             {
-                            case 0:
+                            case 0: //Sair
+                                gravar_credito(iniListaCREDITO);
+                                gravar_utilizador(iniListaUTILIZADOR);
+                                gravar_queues(iniQueue);
                                 exit(0);
                                 break;
                             case 1: //Analisar proposta de credito
@@ -188,17 +208,14 @@ int main(int argc, char const *argv[])
                                 gravar_credito(iniListaCREDITO);
                                 break;
                             case 2:
-                                //
-                                break;
-                            case 3:
-                                opcao[MENU_ANALISTA] = 4;
+                                opcao[MENU_ANALISTA] = 3;
                                 break;
                             default:
                                 printf("OPCAO invalida!\n");
                                 opcao[MENU_ANALISTA] = -1;
                                 break;
                             }
-                        } while (opcao[MENU_ANALISTA] == -1 || (opcao[MENU_ANALISTA] > 0 && opcao[MENU_ANALISTA] < 3));
+                        } while (opcao[MENU_ANALISTA] == -1 || (opcao[MENU_ANALISTA] > 0 && opcao[MENU_ANALISTA] < 2));
                     }
                     break;
                 case 3:
@@ -221,5 +238,6 @@ int main(int argc, char const *argv[])
     gravar_credito(iniListaCREDITO);
     gravar_utilizador(iniListaUTILIZADOR);
     gravar_queues(iniQueue);
+    //? GRAVAR PRIORIDADE
     return 0;
 }

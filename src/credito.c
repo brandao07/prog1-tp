@@ -14,6 +14,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
     CREDITO info;
     int garantiaOpcao;
 
+    // Input dos dados da proposta de crédito
     printf("Introduza identificador:\n");
     fflush(stdin);
     scanf("%d", &info.ID);
@@ -25,7 +26,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
     scanf("%s", info.IBAN);
     printf("Quantas garantias?\n");
     fflush(stdin);
-    scanf("%d", &info.garantiaNumero);
+    scanf("%d", &info.garantiaNumero); // maximo 5
     if (info.garantiaNumero > MAX_GARANTIAS)
     {
         printf("Numero maximo de garantias excedido!\n");
@@ -72,7 +73,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
         }
         printf("Montante:\n");
         scanf("%f", &info.montante);
-        strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante));
+        strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante)); // a carrega_prioridade retorna a prioridade entre os montantes x e y
 
         return info;
     }
@@ -84,6 +85,7 @@ void altera_nome(ELEM_CREDITO **iniLista, int id)
     ELEM_CREDITO *aux = NULL;
     int resposta;
     char novo[100];
+
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -249,7 +251,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            exit(0);
+                            return;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -296,7 +298,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            exit(0);
+                            return;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -343,7 +345,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            exit(0);
+                            return;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -390,7 +392,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            exit(0);
+                            return;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -437,7 +439,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            exit(0);
+                            return;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -630,7 +632,7 @@ void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILI
     else
     {
         printf("OPCAO invalida!\n");
-        exit(0);
+        return;
     }
     printf("Introduza uma justificacao:\n");
     fflush(stdin);
@@ -652,7 +654,7 @@ void gravar_credito(ELEM_CREDITO *iniLista)
 {
     ELEM_CREDITO *aux = NULL;
     FILE *fp = NULL;
-    fp = fopen("files\\propostas.dat", "w+b"); // w - acrescenta ao ficheiro propostas.dat
+    fp = fopen("files\\propostas.dat", "w+b");
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -674,8 +676,8 @@ int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     int res = 0;
     FILE *fp = NULL;
 
-    fp = fopen("files/propostas.dat", "r+b"); // rb - apenas lê do ficheiro
-    if (fp == NULL)                           // Teste para ver se houve problema ao carregar o ficheiro
+    fp = fopen("files/propostas.dat", "r+b");
+    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("Ficheiro inexistente.\n");
         return -1;
