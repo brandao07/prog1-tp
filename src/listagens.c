@@ -34,6 +34,32 @@ void listar_credito(ELEM_CREDITO *aux)
     system("pause");
 }
 
+void listar_por_analisar_aux(QUEUE_CREDITO *aux)
+{
+    printf("\n*------------PROPOSTA----------------*\n");
+    printf("\nProposta #%d\n", aux->info.numeroSequencial);
+    printf("\tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
+           aux->info.ID,
+           aux->info.nome,
+           aux->info.IBAN,
+           aux->info.montante,
+           aux->info.prioridade);
+    printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
+    printf("*--------------------------------------*\n");
+    system("pause");
+    for (int i = 0; i < aux->info.garantiaNumero; i++)
+    {
+        printf("\n*------------GARANTIAS----------------*\n");
+        printf("\nGarantia #%i\n", i + 1);
+        printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
+               aux->info.garantia[i].tipo,
+               aux->info.garantia[i].descricao,
+               aux->info.garantia[i].valor);
+        printf("*--------------------------------------*\n");
+        system("pause");
+    }
+}
+
 void imprime_credito(ELEM_CREDITO *iniLista, int id)
 {
     int ctrl = 0;
@@ -194,7 +220,7 @@ void listar_por_utilizador(ELEM_CREDITO *iniLista)
     }
 }
 
-void listar_por_analisar(QUEUE_CREDITO *iniQueue)
+void listar_por_analisar(QUEUES *queue)
 {
     int ctrl = 0;
     int id;
@@ -202,39 +228,18 @@ void listar_por_analisar(QUEUE_CREDITO *iniQueue)
     printf("Insira o ID: ");
     fflush(stdin);
     scanf("%d", id);
-    if (iniQueue == NULL)
+    if ((queue)->iniLista == NULL)
     {
         printf("Lista vazia!\n");
         return;
     }
     else
     {
-        for (aux = iniQueue; aux != NULL; aux = aux->seguinte)
+        for (aux = (queue)->iniLista; aux != NULL; aux = aux->seguinte)
         {
             if (aux->info.ID == id)
             {
-                printf("\n*------------PROPOSTA----------------*\n");
-                printf("\nProposta #%d\n", aux->info.numeroSequencial);
-                printf("\tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
-                       aux->info.ID,
-                       aux->info.nome,
-                       aux->info.IBAN,
-                       aux->info.montante,
-                       aux->info.prioridade);
-                printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
-                printf("*--------------------------------------*\n");
-                system("pause");
-                for (int i = 0; i < aux->info.garantiaNumero; i++)
-                {
-                    printf("\n*------------GARANTIAS----------------*\n");
-                    printf("\nGarantia #%i\n", i + 1);
-                    printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
-                           aux->info.garantia[i].tipo,
-                           aux->info.garantia[i].descricao,
-                           aux->info.garantia[i].valor);
-                    printf("*--------------------------------------*\n");
-                    system("pause");
-                }
+                listar_por_analisar_aux(aux);
                 ctrl = 1;
             }
         }

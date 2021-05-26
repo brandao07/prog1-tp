@@ -16,24 +16,23 @@ int main(int argc, char const *argv[])
     ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
-    QUEUE_CREDITO *iniQueueCREDITO = NULL, *fimQueueCREDITO = NULL;
+    QUEUES *iniQueue = NULL;
     UTILIZADOR sessao, utilizador; // sessao = para o programa saber quem é que está com a sessão iniciada
     CREDITO credito;
     int id, quantidade_prioridade;
     int opcao[6]; //MENU INICIAL 0 MENU ENTRAR 1 MENU ADMIN 2 MENU ANALISTA 3 MENU ALTERA 4 MENU LISTAR 5
+    char ficheiroCSV[100];
+
     // Teste para ver se os parâmetros introduzidos na linha de comandos foram lidos com sucesso pelo programa
     if (argc < 2)
     {
-        printf("FALTAM argumentos para iniciar o programa.\n");
-        return;
+        printf("Programa sem ficheiro CSV!\n\n");
     }
-    char ficheiroCSV[100];
+    carregar_prioridade(&iniQueue);
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
     recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
-    quantidade_prioridade = conta_prioridade(iniListaPRIORIDADE);
-    QUEUE_CREDITO *queues[quantidade_prioridade]; // ARRAY DE N QUEUES
-    ini_array(queues, quantidade_prioridade);
+    carregar_credito(&iniListaCREDITO, &fimListaCREDITO);
     do
     {
         opcao[MENU_INICIAL] = menu_inicial();
@@ -43,7 +42,6 @@ int main(int argc, char const *argv[])
             exit(0);
             break;
         case 1:
-            //verifica_primeiro(&iniListaUTILIZADOR, &fimListaUTILIZADOR);
             if (carregar_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR) == -1)
             {
                 utilizador = criar_utilizador(iniListaUTILIZADOR);
@@ -80,8 +78,8 @@ int main(int argc, char const *argv[])
                                 break;
                             case 3: //Inserir proposta de credito //? ESTA MAL A IDEIA DE INIQUEUE ACHO
                                 credito = criar_credito(iniListaPRIORIDADE);
-                                enqueue_credito(&iniQueueCREDITO, &fimQueueCREDITO, credito);
-                                gravar_queue(iniQueueCREDITO);
+                                enqueue_credito(&iniQueue, credito);
+                                gravar_queue(iniQueue);
                                 break;
                             case 4: //Alterar proposta de credito
                                 printf("\nInsira o ID: ");
@@ -142,7 +140,7 @@ int main(int argc, char const *argv[])
                                         exit(0);
                                         break;
                                     case 1: //Listar proposta de credito por analisar
-                                        listar_por_analisar(iniQueueCREDITO);
+                                        listar_por_analisar(iniQueue);
                                         break;
                                     case 2: //Listar proposta de credito analisada
                                         listar_analisadas(iniListaCREDITO);
@@ -191,11 +189,11 @@ int main(int argc, char const *argv[])
                                 exit(0);
                                 break;
                             case 1: //Analisar proposta de credito
-                                insere_credito(&iniListaCREDITO, &fimListaCREDITO, &iniQueueCREDITO, &fimQueueCREDITO, &iniListaUTILIZADOR, sessao);
+                                insere_credito(&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao);
                                 gravar_credito(iniListaCREDITO);
                                 break;
-                            case 2: //? Array de lista
-                                //...
+                            case 2:
+                                //
                                 break;
                             case 3:
                                 opcao[MENU_ANALISTA] = 4;
@@ -225,5 +223,6 @@ int main(int argc, char const *argv[])
             break;
         }
     } while (opcao[MENU_INICIAL] == 1 || opcao[MENU_INICIAL] == 2);
+
     return 0;
 }

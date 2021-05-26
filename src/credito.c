@@ -13,6 +13,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
 {
     CREDITO info;
     int garantiaOpcao;
+
     printf("Introduza identificador:\n");
     fflush(stdin);
     scanf("%d", &info.ID);
@@ -72,6 +73,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
         printf("Montante:\n");
         scanf("%f", &info.montante);
         strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante));
+
         return info;
     }
 }
@@ -608,54 +610,6 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     return 0;
 }
 
-void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUE_CREDITO **iniQueue, QUEUE_CREDITO **fimQueue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao)
-{
-    char prioridade[20];
-    CREDITO info;
-    ELEM_CREDITO *novo = NULL;
-    novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
-    //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
-    if (novo == NULL)
-    {
-        printf("FALTA de memoria!\n");
-        return;
-    }
-    printf("Introduza o tipo de prioridade que pretende analisar: \n");
-    fflush(stdin);
-    scanf("%s", &prioridade);
-    /*
-    Tem agora de verificar em qual das listas 
-    é que se encontra a prioridade strcmp com for
-    */
-    /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
-    novo no que sera inserido no fim da lista de propostas de credito*/
-    info = (*iniQueue)->info;
-    novo->info = info;
-    novo->anterior = NULL;
-    novo->seguinte = NULL;
-    if (*fimLista == NULL)
-    {
-        *iniLista = novo;
-        *fimLista = novo;
-    }
-    else
-    {
-        novo->anterior = *fimLista;
-        (*fimLista)->seguinte = novo;
-        *fimLista = novo;
-    }
-    dequeue_credito(iniQueue, fimQueue);
-    analisar_credito(fimLista, iniListaU, sessao);
-}
-
-void ini_array(QUEUE_CREDITO *queues[], int qtd)
-{
-    for (int i = 0; i < qtd; i++)
-    {
-        queues[i] = NULL; //? array de queues
-    }
-}
-
 void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao)
 {
     int situacao;
@@ -708,8 +662,70 @@ void gravar_credito(ELEM_CREDITO *iniLista)
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
         fwrite(&(aux->info), sizeof(CREDITO), 1, fp);
+        fwrite(&(aux->analise), sizeof(ANALISE), 1, fp);
     }
     fclose(fp);
+}
+
+int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
+{
+    CREDITO info;
+    ANALISE analise;
+    int res = 0;
+    FILE *fp = NULL;
+
+    fp = fopen("files/propostas.dat", "r+b"); // rb - apenas lê do ficheiro
+    if (fp == NULL)                           // Teste para ver se houve problema ao carregar o ficheiro
+    {
+        printf("Ficheiro inexistente.\n");
+        return -1;
+    }
+
+    while (fread(&info, sizeof(CREDITO), 1, fp) && fread(&analise, sizeof(ANALISE), 1, fp) == 1)
+    {
+        inserir_credito(iniLista, fimLista, &info, &analise);
+        res++;
+    }
+
+    if (iniLista == NULL)
+    {
+        return -1;
+    }
+
+    printf("Foram lidos %d propostas de credito com sucesso!\n", res);
+    fclose(fp);
+
+    return 0;
+}
+
+void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise)
+{
+    ELEM_CREDITO *novo = NULL;
+    novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
+
+    //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
+    if (novo == NULL)
+    {
+        printf("FALTA de memoria!\n");
+        return;
+    }
+
+    novo->info = *info;
+    novo->analise = *analise;
+    novo->anterior = NULL;
+    novo->seguinte = NULL;
+
+    if (*iniLista == NULL) // Caso a lista esteja vazia atribui o primeiro elemento da lista ao elemento criado
+    {
+        *iniLista = novo;
+        *fimLista = novo;
+    }
+    else
+    {
+        novo->anterior = *fimLista;
+        (*fimLista)->seguinte = novo;
+        *fimLista = novo;
+    }
 }
 
 void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b)
@@ -724,6 +740,7 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista)
     int trocada, i;
     ELEM_CREDITO *x = NULL;
     ELEM_CREDITO *y = NULL;
+
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -745,6 +762,7 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista)
                 x = x->seguinte;
             }
             y = x;
+
         } while (trocada);
     }
 }
@@ -752,6 +770,7 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista)
 void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b)
 {
     char temp[20];
+
     strcpy(temp, a->analise.situacao);
     strcpy(a->analise.situacao, b->analise.situacao);
     strcpy(b->analise.situacao, temp);
@@ -762,6 +781,7 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista)
     int trocada, i;
     ELEM_CREDITO *x = NULL;
     ELEM_CREDITO *y = NULL;
+
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -783,6 +803,7 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista)
                 x = x->seguinte;
             }
             y = x;
+
         } while (trocada);
     }
 }
@@ -790,6 +811,7 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista)
 void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b)
 {
     char temp[20];
+
     strcpy(temp, a->analise.data);
     strcpy(a->analise.data, b->analise.data);
     strcpy(b->analise.data, temp);
@@ -800,6 +822,7 @@ void bubbleSort_data(ELEM_CREDITO *iniLista)
     int trocada, i;
     ELEM_CREDITO *x = NULL;
     ELEM_CREDITO *y = NULL;
+
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -821,6 +844,7 @@ void bubbleSort_data(ELEM_CREDITO *iniLista)
                 x = x->seguinte;
             }
             y = x;
+
         } while (trocada);
     }
 }
