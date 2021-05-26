@@ -61,7 +61,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
             else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
             {
                 printf("OPCAO invalida!\n");
-                exit(0);
+                return;
             }
             printf("Descricao sobre a proposta:\n");
             fflush(stdin);
@@ -756,7 +756,7 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista)
             {
                 if (x->info.montante > x->seguinte->info.montante)
                 {
-                    troca(x, x->seguinte);
+                    troca_montante(x, x->seguinte);
                     trocada = 1;
                 }
                 x = x->seguinte;
@@ -797,7 +797,7 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista)
             {
                 if (strcmp(x->analise.situacao, x->seguinte->analise.situacao) > 0)
                 {
-                    troca(x, x->seguinte);
+                    troca_situacao(x, x->seguinte);
                     trocada = 1;
                 }
                 x = x->seguinte;

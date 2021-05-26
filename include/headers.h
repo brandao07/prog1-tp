@@ -13,7 +13,6 @@
 
 //! ATRIBUIÇÃO DE VALORES
 #define MAX_GARANTIAS 5 // Número máximo de garantias
-//#define MAX_GARANTIAS_TIPO 4 // Imóvel Fiador Depósitos Produtos
 #define MENU_INICIAL 0
 #define MENU_ENTRAR 1
 #define MENU_ADMIN 2
@@ -101,16 +100,16 @@ typedef struct queue_CREDITO
 {
     CREDITO info;
     struct elem_CREDITO *seguinte; // Aponta para o nó (CREDITO) seguinte
-    struct elem_CREDITO *anterior;
+    struct elem_CREDITO *anterior; // Aponta para o nó (CREDITO) anterior
 } QUEUE_CREDITO;
 
-// Estrutura para array de várias filas de processamento
+// Estrutura para lista simples de várias filas de processamento (duplamente ligadas)
 typedef struct queues
 {
     QUEUE_CREDITO *iniLista;
     QUEUE_CREDITO *fimLista;
     PRIORIDADE prioridade;
-    struct queues *seguinte;
+    struct queues *seguinte; // Aponta para o nó (QUEUE_CREDITO) seguinte
 } QUEUES;
 
 //! FUNÇÕES USERS.C
@@ -135,9 +134,13 @@ void enqueue_credito(QUEUES **queue, CREDITO info); // Insere um elemento no fim
 
 void dequeue_credito(QUEUES **queue); // Remove o primeiro elemento da fila
 
-void gravar_queue(QUEUES *queue); // Gravar no ficheiro queue.dat
+void gravar_queues(QUEUES *queue); // Gravar no ficheiro queues.dat
 
-void insere_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
+int carregar_queues(QUEUES **queue); // carrega o ficheiro queues.dat 
+
+void ini_queue(QUEUES **queue, PRIORIDADE *info, QUEUE_CREDITO *infoLista); // insere as queueus guardadas no queues.dat
+
+void insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
 
 
 //!FUNÇÕES DASHBOARD.C
@@ -222,12 +225,10 @@ void listar_prioridade(ELEM_CREDITO *iniLista); // Listar propostas de credito p
 
 void listar_acima_montante(ELEM_CREDITO *iniLista); // Listar proposta de credito acima de um determinado montante
 
-void listar_credito(ELEM_CREDITO *aux); //Lista credito
+void listar_credito(ELEM_CREDITO *aux); // Lista credito
 
-void listar_por_analisar(QUEUES *queue); //Listar propostas por analisar
+void listar_por_analisar(QUEUES *queue); // Listar propostas por analisar
 
-void listar_todas_ordenadas(ELEM_CREDITO *iniLista); // Listar todas as propostas por um determinado utilizador ordenadas por data de análise e depois por situação positiva/negativa
-
-void bubbleSort_listas_credito(ELEM_CREDITO *iniLista); // Ordena as listas
+void bubbleSort_listas_credito(ELEM_CREDITO *iniLista); // Listar todas as propostas por um determinado utilizador ordenadas por data de análise e depois por situação positiva/negativa
 
 void listar_por_analisar_aux(QUEUE_CREDITO *aux); // Listar propostas ainda nao analisadas

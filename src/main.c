@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
     QUEUES *iniQueue = NULL;
     UTILIZADOR sessao, utilizador; // sessao = para o programa saber quem é que está com a sessão iniciada
     CREDITO credito;
-    int id, quantidade_prioridade;
+    int id;
     int opcao[6]; //MENU INICIAL 0 MENU ENTRAR 1 MENU ADMIN 2 MENU ANALISTA 3 MENU ALTERA 4 MENU LISTAR 5
     char ficheiroCSV[100];
 
@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
     {
         printf("Programa sem ficheiro CSV!\n\n");
     }
-    carregar_prioridade(&iniQueue);
+    carregar_queues(&iniQueue);
     // Atribuição do nome do ficheiro csv
     strcpy(ficheiroCSV, argv[1]);
     recebe_csv(&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
@@ -39,14 +39,13 @@ int main(int argc, char const *argv[])
         switch (opcao[MENU_INICIAL])
         {
         case 0:
-            exit(0);
+            opcao[MENU_INICIAL] = 3;
             break;
         case 1:
             if (carregar_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR) == -1)
             {
                 utilizador = criar_utilizador(iniListaUTILIZADOR);
                 inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
-                gravar_utilizador(iniListaUTILIZADOR);
             }
             do
             {
@@ -55,7 +54,6 @@ int main(int argc, char const *argv[])
                 {
                 case 0:
                     exit(0);
-                    break;
                 case 1:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
                     if (sessao.tipoID == 4)
@@ -71,15 +69,13 @@ int main(int argc, char const *argv[])
                             case 1: //Inserir utilizador
                                 utilizador = criar_utilizador(iniListaUTILIZADOR);
                                 inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
-                                gravar_utilizador(iniListaUTILIZADOR);
                                 break;
                             case 2: //Remover utilizador
                                 remove_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR);
                                 break;
-                            case 3: //Inserir proposta de credito //? ESTA MAL A IDEIA DE INIQUEUE ACHO
+                            case 3: //Inserir proposta de credito
                                 credito = criar_credito(iniListaPRIORIDADE);
                                 enqueue_credito(&iniQueue, credito);
-                                gravar_queue(iniQueue);
                                 break;
                             case 4: //Alterar proposta de credito
                                 printf("\nInsira o ID: ");
@@ -120,7 +116,6 @@ int main(int argc, char const *argv[])
                                         break;
                                     }
                                 } while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 7));
-                                gravar_credito(iniListaCREDITO);
                                 break;
                             case 5: //Apagar proposta de credito
                                 apagar_credito(&iniListaCREDITO, &fimListaCREDITO);
@@ -152,7 +147,7 @@ int main(int argc, char const *argv[])
                                         listar_acima_montante(iniListaCREDITO);
                                         break;
                                     case 5: //Listar proposta de credito analisada por um determinado utilizador
-                                        listar_todas_ordenadas(iniListaCREDITO);
+                                        bubbleSort_listas_credito(iniListaCREDITO);
                                         break;
                                     case 6: //Voltar ao menu anterior
                                         opcao[MENU_LISTAR] = 7;
@@ -189,7 +184,7 @@ int main(int argc, char const *argv[])
                                 exit(0);
                                 break;
                             case 1: //Analisar proposta de credito
-                                insere_credito(&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao);
+                                insere_propcredito(&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao);
                                 gravar_credito(iniListaCREDITO);
                                 break;
                             case 2:
@@ -223,6 +218,8 @@ int main(int argc, char const *argv[])
             break;
         }
     } while (opcao[MENU_INICIAL] == 1 || opcao[MENU_INICIAL] == 2);
-
+    gravar_credito(iniListaCREDITO);
+    gravar_utilizador(iniListaUTILIZADOR);
+    gravar_queues(iniQueue);
     return 0;
 }

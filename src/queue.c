@@ -65,6 +65,8 @@ void insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES
     é que se encontra a prioridade strcmp com for
     */
 
+   
+
     /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
     novo no que sera inserido no fim da lista de propostas de credito*/
     info = (*queue)->iniLista->info;
@@ -86,31 +88,37 @@ void insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES
     analisar_credito(fimLista, iniListaU, sessao);
 }
 
-void gravar_queue(QUEUES *queue)
+void gravar_queues(QUEUES *queue)
 {
-    QUEUE_CREDITO *aux = NULL;
+    QUEUES *aux = NULL;
+    QUEUE_CREDITO *aux2 = NULL;
     FILE *fp = NULL;
-    fp = fopen("files/queue.dat", "w+b"); // w - acrescenta ao ficheiro queue.dat
+    fp = fopen("files/queues.dat", "w+b"); // w - acrescenta ao ficheiro queues.dat
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("ERRO ao carregar o ficheiro.\n");
         return;
     }
-    for (aux = (queue)->iniLista; aux != NULL; aux = aux->seguinte)
+    for (aux = queue; aux != NULL; aux = aux->seguinte)
     {
-        fwrite(&(aux->info), sizeof(CREDITO), 1, fp);
+        fwrite(&(aux->prioridade), sizeof(PRIORIDADE), 1, fp);
+        for (aux2 = queue->iniLista; aux2 != NULL; aux2 = aux2->seguinte)
+        {
+            fwrite(&(aux2->info), sizeof(CREDITO), 1, fp);
+        }
     }
     fclose(fp);
 }
 
-void carregar_prioridade(QUEUES **queue)
+int carregar_queues(QUEUES **queue)
 {
     PRIORIDADE info;
+    QUEUES *aux = NULL;
     int res = 0;
     FILE *fp = NULL;
-    fp = fopen("files/prioridades.dat", "r+b"); // rb - apenas lê do ficheiro
-    if (fp == NULL)                             // Teste para ver se houve problema ao carregar o ficheiro
+    fp = fopen("files/queues.dat", "r+b"); // rb - apenas lê do ficheiro
+    if (fp == NULL)                        // Teste para ver se houve problema ao carregar o ficheiro
     {
         printf("Ficheiro inexistente.\n");
 
@@ -118,12 +126,19 @@ void carregar_prioridade(QUEUES **queue)
     }
     while (fread(&info, sizeof(PRIORIDADE), 1, fp) == 1)
     {
-        ini_queue_prioridade(queue, &info);
+        for (aux = (*queue)->iniLista; aux != NULL; aux->iniLista = aux->iniLista->seguinte)
+        {
+            fread(&aux->iniLista, sizeof(QUEUE_CREDITO), 1, fp) == 1;
+        }
+
+        ini_queue(queue, &info, aux->iniLista);
         res++;
     }
 
-    if ((*queue)->iniLista == NULL)
+    if (res==0)
     {
+        printf("Lista vazia\n");
+        fclose(fp);
         return -1;
     }
     printf("Foram lidas %d prioridades com sucesso!\n", res);
@@ -131,7 +146,7 @@ void carregar_prioridade(QUEUES **queue)
     return 0;
 }
 
-void ini_queue_prioridade(QUEUES **queue, PRIORIDADE *info)
+void ini_queue(QUEUES **queue, PRIORIDADE *info, QUEUE_CREDITO *infoLista)
 {
     QUEUES *novo = NULL;
     novo = (QUEUES *)calloc(1, sizeof(QUEUES));
@@ -144,6 +159,10 @@ void ini_queue_prioridade(QUEUES **queue, PRIORIDADE *info)
     novo->prioridade = *info; // Atribuição do utilizador recebido
     novo->seguinte = NULL;
 
+    for (novo = (*queue)->iniLista; novo != NULL; novo->iniLista = novo->iniLista->seguinte)
+    {
+        novo->iniLista = infoLista;
+    }
     if ((*queue)->iniLista == NULL) // Caso a lista esteja vazia atribui o primeiro elemento da lista ao elemento criado
     {
         (*queue)->iniLista = novo;
@@ -155,23 +174,3 @@ void ini_queue_prioridade(QUEUES **queue, PRIORIDADE *info)
         (*queue)->fimLista = novo;
     }
 }
-
-void gravar_prioridades(QUEUES *queue)
-{
-    QUEUES *aux = NULL;
-    FILE *fp = NULL;
-    fp = fopen("files/prioridades.dat", "w+b"); // w - acrescenta ao ficheiro prioridades.dat
-
-    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
-    {
-        printf("ERRO ao carregar o ficheiro.\n");
-        return;
-    }
-    for (aux = queue; aux != NULL; aux = aux->seguinte)
-    {
-        fwrite(&(aux->prioridade), sizeof(CREDITO), 1, fp);
-    }
-    fclose(fp);
-}
-
-queues
