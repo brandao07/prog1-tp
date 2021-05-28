@@ -211,6 +211,10 @@ void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbl
 
 void bubbleSort_data(ELEM_CREDITO *iniLista); // ordena propostas de crédito por data
 
+void troca_rank(ELEM_UTILIZADOR *a, ELEM_UTILIZADOR *b); //função auxiliar do bubbleSort_rank
+
+void bubbleSort_rank(ELEM_UTILIZADOR *iniLista); //ordena por ordem decrescente o rank dos analistas
+
 void gravar_credito(ELEM_CREDITO *iniLista); // grava no ficheiro propostas.dat
 
 int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // carrega o ficheiro propostas.dat
@@ -232,3 +236,5 @@ void listar_por_analisar(QUEUES *queue); // Listar propostas por analisar
 void bubbleSort_listas_credito(ELEM_CREDITO *iniLista); // Listar todas as propostas por um determinado utilizador ordenadas por data de análise e depois por situação positiva/negativa
 
 void listar_por_analisar_aux(QUEUE_CREDITO *aux); // Listar propostas ainda nao analisadas
+
+void listar_ranking (ELEM_UTILIZADOR *iniLista); // Listar por ordem decrescente o ranking dos analistas

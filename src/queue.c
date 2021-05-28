@@ -59,7 +59,7 @@ void insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES
     }
     printf("Introduza o tipo de prioridade que pretende analisar: \n");
     fflush(stdin);
-    scanf("%s", &prioridade);
+    scanf("%s", prioridade);
     /*
     Tem agora de verificar em qual das listas 
     é que se encontra a prioridade strcmp com for

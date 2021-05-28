@@ -163,8 +163,8 @@ int main(int argc, char const *argv[])
                                     case 5: //Listar proposta de credito analisada por um determinado utilizador
                                         bubbleSort_listas_credito(iniListaCREDITO);
                                         break;
-                                    case 6:
-                                        //? FALTA RANKING
+                                    case 6: //Listar os analistas por ordem decrescente do rank
+                                        bubbleSort_rank(iniListaUTILIZADOR);
                                         break;
                                     case 7: //Voltar ao menu anterior
                                         opcao[MENU_LISTAR] = 8;

@@ -227,7 +227,7 @@ void listar_por_analisar(QUEUES *queue)
     QUEUE_CREDITO *aux = NULL;
     printf("Insira o ID: ");
     fflush(stdin);
-    scanf("%d", id);
+    scanf("%d", &id);
     if ((queue)->iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -276,5 +276,24 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista)
     if (ctrl == 0)
     {
         printf("Nao foram encontradas propostas de credito analisadas por este ID(%d)!", id);
+    }
+}
+
+void listar_ranking(ELEM_UTILIZADOR *iniLista)
+{
+    int ctrl = 0;
+    ELEM_UTILIZADOR *aux = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Nao existem propostas de credito registadas!!\n");
+        return;
+    }
+
+    listar_credito(aux);
+
+    if (ctrl == 0)
+    {
+        printf("Nao existem dados sobre o rank dos analistas!\n");
     }
 }

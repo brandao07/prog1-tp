@@ -620,7 +620,7 @@ void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILI
     strcpy(info.utilizador, sessao.username);
     printf("Situacao da analise\n [0] - Negativa\n [1] - Positiva\n");
     fflush(stdin);
-    scanf("%d", situacao);
+    scanf("%d", &situacao);
     if (situacao == 0)
     {
         strcpy(info.situacao, "Negativa");
@@ -849,4 +849,55 @@ void bubbleSort_data(ELEM_CREDITO *iniLista)
 
         } while (trocada);
     }
+}
+
+void troca_rank(ELEM_UTILIZADOR *a, ELEM_UTILIZADOR *b)
+{
+    float temp = a->info.rank;
+    a->info.rank = b->info.rank;
+    b->info.rank = temp;
+}
+
+void bubbleSort_rank(ELEM_UTILIZADOR *iniLista)
+{
+    int trocada, i;
+    ELEM_UTILIZADOR *x = NULL;
+    ELEM_UTILIZADOR *y = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Lista vazia!\n");
+        return;
+    }
+    else
+    {
+        do
+        {
+            trocada = 0;
+            x = iniLista;
+            while (x->seguinte != y)
+            {
+                if (x->info.rank < x->seguinte->info.rank)
+                {
+                    troca_rank(x, x->seguinte);
+                    trocada = 1;
+                }
+                x = x->seguinte;
+            }
+            y = x;
+
+        } while (trocada);
+    }
+}
+
+void gravar_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista,char ficheiroCSV[])
+{
+    ELEM_PRIORIDADE *aux = NULL;
+    FILE *fp = NULL;
+    fp = fopen("files/prioridade.dat", "w+b");
+
+    recebe_csv(&iniLista, &fimLista, ficheiroCSV[]);
+    
+    
+    fclose(fp);
 }
