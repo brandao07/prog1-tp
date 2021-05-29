@@ -612,7 +612,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     return 0;
 }
 
-void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao)
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao)
 {
     int situacao;
     ANALISE info;
@@ -640,7 +640,7 @@ void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILI
     printf("Introduza uma data (DD-MM-YYYY):\n");
     fflush(stdin);
     scanf("%[^\n]", info.data);
-    (*fimLista)->analise = info;
+    //(*fimLista)->analise = info;
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (sessao.ID == aux->info.ID)
@@ -648,6 +648,7 @@ void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILI
             aux->info.rank++; // adicionar pontos após ter analisado uma proposta
         }
     }
+    return info;
 }
 
 void gravar_credito(ELEM_CREDITO *iniLista)
@@ -890,14 +891,22 @@ void bubbleSort_rank(ELEM_UTILIZADOR *iniLista)
     }
 }
 
-void gravar_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista,char ficheiroCSV[])
+void gravar_prioridade(ELEM_PRIORIDADE *iniLista)
 {
     ELEM_PRIORIDADE *aux = NULL;
     FILE *fp = NULL;
     fp = fopen("files/prioridade.dat", "w+b");
 
-    recebe_csv(&iniLista, &fimLista, ficheiroCSV[]);
-    
-    
+    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
+    {
+        printf("ERRO ao carregar o ficheiro.\n");
+        return;
+    }
+    aux = iniLista;
+    while (aux != NULL)
+    {
+        fwrite(&(aux->info), sizeof(PRIORIDADE), 1, fp);
+        aux = aux->seguinte;
+    }
     fclose(fp);
-}
+} 

@@ -49,6 +49,7 @@ void insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES
 {
     char prioridade[20];
     CREDITO info;
+    ANALISE analise;
     ELEM_CREDITO *novo = NULL;
     novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
@@ -68,7 +69,7 @@ void insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES
     /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
     novo no que sera inserido no fim da lista de propostas de credito*/
     info = (*queue)->iniLista->info;
-    novo->info = info;
+    /*  novo->info = info;
     novo->anterior = NULL;
     novo->seguinte = NULL;
     if ((*queue)->fimLista == NULL)
@@ -81,9 +82,10 @@ void insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES
         novo->anterior = (*queue)->fimLista;
         (*queue)->fimLista->seguinte = novo;
         (*queue)->fimLista = novo;
-    }
+    } */
     dequeue_credito(queue);
-    analisar_credito(fimLista, iniListaU, sessao);
+    analise = analisar_credito(iniListaU, sessao);
+    inserir_credito(iniLista, fimLista, &info, &analise);
 }
 
 void gravar_queues(QUEUES *queue)

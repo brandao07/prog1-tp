@@ -147,6 +147,7 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
 UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
 {
     ELEM_UTILIZADOR *aux = NULL;
+    UTILIZADOR erro;
     char username[20], password[20];
 
     printf("Username: ");
@@ -168,7 +169,8 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
     }
     printf("Os dados de login nao sao validos !!\n");
     //system("pause");
-    return;
+    erro.tipoID=0;
+    return erro;
 }
 
 int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)

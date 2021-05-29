@@ -197,7 +197,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Apagar 
 
 void pesquisar_credito(ELEM_CREDITO *iniLista); // Pesquisar proposta de credito pelo nome
 
-void analisar_credito(ELEM_CREDITO **fimLista, ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao); // Insere análise na proposta de crédito
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao); // Insere análise na proposta de crédito
 
 void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_situacao
 
@@ -220,6 +220,8 @@ void gravar_credito(ELEM_CREDITO *iniLista); // grava no ficheiro propostas.dat
 int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // carrega o ficheiro propostas.dat
 
 void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise); // insere na lista ELEM_CREDITO as propostas de crédito recebidas do ficheiro propostas.dat
+
+void gravar_prioridade(ELEM_PRIORIDADE *iniLista); // Grava num ficheiro temporario as prioridades
 
 //! FUNÇÕES LISTAGENS.C
 
