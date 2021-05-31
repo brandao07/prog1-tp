@@ -9,7 +9,7 @@
 //! HEADER
 #include "headers.h"
 
-CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //*
 {
     CREDITO info;
     int garantiaOpcao;
@@ -27,11 +27,13 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
     printf("Quantas garantias?\n");
     fflush(stdin);
     scanf("%d", &info.garantiaNumero); // maximo 5
+
     if (info.garantiaNumero > MAX_GARANTIAS)
     {
         printf("Numero maximo de garantias excedido!\n");
         return;
     }
+
     else
     {
         for (int i = 0; i < info.garantiaNumero; i++)
@@ -43,6 +45,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
             printf("\n[3] - Produtos");
             fflush(stdin);
             scanf("%d", &garantiaOpcao);
+
             if (garantiaOpcao == 0)
             {
                 strcpy(info.garantia[i].tipo, "Imovel");
@@ -64,6 +67,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
                 printf("OPCAO invalida!\n");
                 return;
             }
+
             printf("Descricao sobre a proposta:\n");
             fflush(stdin);
             scanf("%[^\n]", &info.garantia[i].descricao);
@@ -71,6 +75,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
             fflush(stdin);
             scanf("%f", &info.garantia[i].valor);
         }
+
         printf("Montante:\n");
         scanf("%f", &info.montante);
         strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante)); // a carrega_prioridade retorna a prioridade entre os montantes x e y
@@ -79,7 +84,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista)
     }
 }
 
-void altera_nome(ELEM_CREDITO **iniLista, int id)
+void altera_nome(ELEM_CREDITO **iniLista, int id) //*
 {
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
@@ -95,6 +100,7 @@ void altera_nome(ELEM_CREDITO **iniLista, int id)
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
             scanf("%d", &resposta);
+
             if (resposta == 0)
             {
                 return;
@@ -104,7 +110,6 @@ void altera_nome(ELEM_CREDITO **iniLista, int id)
                 printf("Insira o novo nome: \n");
                 fflush(stdin);
                 scanf("%[^\n]", novo);
-
                 strcpy(aux->info.nome, novo);
             }
             ctrl = 1;
@@ -116,12 +121,13 @@ void altera_nome(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-void altera_iban(ELEM_CREDITO **iniLista, int id)
+void altera_iban(ELEM_CREDITO **iniLista, int id) //*
 {
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
     char novo[50];
+
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -140,7 +146,6 @@ void altera_iban(ELEM_CREDITO **iniLista, int id)
                 printf("Insira o novo IBAN: \n");
                 fflush(stdin);
                 scanf("%[^\n]", novo);
-
                 strcpy(aux->info.IBAN, novo);
             }
             ctrl = 1;
@@ -152,7 +157,7 @@ void altera_iban(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
+void altera_numero_garantias(ELEM_CREDITO **iniLista, int id) //*
 {
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
@@ -187,12 +192,13 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-void altera_garantias(ELEM_CREDITO **iniLista, int id)
+void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
 {
     ELEM_CREDITO *aux = NULL;
     int ctrl = 0;
     int resposta[2];
     int opcao, garantiaOpcao;
+
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -222,7 +228,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                             scanf("%d", &resposta[1]);
                             if (resposta[1] == 0)
                             {
-                                return;
+                                break;
                             }
                         }
                         printf("Tipo de garantia?\n");
@@ -259,6 +265,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         printf("Valor:\n");
                         fflush(stdin);
                         scanf("%f", &(aux->info.garantia[0].valor));
+                        aux->info.garantiaNumero++;
                         break;
                     case 2:
                         if (aux->info.garantiaNumero < 2)
@@ -269,7 +276,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                             scanf("%d", &resposta[1]);
                             if (resposta[1] == 0)
                             {
-                                return;
+                                break;
                             }
                         }
                         printf("Tipo de garantia?\n");
@@ -298,7 +305,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            return;
+                            break;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -306,6 +313,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         printf("Valor:\n");
                         fflush(stdin);
                         scanf("%f", &(aux->info.garantia[1].valor));
+                        aux->info.garantiaNumero++;
                         break;
                     case 3:
                         if (aux->info.garantiaNumero < 3)
@@ -316,7 +324,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                             scanf("%d", &resposta[1]);
                             if (resposta[1] == 0)
                             {
-                                return;
+                                break;
                             }
                         }
                         printf("Tipo de garantia?\n");
@@ -345,7 +353,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            return;
+                            break;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -353,6 +361,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         printf("Valor:\n");
                         fflush(stdin);
                         scanf("%f", &(aux->info.garantia[2].valor));
+                        aux->info.garantiaNumero++;
                         break;
                     case 4:
                         if (aux->info.garantiaNumero < 4)
@@ -363,7 +372,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                             scanf("%d", &resposta[1]);
                             if (resposta[1] == 0)
                             {
-                                return;
+                                break;
                             }
                         }
                         printf("Tipo de garantia?\n");
@@ -392,7 +401,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            return;
+                            break;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -400,6 +409,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         printf("Valor:\n");
                         fflush(stdin);
                         scanf("%f", &(aux->info.garantia[3].valor));
+                        aux->info.garantiaNumero++;
                         break;
                     case 5:
                         if (aux->info.garantiaNumero < 5)
@@ -410,7 +420,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                             scanf("%d", &resposta[1]);
                             if (resposta[1] == 0)
                             {
-                                return;
+                                break;
                             }
                         }
                         printf("Tipo de garantia?\n");
@@ -439,7 +449,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         else if (garantiaOpcao != 0 || garantiaOpcao != 1 || garantiaOpcao != 2 || garantiaOpcao || 3)
                         {
                             printf("OPCAO invalida!\n");
-                            return;
+                            break;
                         }
                         printf("Descricao sobre a proposta:\n");
                         fflush(stdin);
@@ -447,6 +457,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
                         printf("Valor:\n");
                         fflush(stdin);
                         scanf("%f", &(aux->info.garantia[4].valor));
+                        aux->info.garantiaNumero++;
                         break;
                     case 6:
                         for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
@@ -480,12 +491,13 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-void altera_montante(ELEM_CREDITO **iniLista, int id)
+void altera_montante(ELEM_CREDITO **iniLista, int id) //*
 {
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
     float novo;
+
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (id == aux->info.ID)
@@ -516,7 +528,7 @@ void altera_montante(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
+void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //TODO cena data
 {
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
@@ -567,7 +579,7 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id)
     }
 }
 
-int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
+int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //*
 {
     int id;
     ELEM_CREDITO *aux = *iniLista;
@@ -612,7 +624,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     return 0;
 }
 
-ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao)
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //TODO cena data
 {
     int situacao;
     ANALISE info;
@@ -640,7 +652,6 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao)
     printf("Introduza uma data (DD-MM-YYYY):\n");
     fflush(stdin);
     scanf("%[^\n]", info.data);
-    //(*fimLista)->analise = info;
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (sessao.ID == aux->info.ID)
@@ -651,15 +662,15 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao)
     return info;
 }
 
-void gravar_credito(ELEM_CREDITO *iniLista)
+void gravar_credito(ELEM_CREDITO *iniLista) //TODO cena data
 {
     ELEM_CREDITO *aux = NULL;
     FILE *fp = NULL;
     fp = fopen("files\\propostas.dat", "w+b");
 
-    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
+    if (fp == NULL) // Teste para ver se houve problema ao criar o ficheiro
     {
-        printf("ERRO ao carregar o ficheiro.\n");
+        printf("ERRO ao criar o ficheiro propostas.dat!\n");
         return;
     }
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
@@ -670,7 +681,7 @@ void gravar_credito(ELEM_CREDITO *iniLista)
     fclose(fp);
 }
 
-int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
+int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //TODO cena data
 {
     CREDITO info;
     ANALISE analise;
@@ -680,7 +691,7 @@ int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     fp = fopen("files/propostas.dat", "r+b");
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
-        printf("Ficheiro inexistente.\n");
+        printf("Ficheiro propostas.dat inexistente!\n");
         return -1;
     }
 
@@ -701,7 +712,7 @@ int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista)
     return 0;
 }
 
-void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise)
+void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise) //TODO cena data
 {
     ELEM_CREDITO *novo = NULL;
     novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));
@@ -731,19 +742,15 @@ void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *
     }
 }
 
-void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b)
+void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b) //*
 {
     float temp = a->info.montante;
     a->info.montante = b->info.montante;
     b->info.montante = temp;
 }
 
-void bubbleSort_montante(ELEM_CREDITO *iniLista)
+void bubbleSort_montante(ELEM_CREDITO *iniLista) //*
 {
-    int trocada, i;
-    ELEM_CREDITO *x = NULL;
-    ELEM_CREDITO *y = NULL;
-
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -751,6 +758,9 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista)
     }
     else
     {
+        int trocada, i;
+        ELEM_CREDITO *x = NULL;
+        ELEM_CREDITO *y = NULL;
         do
         {
             trocada = 0;
@@ -770,21 +780,16 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista)
     }
 }
 
-void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b)
+void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b) //*
 {
     char temp[20];
-
     strcpy(temp, a->analise.situacao);
     strcpy(a->analise.situacao, b->analise.situacao);
     strcpy(b->analise.situacao, temp);
 }
 
-void bubbleSort_situacao(ELEM_CREDITO *iniLista)
+void bubbleSort_situacao(ELEM_CREDITO *iniLista) //*
 {
-    int trocada, i;
-    ELEM_CREDITO *x = NULL;
-    ELEM_CREDITO *y = NULL;
-
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -792,6 +797,9 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista)
     }
     else
     {
+        int trocada, i;
+        ELEM_CREDITO *x = NULL;
+        ELEM_CREDITO *y = NULL;
         do
         {
             trocada = 0;
@@ -811,7 +819,7 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista)
     }
 }
 
-void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b)
+void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b) //! Logica errada
 {
     char temp[20];
 
@@ -820,12 +828,8 @@ void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b)
     strcpy(b->analise.data, temp);
 }
 
-void bubbleSort_data(ELEM_CREDITO *iniLista)
+void bubbleSort_data(ELEM_CREDITO *iniLista) //! Logica errada
 {
-    int trocada, i;
-    ELEM_CREDITO *x = NULL;
-    ELEM_CREDITO *y = NULL;
-
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -833,6 +837,10 @@ void bubbleSort_data(ELEM_CREDITO *iniLista)
     }
     else
     {
+        int trocada, i;
+        ELEM_CREDITO *x = NULL;
+        ELEM_CREDITO *y = NULL;
+
         do
         {
             trocada = 0;
@@ -852,19 +860,15 @@ void bubbleSort_data(ELEM_CREDITO *iniLista)
     }
 }
 
-void troca_rank(ELEM_UTILIZADOR *a, ELEM_UTILIZADOR *b)
+void troca_rank(ELEM_UTILIZADOR *a, ELEM_UTILIZADOR *b) //*
 {
-    float temp = a->info.rank;
+    int temp = a->info.rank;
     a->info.rank = b->info.rank;
     b->info.rank = temp;
 }
 
-void bubbleSort_rank(ELEM_UTILIZADOR *iniLista)
+void bubbleSort_rank(ELEM_UTILIZADOR *iniLista) //*
 {
-    int trocada, i;
-    ELEM_UTILIZADOR *x = NULL;
-    ELEM_UTILIZADOR *y = NULL;
-
     if (iniLista == NULL)
     {
         printf("Lista vazia!\n");
@@ -872,6 +876,9 @@ void bubbleSort_rank(ELEM_UTILIZADOR *iniLista)
     }
     else
     {
+        int trocada, i;
+        ELEM_UTILIZADOR *x = NULL;
+        ELEM_UTILIZADOR *y = NULL;
         do
         {
             trocada = 0;
@@ -890,23 +897,3 @@ void bubbleSort_rank(ELEM_UTILIZADOR *iniLista)
         } while (trocada);
     }
 }
-
-void gravar_prioridade(ELEM_PRIORIDADE *iniLista)
-{
-    ELEM_PRIORIDADE *aux = NULL;
-    FILE *fp = NULL;
-    fp = fopen("files/prioridade.dat", "w+b");
-
-    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
-    {
-        printf("ERRO ao carregar o ficheiro.\n");
-        return;
-    }
-    aux = iniLista;
-    while (aux != NULL)
-    {
-        fwrite(&(aux->info), sizeof(PRIORIDADE), 1, fp);
-        aux = aux->seguinte;
-    }
-    fclose(fp);
-} 

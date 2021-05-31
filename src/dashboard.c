@@ -9,7 +9,7 @@
 //! HEADER
 #include "headers.h"
 
-int menu_listar()
+int menu_listar() //*
 {
     int opcao;
     printf("\n*--------------------------MENU LISTAR--------------------------------*\n");
@@ -28,7 +28,7 @@ int menu_listar()
     return opcao;
 }
 
-int menu_altera_garantias()
+int menu_altera_garantias() //*
 {
     int opcao;
     printf("\n*------------ALTERAR GARANTIAS---------------*\n");
@@ -47,7 +47,7 @@ int menu_altera_garantias()
     return opcao;
 }
 
-int menu_altera()
+int menu_altera() //*
 {
     int opcao;
     printf("\n*------------MENU ALTERA---------------*\n");
@@ -66,7 +66,7 @@ int menu_altera()
     return opcao;
 }
 
-int menu_admin()
+int menu_admin() //*
 {
     int opcao;
     printf("\n*------------MENU ADMIN---------------*\n");
@@ -87,7 +87,7 @@ int menu_admin()
     return opcao;
 }
 
-int menu_analista()
+int menu_analista() //*
 {
     int opcao;
     printf("\n*------------MENU ANALISTA---------------*\n");
@@ -101,7 +101,7 @@ int menu_analista()
     return opcao;
 }
 
-int menu_entrar()
+int menu_entrar() //*
 {
     int opcao;
     printf("\n*------------ENTRAR COMO:---------------*\n");
@@ -116,7 +116,7 @@ int menu_entrar()
     return opcao;
 }
 
-int menu_inicial()
+int menu_inicial() //*
 {
     int opcao;
     printf("\n*------------MENU INICIAL---------------*\n");
@@ -130,7 +130,7 @@ int menu_inicial()
     return opcao;
 }
 
-void ajuda()
+void ajuda() //*
 {
     printf("\n*--------------------------------------AJUDA-------------------------------------------------*\n");
     printf("# Caso seja a primeira vez que usa este programa, por favor insira um ficheiro do tipo .csv\n");
@@ -138,6 +138,7 @@ void ajuda()
     printf("# O primeiro administrador sera o primeiro utilizador registado no programa.\n");
     printf("# Quaso se esqueceu da sua palavra-passe ou username, por favor contacte um administrador.\n");
     printf("# Para mais informacao nao hesite em contactar!\n");
+    printf("# Em anexo encontra-se um manual de utilizador.\n");
     printf("\n*------------------------------------------------------------------------------------------------*\n");
     printf("\nCopyright: Andre Brandao e Diogo Campos IPVC - ESTG\n");
     system("pause");

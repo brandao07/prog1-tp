@@ -12,3 +12,9 @@ passar funções como parametros de uma outra função
 gravar e receber dados de um ficheiro binario com listas ligadas
 ordenar listas ligada
 array de queues 
+
+datas estão mal necessário estrutura própria.
+
+caption:
+//* = Funcional 99%
+//! = Inacabada / pode ter erros

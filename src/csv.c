@@ -9,45 +9,49 @@
 //! HEADER
 #include "headers.h"
 
-void recebe_csv(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[])
+void recebe_csv(QUEUES **queue,ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]) //*
 {
-    // Variáveis necessárias para operar com o ficheiro csv
-    PRIORIDADE info;
-    char tamanhoCSV[100], prioridade[50], *ptr = NULL, *token = NULL;
-    float montanteInferior, montanteSuperior;
     FILE *fp = NULL;
     fp = fopen(ficheiroCSV, "r"); // r - apenas lê do ficheiro
     // Teste para ver se houve problema ao carregar o ficheiro
     if (fp == NULL)
     {
-        printf("ERRO ao carregar o ficheiro.\n");
+        printf("ERRO ao carregar o ficheiro CSV.\n");
         return;
     }
-    while (fscanf(fp, "%s", tamanhoCSV) != EOF) // Percorre o ficheiro até ao fim (EOF)
+    else
     {
-        // O ";" é o nosso delimitador
-        token = strtok(tamanhoCSV, ";");
-        strcpy(prioridade, token);
-        token = strtok(NULL, ";");
-        montanteInferior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante inferior
-        token = strtok(NULL, ";");
-        montanteSuperior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante superior
-        info = criar_prioridade(prioridade, montanteInferior, montanteSuperior);
-        inserir_prioridade(iniLista, fimLista, info);
+        PRIORIDADE info;
+        char tamanhoCSV[100], prioridade[50], *ptr = NULL, *token = NULL;
+        float montanteInferior, montanteSuperior;
+
+        while (fscanf(fp, "%s", tamanhoCSV) != EOF) // Percorre o ficheiro até ao fim (EOF)
+        {
+            // O ";" é o nosso delimitador
+            token = strtok(tamanhoCSV, ";");
+            strcpy(prioridade, token);
+            token = strtok(NULL, ";");
+            montanteInferior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante inferior
+            token = strtok(NULL, ";");
+            montanteSuperior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante superior
+            info = criar_prioridade(queue,prioridade, montanteInferior, montanteSuperior);
+            inserir_prioridade(iniLista, fimLista, info);
+        }
     }
 }
 
-PRIORIDADE criar_prioridade(char prioridade[], int montanteInferior, int montanteSuperior)
+PRIORIDADE criar_prioridade(QUEUES **queue,char prioridade[], int montanteInferior, int montanteSuperior) //*
 {
     PRIORIDADE info;
     //Atribuição da informação recebida para a estrutura PRIORIDADE
     strcpy(info.nome, prioridade);
     info.montanteInferior = montanteInferior;
     info.montanteSuperior = montanteSuperior;
+    enqueue_prioridade(queue,info);
     return info;
 }
 
-void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info)
+void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info) //*
 {
     ELEM_PRIORIDADE *novo = NULL;
     novo = (ELEM_PRIORIDADE *)calloc(1, sizeof(ELEM_PRIORIDADE));
@@ -73,7 +77,7 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
     }
 }
 
-void imprime_prioridades(ELEM_PRIORIDADE *iniLista)
+void imprime_prioridades(ELEM_PRIORIDADE *iniLista) //*
 {
     ELEM_PRIORIDADE *aux = NULL;
     if (iniLista == NULL)
@@ -92,7 +96,7 @@ void imprime_prioridades(ELEM_PRIORIDADE *iniLista)
     printf("*---------------------------------------*\n");
 }
 
-char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
+char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante) //! return NULL duvidoso..
 {
     PRIORIDADE prioridade;
     ELEM_PRIORIDADE *aux = NULL;
@@ -101,23 +105,47 @@ char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante)
         if (montante >= prioridade.montanteInferior && montante < prioridade.montanteSuperior)
         {
             return prioridade.nome;
-        }       
+        }
     }
     return NULL;
 }
 
-int conta_prioridade(ELEM_PRIORIDADE *iniLista)
+int conta_prioridade(ELEM_PRIORIDADE *iniLista) //*
 {
-    int res = 0;
-    ELEM_PRIORIDADE *aux = NULL;
     if (iniLista == NULL)
     {
         printf("Sem prioridades!\n");
+    }
+    else
+    {
+        int res = 0;
+        ELEM_PRIORIDADE *aux = NULL;
+
+        for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+        {
+            res++;
+        }
+
+        return res;
+    }
+}
+
+void gravar_prioridade(ELEM_PRIORIDADE *iniLista) //*
+{
+    ELEM_PRIORIDADE *aux = NULL;
+    FILE *fp = NULL;
+    fp = fopen("files/prioridade.dat", "w+b");
+
+    if (fp == NULL) // Teste para ver se houve problema ao gravar o ficheiro
+    {
+        printf("ERRO ao gravar o ficheiro prioridade.dat!\n");
         return;
     }
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    aux = iniLista;
+    while (aux != NULL)
     {
-        res++;
+        fwrite(&(aux->info), sizeof(PRIORIDADE), 1, fp);
+        aux = aux->seguinte;
     }
-    return res;
+    fclose(fp);
 }
