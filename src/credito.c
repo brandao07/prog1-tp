@@ -9,6 +9,8 @@
 //! HEADER
 #include "headers.h"
 
+//TODO
+
 CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //TODO erro 81
 {
     CREDITO info;
@@ -754,158 +756,47 @@ void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *
     }
 }
 
-void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b) //*
+void relatorio_proposta(ELEM_CREDITO *iniLista)
 {
-    float temp = a->info.montante;
-    a->info.montante = b->info.montante;
-    b->info.montante = temp;
-}
+    char frase[300];
+    ELEM_CREDITO *aux = NULL;
+    int opcao;
 
-void bubbleSort_montante(ELEM_CREDITO *iniLista) //*
-{
-    if (iniLista == NULL)
+    FILE *fp = NULL;
+    fp = fopen("files/relatorio.txt", "w");
+
+    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
-        printf("Lista vazia!\n");
+        printf("ERRO ao carregar o ficheiro.\n");
         return;
     }
-    else
+
+    bubbleSort_montante(iniLista);
+
+    while (aux != NULL)
     {
-        int trocada, i;
-        ELEM_CREDITO *x = NULL;
-        ELEM_CREDITO *y = NULL;
-        do
-        {
-            trocada = 0;
-            x = iniLista;
-            while (x->seguinte != y)
-            {
-                if (x->info.montante > x->seguinte->info.montante)
-                {
-                    troca_montante(x, x->seguinte);
-                    trocada = 1;
-                }
-                x = x->seguinte;
-            }
-            y = x;
+        fprintf(fp, "\nProposta #%d\n \tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
+                aux->info.numeroSequencial,
+                aux->info.ID,
+                aux->info.nome,
+                aux->info.IBAN,
+                aux->info.montante,
+                aux->info.prioridade); //! Como e que escrevo as garantias
 
-        } while (trocada);
+        aux = aux->seguinte;
     }
-}
 
-void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b) //*
-{
-    char temp[20];
-    strcpy(temp, a->analise.situacao);
-    strcpy(a->analise.situacao, b->analise.situacao);
-    strcpy(b->analise.situacao, temp);
-}
+    printf("Pretende escrever algo sobre as propostas de credito analisadas [0]-Nao [1]-Sim: \n");
+    scanf("%d", &opcao);
 
-void bubbleSort_situacao(ELEM_CREDITO *iniLista) //*
-{
-    if (iniLista == NULL)
+    if(opcao==1)
     {
-        printf("Lista vazia!\n");
-        return;
+        printf("Introduza o comentario que deseja fazer sobre as propostas de credito analisadas: \n");
+        fflush(stdin);
+        scanf("%[^\n]", frase);
     }
-    else
-    {
-        int trocada, i;
-        ELEM_CREDITO *x = NULL;
-        ELEM_CREDITO *y = NULL;
-        do
-        {
-            trocada = 0;
-            x = iniLista;
-            while (x->seguinte != y)
-            {
-                if (strcmp(x->analise.situacao, x->seguinte->analise.situacao) > 0)
-                {
-                    troca_situacao(x, x->seguinte);
-                    trocada = 1;
-                }
-                x = x->seguinte;
-            }
-            y = x;
+    
+    fprintf(fp, "%s", frase);
 
-        } while (trocada);
-    }
-}
-
-void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b) //! Logica errada
-{
-    char temp[20];
-
-    strcpy(temp, a->analise.data);
-    strcpy(a->analise.data, b->analise.data);
-    strcpy(b->analise.data, temp);
-}
-
-void bubbleSort_data(ELEM_CREDITO *iniLista) //! Logica errada
-{
-    if (iniLista == NULL)
-    {
-        printf("Lista vazia!\n");
-        return;
-    }
-    else
-    {
-        int trocada, i;
-        ELEM_CREDITO *x = NULL;
-        ELEM_CREDITO *y = NULL;
-
-        do
-        {
-            trocada = 0;
-            x = iniLista;
-            while (x->seguinte != y)
-            {
-                if (strcmp(x->analise.data, x->seguinte->analise.data) > 0)
-                {
-                    troca_data(x, x->seguinte);
-                    trocada = 1;
-                }
-                x = x->seguinte;
-            }
-            y = x;
-
-        } while (trocada);
-    }
-}
-
-void troca_rank(ELEM_UTILIZADOR *a, ELEM_UTILIZADOR *b) //*
-{
-    int temp = a->info.rank;
-    a->info.rank = b->info.rank;
-    b->info.rank = temp;
-}
-
-void bubbleSort_rank(ELEM_UTILIZADOR *iniLista) //*
-{
-    if (iniLista == NULL)
-    {
-        printf("Lista vazia!\n");
-        return;
-    }
-    else
-    {
-        int trocada, i;
-        ELEM_UTILIZADOR *x = NULL;
-        ELEM_UTILIZADOR *y = NULL;
-        do
-        {
-            trocada = 0;
-            x = iniLista;
-            while (x->seguinte != y)
-            {
-                if (x->info.rank < x->seguinte->info.rank)
-                {
-                    troca_rank(x, x->seguinte);
-                    trocada = 1;
-                }
-                x = x->seguinte;
-            }
-            y = x;
-
-        } while (trocada);
-    }
+    fclose(fp);
 }

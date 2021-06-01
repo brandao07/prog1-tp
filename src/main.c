@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) //TODO
     if (argc < 2)
     {
         printf("Programa sem ficheiro CSV!\n\n");
-        carrega_priridades(&iniListaPRIORIDADE, &fimListaPRIORIDADE);//? Ver se esta ready to go
+        carrega_priridades(&iniListaPRIORIDADE, &fimListaPRIORIDADE);//? Ver se tá topCHUCHA
     }
     else
     {

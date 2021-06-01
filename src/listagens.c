@@ -8,7 +8,7 @@
 
 #include "headers.h"
 
-void listar_credito(ELEM_CREDITO *aux) //TODO data
+void listar_credito(ELEM_CREDITO *aux) //TODO data (Revisto)
 {
     printf("\n*------------PROPOSTA----------------*\n");
     printf("\nProposta #%d\n", aux->info.numeroSequencial);
@@ -34,10 +34,12 @@ void listar_credito(ELEM_CREDITO *aux) //TODO data
     }
     printf("\n*------------ANALISE----------------*\n");
     printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
-    printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tJustificacao: %s\n\tData: %s\n",
+    printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tJustificacao: %s\n\tData: %d-%d-%d\n",
            aux->analise.situacao,
            aux->analise.justificacao,
-           aux->analise.data);
+           aux->analise.data.dia,
+           aux->analise.data.mes,
+           aux->analise.data.ano);
     printf("*--------------------------------------*\n");
     system("pause");
 }

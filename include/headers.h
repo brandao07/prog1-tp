@@ -216,6 +216,8 @@ int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // carre
 
 void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise); // insere na lista ELEM_CREDITO as propostas de crédito recebidas do ficheiro propostas.dat
 
+//! FUNÇÕES DO SORT.C
+
 void troca_situacao(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_situacao
 
 void bubbleSort_situacao(ELEM_CREDITO *iniLista); // ordena propostas de crédito por situação
@@ -224,9 +226,17 @@ void troca_montante(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do b
 
 void bubbleSort_montante(ELEM_CREDITO *iniLista); // ordena propostas de crédito por montante
 
-void troca_data(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_data
+void troca_data_ano(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_data_ano
 
-void bubbleSort_data(ELEM_CREDITO *iniLista); // ordena propostas de crédito por data
+void bubbleSort_data_ano(ELEM_CREDITO *iniLista); // ordena propostas de crédito por ano
+
+void troca_data_mes(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_data_mes
+
+void bubbleSort_data_mes(ELEM_CREDITO *iniLista); // ordena propostas de crédito por mes
+
+void troca_data_dia(ELEM_CREDITO *a, ELEM_CREDITO *b); // função auxiliar do bubbleSort_data_dia
+
+void bubbleSort_data_dia(ELEM_CREDITO *iniLista); // ordena propostas de crédito por dia
 
 void troca_rank(ELEM_UTILIZADOR *a, ELEM_UTILIZADOR *b); //função auxiliar do bubbleSort_rank
 
