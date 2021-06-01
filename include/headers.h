@@ -40,6 +40,12 @@ typedef struct prioridade
     float montanteInferior, montanteSuperior;
 } PRIORIDADE;
 
+// Estrutura para as datas das propostas de crédito
+typedef struct data //* DD/MM/AAAA
+{
+    int dia, mes, ano;
+} DATA;
+
 // Estrutura para até 5 garantias
 typedef struct garantia
 {
@@ -54,7 +60,7 @@ typedef struct analise
     char utilizador[20]; // = ao username do utilizador que a analisou
     char situacao[20];   //* NEGATIVA OU POSITIVA
     char justificacao[200];
-    char data[30]; //! TEM QUE SER ESTRUTURA 
+    char data[30]; //! TEM QUE SER ESTRUTURA
 } ANALISE;
 
 // Estruturas de uma propostas de crédito
@@ -138,9 +144,9 @@ void enqueue_prioridade(QUEUES **queue, PRIORIDADE info); // adiciona header da 
 
 void gravar_queues(QUEUES *queue); // Gravar no ficheiro queues.dat
 
-void carregar_queues(QUEUES **queue) ; // carrega o ficheiro queues.dat 
+void carregar_queues(QUEUES **queue); // carrega o ficheiro queues.dat
 
-void insere_propcredito(ELEM_PRIORIDADE *iniListaP,ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
+void insere_propcredito(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
 
 void enqueue_prioridade(QUEUES **queue, PRIORIDADE prioridade); // Adiciona x prioridades origem da lista
 
@@ -164,9 +170,9 @@ void ajuda(); // Apoio ao utilizador
 
 //!FUNÇÕES DO CSV.C
 
-void recebe_csv(QUEUES **queue,ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Separa as strings recebidas do ficheiro CSV em três variáveis linha a linha
+void recebe_csv(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Separa as strings recebidas do ficheiro CSV em três variáveis linha a linha
 
-PRIORIDADE criar_prioridade(QUEUES **queue,char prioridade[], int montanteInferior, int montanteSuperior); // Cria uma prioridade (uma prioridade corresponde a 1 linha do ficheiro CSV)
+PRIORIDADE criar_prioridade(QUEUES **queue, char prioridade[], int montanteInferior, int montanteSuperior); // Cria uma prioridade (uma prioridade corresponde a 1 linha do ficheiro CSV)
 
 void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere prioridade criada na lista PRIORIDADE
 
@@ -240,4 +246,4 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista); // Listar todas as propo
 
 void listar_por_analisar_aux(QUEUE_CREDITO *aux); // Listar propostas ainda nao analisadas
 
-void listar_ranking (ELEM_UTILIZADOR *iniLista); // Listar por ordem decrescente o ranking dos analistas
+void listar_ranking(ELEM_UTILIZADOR *iniLista); // Listar por ordem decrescente o ranking dos analistas

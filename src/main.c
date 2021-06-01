@@ -29,10 +29,14 @@ int main(int argc, char const *argv[]) //TODO
         printf("Programa sem ficheiro CSV!\n\n");
         // Função carregar prioridades //? FALTA
     }
+    else
+    {
+        strcpy(ficheiroCSV, argv[1]);                                                 // Atribuição do nome do ficheiro csv
+        recebe_csv(&iniQueue, &iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csvS
+        printf("Ficheiro CSV carregado com sucesso!\n\n");
+    }
 
     carregar_queues(&iniQueue);
-    strcpy(ficheiroCSV, argv[1]); // Atribuição do nome do ficheiro csv
-    recebe_csv(&iniQueue,&iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csv
     carregar_credito(&iniListaCREDITO, &fimListaCREDITO);
     do
     {
@@ -205,7 +209,7 @@ int main(int argc, char const *argv[]) //TODO
                                 gravar_prioridade(iniListaPRIORIDADE);
                                 return 0;
                             case 1: //Analisar proposta de credito
-                                insere_propcredito(iniListaPRIORIDADE,&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao);
+                                insere_propcredito(iniListaPRIORIDADE, &iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao);
                                 gravar_credito(iniListaCREDITO);
                                 break;
                             case 2:
