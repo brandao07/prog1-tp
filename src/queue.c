@@ -41,7 +41,7 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
 
 void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //TODO erro 59
 {
-    QUEUES *novo = NULL, *aux = queue;
+    QUEUES *novo = NULL;
     novo = (QUEUES *)calloc(1, sizeof(QUEUES));
     if (novo == NULL)
     {
@@ -100,13 +100,13 @@ void insere_propcredito(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, ELE
     Tem agora de verificar em qual das listas 
     é que se encontra a prioridade strcmp com for
     */
-    for (aux = queue; aux != NULL; aux = aux->seguinte)
+    for (aux = (*queue); aux != NULL; aux = aux->seguinte)
     {
         if (strcmp(prioridade, aux->prioridade.nome) == 0)
         {
             /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
             novo no que sera inserido no fim da lista de propostas de credito*/
-            info = (*queue)->iniLista->info;
+            info = aux->iniLista->info;
         }
     }
     dequeue_credito(queue, prioridade);

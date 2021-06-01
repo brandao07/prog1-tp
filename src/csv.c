@@ -96,15 +96,14 @@ void imprime_prioridades(ELEM_PRIORIDADE *iniLista) //*
     printf("*---------------------------------------*\n");
 }
 
-char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante) //! return NULL duvidoso..
+const char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante) //! return NULL duvidoso..
 {
-    PRIORIDADE prioridade;
     ELEM_PRIORIDADE *aux = NULL;
     for (aux = iniLista; aux != NULL; aux = aux->seguinte)
     {
-        if (montante >= prioridade.montanteInferior && montante < prioridade.montanteSuperior)
+        if (montante >= aux->info.montanteInferior && montante < aux->info.montanteSuperior)
         {
-            return prioridade.nome;
+            return aux->info.nome;
         }
     }
     return NULL;

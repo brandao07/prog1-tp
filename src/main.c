@@ -36,8 +36,8 @@ int main(int argc, char const *argv[]) //TODO
         printf("Ficheiro CSV carregado com sucesso!\n\n");
     }
 
-    //carregar_queues(&iniQueue);
-   // carregar_credito(&iniListaCREDITO, &fimListaCREDITO);
+    carregar_queues(&iniQueue);
+    carregar_credito(&iniListaCREDITO, &fimListaCREDITO);
     do
     {
         opcao[MENU_INICIAL] = menu_inicial();
