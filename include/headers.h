@@ -60,7 +60,7 @@ typedef struct analise
     char utilizador[20]; // = ao username do utilizador que a analisou
     char situacao[20];   //* NEGATIVA OU POSITIVA
     char justificacao[200];
-    char data[30]; //! TEM QUE SER ESTRUTURA
+    DATA data;
 } ANALISE;
 
 // Estruturas de uma propostas de crédito
@@ -174,7 +174,7 @@ void recebe_csv(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fi
 
 PRIORIDADE criar_prioridade(QUEUES **queue, char prioridade[], int montanteInferior, int montanteSuperior); // Cria uma prioridade (uma prioridade corresponde a 1 linha do ficheiro CSV)
 
-void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info); // Insere prioridade criada na lista PRIORIDADE
+void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE *info); // Insere prioridade criada na lista PRIORIDADE
 
 void imprime_prioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades carregadas pelo programa
 
@@ -182,7 +182,9 @@ const char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // In
 
 int conta_prioridade(ELEM_PRIORIDADE *iniLista); // Conta o número de prioridades
 
-void gravar_prioridade(ELEM_PRIORIDADE *iniLista); // Grava num ficheiro temporario as prioridades
+void gravar_prioridade(ELEM_PRIORIDADE *iniLista); // Grava num ficheiro temporario as 
+
+int carrega_priridades(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista); // Carrega do ficheiro prioridades.dat
 
 //!FUNÇÕES DO CREDITO.C
 

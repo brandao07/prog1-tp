@@ -158,6 +158,7 @@ void carregar_queues(QUEUES **queue) //? duvido que funcione
         {
             fread(&aux->iniLista, sizeof(QUEUE_CREDITO), 1, fp) == 1; // Lê propostas de crédito por analisar a x queue
         }
+        printf("%s\n",aux->iniLista->info.prioridade);
         enqueue_credito(queue, aux->iniLista->info);
         res++;
     }
@@ -165,4 +166,3 @@ void carregar_queues(QUEUES **queue) //? duvido que funcione
     printf("Foram lidas %d prioridades com sucesso!\n", res);
     fclose(fp);
 }
-

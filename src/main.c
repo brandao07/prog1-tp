@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) //TODO
     if (argc < 2)
     {
         printf("Programa sem ficheiro CSV!\n\n");
-        // Função carregar prioridades //? FALTA
+        carrega_priridades(&iniListaPRIORIDADE, &fimListaPRIORIDADE);//? Ver se esta ready to go
     }
     else
     {
@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]) //TODO
         printf("Ficheiro CSV carregado com sucesso!\n\n");
     }
 
-    carregar_queues(&iniQueue);
+    //carregar_queues(&iniQueue);
     carregar_credito(&iniListaCREDITO, &fimListaCREDITO);
     do
     {
@@ -179,7 +179,7 @@ int main(int argc, char const *argv[]) //TODO
                                         opcao[MENU_LISTAR] = -1;
                                         break;
                                     }
-                                } while (opcao[MENU_LISTAR] = -1 || (opcao[MENU_LISTAR] > 0 && opcao[MENU_LISTAR] < 7));
+                                } while (opcao[MENU_LISTAR] == -1 || (opcao[MENU_LISTAR] > 0 && opcao[MENU_LISTAR] < 7));
                                 break;
                             case 9: //Voltar
                                 opcao[MENU_ADMIN] = 10;

@@ -528,7 +528,7 @@ void altera_montante(ELEM_CREDITO **iniLista, int id) //*
     }
 }
 
-void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //TODO cena data
+void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //TODO cena data(revista)
 {
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
@@ -566,9 +566,15 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //TODO cena data
                 printf("Insira uma nova justificacao:\n");
                 fflush(stdin);
                 scanf("%[^\n]", aux->analise.justificacao);
-                printf("Insira uma nova data (DD-MM-YYYY): \n");
+                printf("Insira um dia: \n");
                 fflush(stdin);
-                scanf("%[^\n]", aux->analise.data);
+                scanf("%d", &aux->analise.data.dia);
+                printf("Insira um mes: \n");
+                fflush(stdin);
+                scanf("%d", &aux->analise.data.mes);
+                printf("Insira um ano: \n");
+                fflush(stdin);
+                scanf("%d", &aux->analise.data.ano);
             }
             ctrl = 1;
         }
@@ -624,7 +630,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //*
     return 0;
 }
 
-ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //TODO cena data
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //TODO cena data(revista)
 {
     int situacao;
     ANALISE info;
@@ -649,9 +655,15 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //TODO c
     printf("Introduza uma justificacao:\n");
     fflush(stdin);
     scanf("%[^\n]", info.justificacao);
-    printf("Introduza uma data (DD-MM-YYYY):\n");
+    printf("Insira um dia: \n");
     fflush(stdin);
-    scanf("%[^\n]", info.data);
+    scanf("%d", &info.data.dia);
+    printf("Insira um mes: \n");
+    fflush(stdin);
+    scanf("%d", &info.data.mes);
+    printf("Insira um ano: \n");
+    fflush(stdin);
+    scanf("%d", &info.data.ano);
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (sessao.ID == aux->info.ID)
@@ -662,7 +674,7 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //TODO c
     return info;
 }
 
-void gravar_credito(ELEM_CREDITO *iniLista) //TODO cena data
+void gravar_credito(ELEM_CREDITO *iniLista) //TODO cena data(revista)
 {
     ELEM_CREDITO *aux = NULL;
     FILE *fp = NULL;
@@ -681,7 +693,7 @@ void gravar_credito(ELEM_CREDITO *iniLista) //TODO cena data
     fclose(fp);
 }
 
-int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //TODO cena data
+int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //TODO cena data(revista)
 {
     CREDITO info;
     ANALISE analise;
@@ -712,7 +724,7 @@ int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //TODO ce
     return 0;
 }
 
-void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise) //TODO cena data
+void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise) //TODO cena data(Revista)
 {
     ELEM_CREDITO *novo = NULL;
     novo = (ELEM_CREDITO *)calloc(1, sizeof(ELEM_CREDITO));

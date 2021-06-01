@@ -35,7 +35,7 @@ void recebe_csv(QUEUES **queue,ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fim
             token = strtok(NULL, ";");
             montanteSuperior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante superior
             info = criar_prioridade(queue,prioridade, montanteInferior, montanteSuperior);
-            inserir_prioridade(iniLista, fimLista, info);
+            inserir_prioridade(iniLista, fimLista, &info);
         }
     }
 }
@@ -51,7 +51,7 @@ PRIORIDADE criar_prioridade(QUEUES **queue,char prioridade[], int montanteInferi
     return info;
 }
 
-void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE info) //*
+void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE *info) //*
 {
     ELEM_PRIORIDADE *novo = NULL;
     novo = (ELEM_PRIORIDADE *)calloc(1, sizeof(ELEM_PRIORIDADE));
@@ -61,7 +61,7 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
         printf("FALTA de memoria!\n");
         return;
     }
-    novo->info = info; // Atribuição da prioridade recebida
+    novo->info = *info; // Atribuição da prioridade recebida
     novo->anterior = NULL;
     novo->seguinte = NULL;
     if (*fimLista == NULL) // Caso a lista esteja vazia atribui o primeiro elemento da lista ao elemento criado
@@ -147,4 +147,34 @@ void gravar_prioridade(ELEM_PRIORIDADE *iniLista) //*
         aux = aux->seguinte;
     }
     fclose(fp);
+}
+
+int carrega_priridades(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista)
+{
+    PRIORIDADE info;
+    int res = 0;
+    FILE *fp = NULL;
+
+    fp = fopen("files/prioridade.dat", "r+b");
+    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
+    {
+        printf("Ficheiro prioridade.dat inexistente!\n");
+        return -1;
+    }
+
+    while (fread(&info, sizeof(PRIORIDADE), 1, fp)==1)
+    {
+        inserir_prioridade(iniLista, fimLista, &info);
+        res++;
+    }
+
+    if (iniLista == NULL)
+    {
+        return -1;
+    }
+
+    printf("Foram lidas %d prioridades com sucesso!\n", res);
+    fclose(fp);
+
+    return 0;
 }
