@@ -39,9 +39,9 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
     }
 }
 
-void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //*
+void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //TODO erro 59
 {
-    QUEUES *novo = NULL, *aux = NULL;
+    QUEUES *novo = NULL, *aux = queue;
     novo = (QUEUES *)calloc(1, sizeof(QUEUES));
     if (novo == NULL)
     {
@@ -56,11 +56,11 @@ void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //*
     }
     else
     {
-        while (aux->seguinte != NULL) // para adicionar no fim
+        while (novo->seguinte != NULL) // para adicionar no fim
         {
-            aux = aux->seguinte;
+            novo = novo->seguinte;
         }
-        aux->seguinte = novo;
+        novo->seguinte = novo;
     }
 }
 

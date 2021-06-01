@@ -9,7 +9,7 @@
 //! HEADER
 #include "headers.h"
 
-CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //*
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //TODO erro 81
 {
     CREDITO info;
     int garantiaOpcao;
@@ -42,7 +42,7 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //*
             printf("\n[0] - Imovel");
             printf("\n[1] - Fiador");
             printf("\n[2] - Depositos");
-            printf("\n[3] - Produtos");
+            printf("\n[3] - Produtos\n");
             fflush(stdin);
             scanf("%d", &garantiaOpcao);
 
