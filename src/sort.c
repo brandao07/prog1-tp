@@ -2,8 +2,8 @@
  ** EI - Programação 1
  ** PL1 - Gestão Propostas de Crédito
  ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
- ** Nome do ficheiro: csv.c
- ** Ficheiro C responsável por todas as operações com a informação recebida do ficheiro CSV
+ ** Nome do ficheiro: sort.c
+ ** Ficheiro C responsável pela ordenação de listas
 \***********************************************************************************************/
 
 //! HEADER

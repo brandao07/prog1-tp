@@ -11,6 +11,8 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
 {
     QUEUE_CREDITO *novo = NULL;
     QUEUES *aux = NULL;
+    QUEUE_CREDITO *aux2 = NULL;
+    int res = 0;
     novo = (QUEUE_CREDITO *)calloc(1, sizeof(QUEUE_CREDITO));
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
     if (novo == NULL)
@@ -25,23 +27,30 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
     {
         if (strcmp(aux->prioridade.nome, info.prioridade) == 0)
         {
-            if (((*queue)->iniLista == NULL) && ((*queue)->fimLista == NULL))
+            for (aux2 = aux->iniLista; aux2 != NULL; aux2 = aux2->seguinte)
             {
-                (*queue)->iniLista = (*queue)->fimLista = novo;
+                res++;
+            }
+            novo->info.numeroSequencial = res;
+            if ((aux->iniLista == NULL) && (aux->fimLista == NULL))
+            {
+                aux->iniLista = aux->fimLista = novo;
             }
             else
             {
-                novo->anterior = (*queue)->fimLista;
-                (*queue)->fimLista->seguinte = novo;
-                (*queue)->fimLista = novo;
+                novo->anterior = aux->fimLista;
+                aux->fimLista->seguinte = novo;
+                aux->fimLista = novo;
             }
         }
     }
 }
 
-void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //TODO erro 59
+void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //*
 {
     QUEUES *novo = NULL;
+    QUEUES *aux = NULL;
+
     novo = (QUEUES *)calloc(1, sizeof(QUEUES));
     if (novo == NULL)
     {
@@ -56,11 +65,13 @@ void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //TODO erro 59
     }
     else
     {
-        while (novo->seguinte != NULL) // para adicionar no fim
+        aux = *queue;
+
+        while (aux->seguinte != NULL) // para adicionar no fim
         {
-            novo = novo->seguinte;
+            aux = aux->seguinte;
         }
-        novo->seguinte = novo;
+        aux->seguinte = novo;
     }
 }
 
@@ -72,14 +83,14 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //*
     {
         if (strcmp(prioridade, aux->prioridade.nome) == 0)
         {
-            temp = (*queue)->iniLista;
-            if (((*queue)->iniLista == NULL) && ((*queue)->fimLista == NULL))
+            temp = aux->iniLista;
+            if ((aux->iniLista == NULL) && (aux->fimLista == NULL))
             {
                 printf("Fila vazia!\n");
             }
             else
             {
-                (*queue)->iniLista = (*queue)->iniLista->seguinte;
+                aux->iniLista = aux->iniLista->seguinte;
                 free(temp);
             }
         }
@@ -119,50 +130,55 @@ void gravar_queues(QUEUES *queue) //*
     QUEUES *aux_out = NULL;       // percorre lista de queues
     QUEUE_CREDITO *aux_in = NULL; // percorre queue
     FILE *fp = NULL;
-    fp = fopen("files/queues.dat", "w+b");
+    fp = fopen("files/queues.dat", "wb");
+    FILE *fp1 = NULL;
+    fp1 = fopen("files/queuesCredito.dat", "wb");
 
-    if (fp == NULL) // Teste para ver se houve problema ao criar o ficheiro
+    if (fp == NULL && fp1 == NULL) // Teste para ver se houve problema ao criar o ficheiro
     {
-        printf("ERRO ao criar o ficheiro queues.dat!\n");
+        printf("ERRO ao criar o ficheiro queues.dat ou queuesCredito.dat!\n");
         return;
     }
     for (aux_out = queue; aux_out != NULL; aux_out = aux_out->seguinte) // percorre a lista simples (QUEUES)
     {
-        fwrite(&(aux_out->prioridade), sizeof(PRIORIDADE), 1, fp);                // Escreve o indicador da lista simples (prioridade)
-        for (aux_in = queue->iniLista; aux_in != NULL; aux_in = aux_in->seguinte) // percorre a lista duplamente ligada (QUEUE_CREDITO)
+        fwrite(&(aux_out->prioridade), sizeof(PRIORIDADE), 1, fp);                  // Escreve o indicador da lista simples (prioridade)
+        for (aux_in = aux_out->iniLista; aux_in != NULL; aux_in = aux_in->seguinte) // percorre a lista duplamente ligada (QUEUE_CREDITO)
         {
-            fwrite(&(aux_in->info), sizeof(CREDITO), 1, fp); // Escreve a informacao de cada elemento da lista simples
+            fwrite(&(aux_in->info), sizeof(CREDITO), 1, fp1); // Escreve a informacao de cada elemento da lista simples
         }
     }
     fclose(fp);
+    fclose(fp1);
 }
 
-void carregar_queues(QUEUES **queue) //? duvido que funcione //! TEM COVID NA FUNÇÂO ERRO (linha 161)
+void carregar_queues(QUEUES **queue) //*
 {
     PRIORIDADE info;
+    CREDITO infoCredito;
     QUEUES *aux = NULL;
     int res = 0;
     FILE *fp = NULL;
     fp = fopen("files/queues.dat", "r+b");
+    FILE *fp1 = NULL;
+    fp1 = fopen("files/queuesCredito.dat", "r+b");
 
-    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
+    if (fp == NULL && fp1 == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
-        printf("ERRO ao carregar queues.dat!\n");
+        printf("ERRO ao carregar queues.dat ou queuesCredito.dat!\n");
         return;
     }
 
     while (fread(&info, sizeof(PRIORIDADE), 1, fp) == 1) // Enquanto os elementos tiverem a mesma identificacao (prioridade x) adiciona na QUEUE_CREDITO dessa prioridade
     {
         enqueue_prioridade(queue, info);
-        for (aux = (*queue)->iniLista; aux != NULL; aux->iniLista = aux->iniLista->seguinte)
-        {
-            fread(&aux->iniLista, sizeof(QUEUE_CREDITO), 1, fp) == 1; // Lê propostas de crédito por analisar a x queue
-        }
-        //printf("%s\n",aux->iniLista->info.prioridade);
-        enqueue_credito(queue, aux->iniLista->info);
+
         res++;
     }
-
-    printf("Foram lidas %d prioridades com sucesso!\n", res);
+    while (fread(&infoCredito, sizeof(CREDITO), 1, fp1) == 1) // Lê propostas de crédito por analisar a x queue
+    {
+        enqueue_credito(queue, infoCredito);
+    }
+    printf("Foram lidas %d queues com sucesso!\n", res);
     fclose(fp);
+    fclose(fp1);
 }

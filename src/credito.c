@@ -758,12 +758,10 @@ void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *
 
 void relatorio_proposta(ELEM_CREDITO *iniLista)
 {
-    char frase[300];
     ELEM_CREDITO *aux = NULL;
-    int opcao;
 
     FILE *fp = NULL;
-    fp = fopen("files/relatorio.txt", "w");
+    fp = fopen("files/relatorio.txt", "w+");
 
     if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -775,28 +773,38 @@ void relatorio_proposta(ELEM_CREDITO *iniLista)
 
     while (aux != NULL)
     {
-        fprintf(fp, "\nProposta #%d\n \tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
-                aux->info.numeroSequencial,
-                aux->info.ID,
-                aux->info.nome,
-                aux->info.IBAN,
-                aux->info.montante,
-                aux->info.prioridade); //! Como e que escrevo as garantias
+        fprintf(fp,"\n*------------PROPOSTA----------------*\n");
+        fprintf(fp,"\nProposta #%d\n", aux->info.numeroSequencial);
+        fprintf(fp,"\tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
+               aux->info.ID,
+               aux->info.nome,
+               aux->info.IBAN,
+               aux->info.montante,
+               aux->info.prioridade);
+        fprintf(fp,"Numero de garantias: %d\n", aux->info.garantiaNumero);
+        fprintf(fp,"*--------------------------------------*\n");
+        for (int i = 0; i < aux->info.garantiaNumero; i++)
+        {
+            fprintf(fp,"\n*----fp,--------GARANTIAS----------------*\n");
+            fprintf(fp,"\nGarantia #%i\n", i + 1);
+            fprintf(fp,"\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f\n",
+                   aux->info.garantia[i].tipo,
+                   aux->info.garantia[i].descricao,
+                   aux->info.garantia[i].valor);
+            fprintf(fp,"*--------------------------------------*\n");
+        }
+        fprintf(fp,"\n*------------ANALISE----------------*\n");
+        fprintf(fp,"Analise da proposta #%d\n", aux->info.numeroSequencial);
+        fprintf(fp,"\n\tAnalisada por: %s\n\tSituacao: %s\n\tJustificacao: %s\n\tData: %d/%d/%d\n",
+               aux->analise.utilizador,
+               aux->analise.situacao,
+               aux->analise.justificacao,
+               aux->analise.data.dia,
+               aux->analise.data.mes,
+               aux->analise.data.ano);
+        fprintf(fp,"*--------------------------------------*\n");
 
         aux = aux->seguinte;
     }
-
-    printf("Pretende escrever algo sobre as propostas de credito analisadas [0]-Nao [1]-Sim: \n");
-    scanf("%d", &opcao);
-
-    if(opcao==1)
-    {
-        printf("Introduza o comentario que deseja fazer sobre as propostas de credito analisadas: \n");
-        fflush(stdin);
-        scanf("%[^\n]", frase);
-    }
-    
-    fprintf(fp, "%s", frase);
-
     fclose(fp);
 }

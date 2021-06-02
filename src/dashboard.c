@@ -17,7 +17,7 @@ int menu_listar() //*
     printf("2 - Listar as propostas de credito analisadas\n");
     printf("3 - Listar as propostas de credito por uma prioridade\n");
     printf("4 - Listar as propostas de credito acima de um determinado montante\n");
-    printf("5 - Listar todas as propostas de crédito analisadas por um determinado utilizador\n");
+    printf("5 - Listar todas as propostas de credito analisadas por um determinado utilizador\n");
     printf("6 - Listar ranking de analistas\n");
     printf("\n7 - Voltar para o menu anterior\n");
     printf("0 - Sair do programa\n");

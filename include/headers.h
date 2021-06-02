@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-//! ATRIBUIÇÃO DE VALORES
+//! DEFINIÇÃO DE CONSTANTES
 #define MAX_GARANTIAS 5 // Número máximo de garantias
 #define MENU_INICIAL 0
 #define MENU_ENTRAR 1

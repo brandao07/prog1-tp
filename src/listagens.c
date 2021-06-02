@@ -25,7 +25,7 @@ void listar_credito(ELEM_CREDITO *aux) //TODO data (Revisto)
     {
         printf("\n*------------GARANTIAS----------------*\n");
         printf("\nGarantia #%i\n", i + 1);
-        printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
+        printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f\n",
                aux->info.garantia[i].tipo,
                aux->info.garantia[i].descricao,
                aux->info.garantia[i].valor);
@@ -34,7 +34,8 @@ void listar_credito(ELEM_CREDITO *aux) //TODO data (Revisto)
     }
     printf("\n*------------ANALISE----------------*\n");
     printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
-    printf("\tEstado da proposta: Analisada\n\tSituacao: %s\n\tJustificacao: %s\n\tData: %d-%d-%d\n",
+    printf("\n\tAnalisada por: %s\n\tSituacao: %s\n\tJustificacao: %s\n\tData: %d/%d/%d\n",
+           aux->analise.utilizador,
            aux->analise.situacao,
            aux->analise.justificacao,
            aux->analise.data.dia,
@@ -259,12 +260,6 @@ void listar_por_utilizador(ELEM_CREDITO *iniLista) //*
 
 void listar_por_analisar(QUEUES *queue) //*
 {
-    if ((queue)->iniLista == NULL)
-    {
-        printf("Queue vazia!\n");
-    }
-    else
-    {
         int ctrl = 0;
         int id;
         QUEUE_CREDITO *aux_in = NULL; // ciclo for para a lista de listas duplamente ligadas (percorre linhas)
@@ -276,7 +271,7 @@ void listar_por_analisar(QUEUES *queue) //*
 
         for (aux_out = queue; aux_out != NULL; aux_out = aux_out->seguinte) // percorre a lista ligada de listas duplamente ligadas
         {
-            for (aux_in = queue->iniLista; aux_in != NULL; aux_in = aux_in->seguinte) // percorre a lista duplamente ligadas
+            for (aux_in = aux_out->iniLista; aux_in != NULL; aux_in = aux_in->seguinte) // percorre a lista duplamente ligadas
             {
                 if (aux_in->info.ID == id)
                 {
@@ -289,7 +284,6 @@ void listar_por_analisar(QUEUES *queue) //*
         {
             printf("Proposta nao encontrada!\n");
         }
-    }
 }
 
 void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
@@ -310,7 +304,9 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
         scanf("%d", &id);
 
         // primeiro ordena por data e depois por situação
-        bubbleSort_data(iniLista);     // ordena por data
+        bubbleSort_data_dia(iniLista);
+        bubbleSort_data_mes(iniLista);
+        bubbleSort_data_ano(iniLista);
         bubbleSort_situacao(iniLista); // ordena por situação
 
         for (aux = iniLista; aux != NULL; aux = aux->seguinte)
