@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <windows.h>
 
 //! DEFINIÇÃO DE CONSTANTES
 #define MAX_GARANTIAS 5 // Número máximo de garantias
@@ -146,7 +147,7 @@ void gravar_queues(QUEUES *queue); // Gravar no ficheiro queues.dat
 
 void carregar_queues(QUEUES **queue); // carrega o ficheiro queues.dat
 
-void insere_propcredito(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
+int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
 
 void enqueue_prioridade(QUEUES **queue, PRIORIDADE prioridade); // Adiciona x prioridades origem da lista
 
@@ -168,7 +169,7 @@ int menu_listar(); // Menu para listar
 
 void ajuda(); // Apoio ao utilizador
 
-//!FUNÇÕES DO CSV.C
+//!FUNÇÕES DO PRIORIDADE.C
 
 void recebe_csv(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]); // Separa as strings recebidas do ficheiro CSV em três variáveis linha a linha
 
@@ -176,21 +177,21 @@ PRIORIDADE criar_prioridade(QUEUES **queue, char prioridade[], int montanteInfer
 
 void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, PRIORIDADE *info); // Insere prioridade criada na lista PRIORIDADE
 
-void imprime_prioridades(ELEM_PRIORIDADE *iniLista); // Imprime para o ecrã todas as prioridades carregadas pelo programa
+void imprime_prioridades(QUEUES **queue); // Imprime para o ecrã todas as prioridades carregadas pelo programa
 
 const char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // Insere prioridade em uma proposta de crédito
 
-int conta_prioridade(ELEM_PRIORIDADE *iniLista); // Conta o número de prioridades
+//int conta_prioridade(ELEM_PRIORIDADE *iniLista); // Conta o número de prioridades
 
-void gravar_prioridade(ELEM_PRIORIDADE *iniLista); // Grava num ficheiro temporario as 
+void gravar_prioridades(ELEM_PRIORIDADE *iniLista); // Grava num ficheiro temporario as 
 
-int carrega_priridades(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista); // Carrega do ficheiro prioridades.dat
+int carrega_prioridades(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista); // Carrega do ficheiro prioridades.dat
 
 //!FUNÇÕES DO CREDITO.C
 
 CREDITO criar_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
 
-void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã uma Proposta de crédito juntamente com as suas garantias e análise
+//void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã uma Proposta de crédito juntamente com as suas garantias e análise
 
 void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome
 
@@ -215,6 +216,8 @@ void gravar_credito(ELEM_CREDITO *iniLista); // grava no ficheiro propostas.dat
 int carregar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // carrega o ficheiro propostas.dat
 
 void inserir_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, CREDITO *info, ANALISE *analise); // insere na lista ELEM_CREDITO as propostas de crédito recebidas do ficheiro propostas.dat
+
+void relatorio_proposta(ELEM_CREDITO *iniLista); // Relatório de propostas de credito
 
 //! FUNÇÕES DO SORT.C
 

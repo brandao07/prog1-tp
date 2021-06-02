@@ -79,14 +79,14 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //*
 {
     QUEUE_CREDITO *temp = NULL;
     QUEUES *aux = NULL;
-    for (aux = queue; aux != NULL; aux = aux->seguinte)
+    for (aux = (*queue); aux != NULL; aux = aux->seguinte)
     {
         if (strcmp(prioridade, aux->prioridade.nome) == 0)
         {
             temp = aux->iniLista;
             if ((aux->iniLista == NULL) && (aux->fimLista == NULL))
             {
-                printf("Fila vazia!\n");
+                printf("Queue vazia!\n");
             }
             else
             {
@@ -97,16 +97,23 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //*
     }
 }
 
-void insere_propcredito(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao) //*
+int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao) //*
 {
     char prioridade[20];
+    int montanteInferior, montanteSuperior;
     CREDITO info;
     ANALISE analise;
     QUEUES *aux = NULL;
-    imprime_prioridades(iniListaP);
+    imprime_prioridades(queue);
     printf("Introduza o tipo de prioridade que pretende analisar: \n");
     fflush(stdin);
     scanf("%s", prioridade);
+    printf("Introduza o montante inferior da prioridade: \n");
+    fflush(stdin);
+    scanf("%d", &montanteInferior);
+    printf("Introduza o montante superior da prioridade: \n");
+    fflush(stdin);
+    scanf("%d", &montanteSuperior);
     /*
     Tem agora de verificar em qual das listas 
     é que se encontra a prioridade strcmp com for
@@ -115,14 +122,18 @@ void insere_propcredito(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, ELE
     {
         if (strcmp(prioridade, aux->prioridade.nome) == 0)
         {
-            /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
-            novo no que sera inserido no fim da lista de propostas de credito*/
-            info = aux->iniLista->info;
+            if (montanteSuperior == aux->prioridade.montanteSuperior && montanteInferior == aux->prioridade.montanteInferior)
+            {
+                /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
+                novo no que sera inserido no fim da lista de propostas de credito*/
+                info = aux->iniLista->info;
+            }
         }
     }
     dequeue_credito(queue, prioridade);
     analise = analisar_credito(iniListaU, sessao);
     inserir_credito(iniLista, fimLista, &info, &analise);
+    return 0;
 }
 
 void gravar_queues(QUEUES *queue) //*
@@ -130,9 +141,9 @@ void gravar_queues(QUEUES *queue) //*
     QUEUES *aux_out = NULL;       // percorre lista de queues
     QUEUE_CREDITO *aux_in = NULL; // percorre queue
     FILE *fp = NULL;
-    fp = fopen("files/queues.dat", "wb");
+    fp = fopen("files/queues.dat", "wb"); // guarda prioridade de x propostas
     FILE *fp1 = NULL;
-    fp1 = fopen("files/queuesCredito.dat", "wb");
+    fp1 = fopen("files/queuesCredito.dat", "wb"); // guarda propostas não analisadas
 
     if (fp == NULL && fp1 == NULL) // Teste para ver se houve problema ao criar o ficheiro
     {
@@ -158,9 +169,9 @@ void carregar_queues(QUEUES **queue) //*
     QUEUES *aux = NULL;
     int res = 0;
     FILE *fp = NULL;
-    fp = fopen("files/queues.dat", "r+b");
+    fp = fopen("files/queues.dat", "r+b"); // guarda prioridade de x propostas
     FILE *fp1 = NULL;
-    fp1 = fopen("files/queuesCredito.dat", "r+b");
+    fp1 = fopen("files/queuesCredito.dat", "r+b"); // carrega propostas não analisadas
 
     if (fp == NULL && fp1 == NULL) // Teste para ver se houve problema ao carregar o ficheiro
     {
@@ -170,9 +181,14 @@ void carregar_queues(QUEUES **queue) //*
 
     while (fread(&info, sizeof(PRIORIDADE), 1, fp) == 1) // Enquanto os elementos tiverem a mesma identificacao (prioridade x) adiciona na QUEUE_CREDITO dessa prioridade
     {
-        enqueue_prioridade(queue, info);
-
-        res++;
+        for (aux = (*queue); aux != NULL; aux = aux->seguinte)
+        {
+            if (strcmp(aux->prioridade.nome, info.nome) != 0)
+            {
+                enqueue_prioridade(queue, info);
+                res++;
+            }
+        }
     }
     while (fread(&infoCredito, sizeof(CREDITO), 1, fp1) == 1) // Lê propostas de crédito por analisar a x queue
     {

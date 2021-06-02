@@ -8,7 +8,7 @@
 
 #include "headers.h"
 
-void listar_credito(ELEM_CREDITO *aux) //TODO data (Revisto)
+void listar_credito(ELEM_CREDITO *aux) //*
 {
     printf("\n*------------PROPOSTA----------------*\n");
     printf("\nProposta #%d\n", aux->info.numeroSequencial);
@@ -62,7 +62,7 @@ void listar_por_analisar_aux(QUEUE_CREDITO *aux) //*
     {
         printf("\n*------------GARANTIAS----------------*\n");
         printf("\nGarantia #%i\n", i + 1);
-        printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f€\n",
+        printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f\n",
                aux->info.garantia[i].tipo,
                aux->info.garantia[i].descricao,
                aux->info.garantia[i].valor);
@@ -71,7 +71,7 @@ void listar_por_analisar_aux(QUEUE_CREDITO *aux) //*
     }
 }
 
-void imprime_credito(ELEM_CREDITO *iniLista, int id) //? nao sei o que é esta funcao
+/* void imprime_credito(ELEM_CREDITO *iniLista, int id) //?
 {
     if (iniLista == NULL)
     {
@@ -96,7 +96,7 @@ void imprime_credito(ELEM_CREDITO *iniLista, int id) //? nao sei o que é esta f
             printf("Proposta nao encontrada!\n");
         }
     }
-}
+} */
 
 void pesquisar_credito(ELEM_CREDITO *iniLista) //*
 {
@@ -244,7 +244,7 @@ void listar_por_utilizador(ELEM_CREDITO *iniLista) //*
 
         for (aux = iniLista; aux != NULL; aux = aux->seguinte)
         {
-            if (aux->analise.utilizador == id)
+            if (aux->info.ID == id)
             {
                 listar_credito(aux);
                 ctrl = 1;
@@ -260,30 +260,30 @@ void listar_por_utilizador(ELEM_CREDITO *iniLista) //*
 
 void listar_por_analisar(QUEUES *queue) //*
 {
-        int ctrl = 0;
-        int id;
-        QUEUE_CREDITO *aux_in = NULL; // ciclo for para a lista de listas duplamente ligadas (percorre linhas)
-        QUEUES *aux_out = NULL;       // ciclo for para a lista duplamente ligada (percorre colunas)
+    int ctrl = 0;
+    int id;
+    QUEUE_CREDITO *aux_in = NULL; // ciclo for para a lista de listas duplamente ligadas (percorre linhas)
+    QUEUES *aux_out = NULL;       // ciclo for para a lista duplamente ligada (percorre colunas)
 
-        printf("Insira o ID: ");
-        fflush(stdin);
-        scanf("%d", &id);
+    printf("Insira o ID: ");
+    fflush(stdin);
+    scanf("%d", &id);
 
-        for (aux_out = queue; aux_out != NULL; aux_out = aux_out->seguinte) // percorre a lista ligada de listas duplamente ligadas
+    for (aux_out = queue; aux_out != NULL; aux_out = aux_out->seguinte) // percorre a lista ligada de listas duplamente ligadas
+    {
+        for (aux_in = (aux_out)->iniLista; aux_in != NULL; aux_in = aux_in->seguinte) // percorre a lista duplamente ligadas
         {
-            for (aux_in = aux_out->iniLista; aux_in != NULL; aux_in = aux_in->seguinte) // percorre a lista duplamente ligadas
+            if (aux_in->info.ID == id)
             {
-                if (aux_in->info.ID == id)
-                {
-                    listar_por_analisar_aux(aux_in);
-                    ctrl = 1;
-                }
+                listar_por_analisar_aux(aux_in);
+                ctrl = 1;
             }
         }
-        if (ctrl == 0)
-        {
-            printf("Proposta nao encontrada!\n");
-        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Proposta nao encontrada!\n");
+    }
 }
 
 void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
@@ -325,7 +325,7 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
     }
 }
 
-void listar_ranking(ELEM_UTILIZADOR *iniLista) //*
+void listar_ranking(ELEM_UTILIZADOR *iniLista) //!VER MELHOR
 {
     if (iniLista == NULL)
     {
@@ -340,9 +340,10 @@ void listar_ranking(ELEM_UTILIZADOR *iniLista) //*
         bubbleSort_rank(iniLista); // ordena por montante
 
         printf("\n*-------------RANKING-----------*\n");
-        for (int i = 1; i <= res; i++)
+
+        for (aux = iniLista; aux != NULL; aux = aux->seguinte)
         {
-            for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+            for (int i = 1; i <= res; i++)
             {
                 if (aux->info.tipoID == 5)
                 {

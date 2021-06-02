@@ -30,28 +30,30 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
     printf("Introduza uma password:\n");
     fflush(stdin);
     scanf("%s", info.password);
-    printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
-    fflush(stdin);
-    scanf("%d", &info.tipoID);
-    if (info.tipoID == 4)
+    while (info.tipoID != 4 && info.tipoID != 5)
     {
-        strcpy(info.tipo, "Administrador");
-        info.rank = NULL;
+        printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
+        fflush(stdin);
+        scanf("%d", &info.tipoID);
+        if (info.tipoID == 4)
+        {
+            strcpy(info.tipo, "Administrador");
+        }
+        else if (info.tipoID == 5)
+        {
+            strcpy(info.tipo, "Analista");
+        }
+        else
+        {
+            printf("OPCAO invalida!\n");
+        }
     }
-    else if (info.tipoID == 5)
-    {
-        strcpy(info.tipo, "Analista");
-        info.rank = 0;
-    }
-    else
-    {
-        printf("OPCAO invalida!\n");
-        return;
-    }
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
-    {
-        res++;
-    }
+    while (info.tipoID != 4 && info.tipoID != 5)
+        for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+        {
+            res++;
+        }
+    info.rank = 0;
     info.ID = res;
     return info;
 }
@@ -169,7 +171,7 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
     }
     printf("Os dados de login nao sao validos !!\n");
     //system("pause");
-    erro.tipoID=0;
+    erro.tipoID = 0;
     return erro;
 }
 

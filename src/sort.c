@@ -25,7 +25,7 @@ void bubbleSort_montante(ELEM_CREDITO *iniLista) //*
     }
     else
     {
-        int trocada, i;
+        int trocada;
         ELEM_CREDITO *x = NULL;
         ELEM_CREDITO *y = NULL;
         do
@@ -64,7 +64,7 @@ void bubbleSort_situacao(ELEM_CREDITO *iniLista) //*
     }
     else
     {
-        int trocada, i;
+        int trocada;
         ELEM_CREDITO *x = NULL;
         ELEM_CREDITO *y = NULL;
         do
@@ -102,7 +102,7 @@ void bubbleSort_data_ano(ELEM_CREDITO *iniLista) //?Verificar se está correto
     }
     else
     {
-        int trocada, i;
+        int trocada;
         ELEM_CREDITO *x = NULL;
         ELEM_CREDITO *y = NULL;
 
@@ -141,7 +141,7 @@ void bubbleSort_data_mes(ELEM_CREDITO *iniLista) //?Verificar se está correto
     }
     else
     {
-        int trocada, i;
+        int trocada;
         ELEM_CREDITO *x = NULL;
         ELEM_CREDITO *y = NULL;
 
@@ -180,7 +180,7 @@ void bubbleSort_data_dia(ELEM_CREDITO *iniLista) //?Verificar se está correto
     }
     else
     {
-        int trocada, i;
+        int trocada;
         ELEM_CREDITO *x = NULL;
         ELEM_CREDITO *y = NULL;
 
@@ -219,7 +219,7 @@ void bubbleSort_rank(ELEM_UTILIZADOR *iniLista) //*
     }
     else
     {
-        int trocada, i;
+        int trocada;
         ELEM_UTILIZADOR *x = NULL;
         ELEM_UTILIZADOR *y = NULL;
         do

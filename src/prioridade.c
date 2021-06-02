@@ -2,21 +2,21 @@
  ** EI - Programação 1
  ** PL1 - Gestão Propostas de Crédito
  ** Realizado por: André Brandão (26244) e Diogo Campos (24888)
- ** Nome do ficheiro: csv.c
+ ** Nome do ficheiro: prioridade.c
  ** Ficheiro C responsável por todas as operações com a informação recebida do ficheiro CSV
 \***********************************************************************************************/
 
 //! HEADER
 #include "headers.h"
 
-void recebe_csv(QUEUES **queue,ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]) //*
+void recebe_csv(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, char ficheiroCSV[]) //*
 {
     FILE *fp = NULL;
     fp = fopen(ficheiroCSV, "r"); // r - apenas lê do ficheiro
     // Teste para ver se houve problema ao carregar o ficheiro
     if (fp == NULL)
     {
-        printf("ERRO ao carregar o ficheiro CSV.\n");
+        printf("ERRO ao carregar o ficheiro CSV!\n");
         return;
     }
     else
@@ -34,20 +34,20 @@ void recebe_csv(QUEUES **queue,ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fim
             montanteInferior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante inferior
             token = strtok(NULL, ";");
             montanteSuperior = strtoll(token, &ptr, 10); // strtoll para converter caracter em inteiro do montante superior
-            info = criar_prioridade(queue,prioridade, montanteInferior, montanteSuperior);
+            info = criar_prioridade(queue, prioridade, montanteInferior, montanteSuperior);
             inserir_prioridade(iniLista, fimLista, &info);
         }
     }
 }
 
-PRIORIDADE criar_prioridade(QUEUES **queue,char prioridade[], int montanteInferior, int montanteSuperior) //*
+PRIORIDADE criar_prioridade(QUEUES **queue, char prioridade[], int montanteInferior, int montanteSuperior) //*
 {
     PRIORIDADE info;
     //Atribuição da informação recebida para a estrutura PRIORIDADE
     strcpy(info.nome, prioridade);
     info.montanteInferior = montanteInferior;
     info.montanteSuperior = montanteSuperior;
-    enqueue_prioridade(queue,info);
+    enqueue_prioridade(queue, info);
     return info;
 }
 
@@ -77,21 +77,21 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
     }
 }
 
-void imprime_prioridades(ELEM_PRIORIDADE *iniLista) //*
+void imprime_prioridades(QUEUES **queue) //TODO
 {
-    ELEM_PRIORIDADE *aux = NULL;
-    if (iniLista == NULL)
+    QUEUES *aux = NULL;
+    if (queue == NULL)
     {
         printf("Lista vazia!\n");
         return;
     }
     printf("\n*------------PRIORIDADES---------------*\n");
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    for (aux = (*queue); aux != NULL; aux = aux->seguinte)
     {
         printf("%s;%.2f;%.2f\n", // print com estrutura CSV
-               aux->info.nome,
-               aux->info.montanteInferior,
-               aux->info.montanteSuperior);
+               aux->prioridade.nome,
+               aux->prioridade.montanteInferior,
+               aux->prioridade.montanteSuperior);
     }
     printf("*---------------------------------------*\n");
 }
@@ -106,10 +106,10 @@ const char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante) //! re
             return aux->info.nome;
         }
     }
-    return NULL;
+    return '\0';
 }
 
-int conta_prioridade(ELEM_PRIORIDADE *iniLista) //*
+/* int conta_prioridade(ELEM_PRIORIDADE *iniLista) //?
 {
     if (iniLista == NULL)
     {
@@ -127,9 +127,9 @@ int conta_prioridade(ELEM_PRIORIDADE *iniLista) //*
 
         return res;
     }
-}
+} */
 
-void gravar_prioridade(ELEM_PRIORIDADE *iniLista) //*
+void gravar_prioridades(ELEM_PRIORIDADE *iniLista) //*
 {
     ELEM_PRIORIDADE *aux = NULL;
     FILE *fp = NULL;
@@ -149,7 +149,7 @@ void gravar_prioridade(ELEM_PRIORIDADE *iniLista) //*
     fclose(fp);
 }
 
-int carrega_priridades(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista)
+int carrega_prioridades(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista) //*
 {
     PRIORIDADE info;
     int res = 0;
@@ -162,8 +162,9 @@ int carrega_priridades(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista)
         return -1;
     }
 
-    while (fread(&info, sizeof(PRIORIDADE), 1, fp)==1)
+    while (fread(&info, sizeof(PRIORIDADE), 1, fp) == 1)
     {
+        enqueue_prioridade(queue, info);
         inserir_prioridade(iniLista, fimLista, &info);
         res++;
     }

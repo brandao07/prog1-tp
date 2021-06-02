@@ -27,7 +27,7 @@ int main(int argc, char const *argv[]) //TODO
     if (argc < 2)
     {
         printf("Programa sem ficheiro CSV!\n\n");
-        carrega_priridades(&iniListaPRIORIDADE, &fimListaPRIORIDADE);//? Ver se tá topCHUCHA
+        carrega_prioridades(&iniQueue, &iniListaPRIORIDADE, &fimListaPRIORIDADE);
     }
     else
     {
@@ -61,7 +61,7 @@ int main(int argc, char const *argv[]) //TODO
                     gravar_credito(iniListaCREDITO);
                     gravar_utilizador(iniListaUTILIZADOR);
                     gravar_queues(iniQueue);
-                    gravar_prioridade(iniListaPRIORIDADE);
+                    gravar_prioridades(iniListaPRIORIDADE);
                     return 0;
                 case 1:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
@@ -76,7 +76,7 @@ int main(int argc, char const *argv[]) //TODO
                                 gravar_credito(iniListaCREDITO);
                                 gravar_utilizador(iniListaUTILIZADOR);
                                 gravar_queues(iniQueue);
-                                gravar_prioridade(iniListaPRIORIDADE);
+                                gravar_prioridades(iniListaPRIORIDADE);
                                 return 0;
                             case 1: //Inserir utilizador
                                 utilizador = criar_utilizador(iniListaUTILIZADOR);
@@ -102,14 +102,14 @@ int main(int argc, char const *argv[]) //TODO
                                         gravar_credito(iniListaCREDITO);
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
-                                        gravar_prioridade(iniListaPRIORIDADE);
+                                        gravar_prioridades(iniListaPRIORIDADE);
                                         return 0;
                                     case 1: //Alterar o nome
                                         altera_nome(&iniListaCREDITO, id);
                                         break;
                                     case 2: //Alterar o IBAN
-                                        break;
                                         altera_iban(&iniListaCREDITO, id);
+                                        break;
                                     case 3: //Alterar o numero de garantias
                                         altera_numero_garantias(&iniListaCREDITO, id);
                                         break;
@@ -138,8 +138,8 @@ int main(int argc, char const *argv[]) //TODO
                             case 6: //Pesquisa proposta de credito
                                 pesquisar_credito(iniListaCREDITO);
                                 break;
-                            case 7:
-                                //? FALTA JUSTIFICAÇÂO MONTANTE
+                            case 7: //Relatório para propostas de crédito
+                                relatorio_proposta(iniListaCREDITO);
                                 break;
                             case 8: //Menu Listagens
                                 do
@@ -151,7 +151,7 @@ int main(int argc, char const *argv[]) //TODO
                                         gravar_credito(iniListaCREDITO);
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
-                                        gravar_prioridade(iniListaPRIORIDADE);
+                                        gravar_prioridades(iniListaPRIORIDADE);
                                         return 0;
                                     case 1: //Listar proposta de credito por analisar
                                         listar_por_analisar(iniQueue);
@@ -169,7 +169,7 @@ int main(int argc, char const *argv[]) //TODO
                                         bubbleSort_listas_credito(iniListaCREDITO);
                                         break;
                                     case 6: //Listar os analistas por ordem decrescente do rank
-                                        bubbleSort_rank(iniListaUTILIZADOR);
+                                        listar_ranking(iniListaUTILIZADOR);
                                         break;
                                     case 7: //Voltar ao menu anterior
                                         opcao[MENU_LISTAR] = 8;
@@ -206,11 +206,17 @@ int main(int argc, char const *argv[]) //TODO
                                 gravar_credito(iniListaCREDITO);
                                 gravar_utilizador(iniListaUTILIZADOR);
                                 gravar_queues(iniQueue);
-                                gravar_prioridade(iniListaPRIORIDADE);
+                                gravar_prioridades(iniListaPRIORIDADE);
                                 return 0;
                             case 1: //Analisar proposta de credito
-                                insere_propcredito(iniListaPRIORIDADE, &iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao);
-                                gravar_credito(iniListaCREDITO);
+                                if (insere_propcredito(&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao) == 0)
+                                {
+                                    printf("Proposta de credito introduzida com sucesso!\n");
+                                }
+                                else
+                                {
+                                    printf("ERRO ao introduzir proposta de credito!\n");
+                                }
                                 break;
                             case 2:
                                 opcao[MENU_ANALISTA] = 3;
@@ -244,7 +250,7 @@ int main(int argc, char const *argv[]) //TODO
     gravar_credito(iniListaCREDITO);
     gravar_utilizador(iniListaUTILIZADOR);
     gravar_queues(iniQueue);
-    gravar_prioridade(iniListaPRIORIDADE);
+    gravar_prioridades(iniListaPRIORIDADE);
 
     return 0;
 }
