@@ -11,11 +11,14 @@
 
 //TODO
 
-CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //*
+CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *iniLista) //*
 {
     CREDITO info;
+    ELEM_CREDITO *aux = NULL;
+    QUEUES *aux2 = NULL;
+    QUEUE_CREDITO *aux3 = NULL;
     int garantiaOpcao;
-    int ctrl = 0;
+    int ctrl = 0, res = 0;
     // Input dos dados da proposta de crédito
     printf("Introduza identificador:\n");
     fflush(stdin);
@@ -86,7 +89,18 @@ CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //*
     printf("Montante:\n");
     scanf("%f", &info.montante);
     strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante)); // a carrega_prioridade retorna a prioridade entre os montantes x e y
-
+    for (aux = iniListaC; aux != NULL; aux = aux->seguinte) // soma elementos na lista de propostas analisadas
+    {
+        res++;
+    }
+    for (aux2 = queues; aux2 != NULL; aux2 = aux2->seguinte) // percorre lista de prioridades
+    {
+        for (aux3 = aux2->iniLista; aux3 != NULL; aux3 = aux3->seguinte) // percorre lista ligada de cada prioridade e soma elementos
+        {
+            res++;
+        }
+    }
+    info.numeroSequencial = res;
     return info;
 }
 
@@ -111,7 +125,7 @@ void altera_nome(ELEM_CREDITO **iniLista, int id) //*
             {
                 return;
             }
-            if (resposta == 1)
+            else if (resposta == 1)
             {
                 printf("Insira o novo nome: \n");
                 fflush(stdin);
@@ -147,7 +161,7 @@ void altera_iban(ELEM_CREDITO **iniLista, int id) //*
             {
                 return;
             }
-            if (resposta == 1)
+            else if (resposta == 1)
             {
                 printf("Insira o novo IBAN: \n");
                 fflush(stdin);
@@ -182,7 +196,7 @@ void altera_numero_garantias(ELEM_CREDITO **iniLista, int id) //*
             {
                 return;
             }
-            if (resposta == 1)
+            else if (resposta == 1)
             {
                 printf("Insira o novo numero de garantias: \n");
                 fflush(stdin);
@@ -216,9 +230,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
             scanf("%d", &resposta[0]);
             if (resposta[0] == 0)
             {
-                return;
+                break;
             }
-            if (resposta[1] == 1)
+            else if (resposta[0] == 1)
             {
                 do
                 {
@@ -477,7 +491,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                                        aux->info.garantia[i].descricao,
                                        aux->info.garantia[i].valor);
                                 printf("*--------------------------------------*\n");
-                                system("pause");
+                                //system("pause");
                             }
                         }
                         break;
@@ -517,7 +531,7 @@ void altera_montante(ELEM_CREDITO **iniLista, int id) //*
             {
                 return;
             }
-            if (resposta == 1)
+            else if (resposta == 1)
             {
                 printf("Insira o novo montante: \n");
                 fflush(stdin);
@@ -551,9 +565,9 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //*
             scanf("%d", &resposta);
             if (resposta == 0)
             {
-                return;
+                break;
             }
-            if (resposta == 1)
+            else if (resposta == 1)
             {
                 printf("Insira a nova situacao:\n**0-NEGATIVO**\n**1-POSITIVO**\n");
                 fflush(stdin);
@@ -637,7 +651,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //*
     return 0;
 }
 
-ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //*
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //!
 {
     int ctrl = 1;
     int situacao;
@@ -681,7 +695,8 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //*
     {
         if (sessao.ID == aux->info.ID)
         {
-            aux->info.rank++; // adicionar pontos após ter analisado uma proposta
+            sessao.rank++;
+            aux->info.rank = sessao.rank; // adicionar pontos após ter analisado uma proposta
         }
     }
     return info;
@@ -787,7 +802,7 @@ void relatorio_proposta(ELEM_CREDITO *iniLista) //*
     }
 
     bubbleSort_montante(iniLista);
-
+    aux = iniLista;
     while (aux != NULL)
     {
         fprintf(fp, "\n*------------PROPOSTA----------------*\n");
@@ -802,7 +817,7 @@ void relatorio_proposta(ELEM_CREDITO *iniLista) //*
         fprintf(fp, "*--------------------------------------*\n");
         for (int i = 0; i < aux->info.garantiaNumero; i++)
         {
-            fprintf(fp, "\n*----fp,--------GARANTIAS----------------*\n");
+            fprintf(fp, "\n*------------GARANTIAS----------------*\n");
             fprintf(fp, "\nGarantia #%i\n", i + 1);
             fprintf(fp, "\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f\n",
                     aux->info.garantia[i].tipo,

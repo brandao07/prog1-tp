@@ -9,7 +9,7 @@
 //! HEADER
 #include "headers.h"
 
-UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
+UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista) //*
 {
     UTILIZADOR info;
     int res = 0;
@@ -48,17 +48,16 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista)
             printf("OPCAO invalida!\n");
         }
     }
-    while (info.tipoID != 4 && info.tipoID != 5)
-        for (aux = iniLista; aux != NULL; aux = aux->seguinte)
-        {
-            res++;
-        }
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        res++;
+    }
     info.rank = 0;
     info.ID = res;
     return info;
 }
 
-void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR *info)
+void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR *info) //*
 {
     ELEM_UTILIZADOR *novo = NULL;
     novo = (ELEM_UTILIZADOR *)calloc(1, sizeof(ELEM_UTILIZADOR));
@@ -85,7 +84,7 @@ void inserir_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, 
     }
 }
 
-void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
+void gravar_utilizador(ELEM_UTILIZADOR *iniLista) //*
 {
     ELEM_UTILIZADOR *aux = NULL;
     FILE *fp = NULL;
@@ -105,7 +104,7 @@ void gravar_utilizador(ELEM_UTILIZADOR *iniLista)
     fclose(fp);
 }
 
-int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
+int verifique_username(ELEM_UTILIZADOR *iniLista, char username[]) //*
 {
     ELEM_UTILIZADOR *aux = NULL;
     //Percorre a lista
@@ -119,7 +118,7 @@ int verifique_username(ELEM_UTILIZADOR *iniLista, char username[])
     return 0;
 }
 
-int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
+int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista) //*
 {
     UTILIZADOR info;
     int res = 0;
@@ -146,7 +145,7 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     return 0;
 }
 
-UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
+UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista) //*
 {
     ELEM_UTILIZADOR *aux = NULL;
     UTILIZADOR erro;
@@ -170,20 +169,26 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista)
         }
     }
     printf("Os dados de login nao sao validos !!\n");
-    //system("pause");
+    ////system("pause");
     erro.tipoID = 0;
     return erro;
 }
 
-int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
+int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR sessao) //*
 {
     char username[20];
-    ELEM_UTILIZADOR *aux = *iniLista;
-
+    int ctrl = 0;
+    ELEM_UTILIZADOR *aux = NULL;
     printf("Insira o username a ser removido: ");
     fflush(stdin);
     scanf("%s", username);
-    while (aux != NULL && aux->info.username != username)
+    if (strcmp(username, sessao.username) == 0)
+    {
+        printf("Nao se pode remover a si mesmo!\n");
+        return -1;
+    }
+    aux = *iniLista;
+    while (aux != NULL && strcmp(aux->info.username, username) != 0)
     {
         aux = aux->seguinte;
     }
@@ -218,4 +223,167 @@ int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista)
     }
     free(aux);
     return 0;
+}
+
+void altera_nome_utilizador(ELEM_UTILIZADOR **iniLista, int id)
+{
+    int ctrl = 0;
+    ELEM_UTILIZADOR *aux = NULL;
+    int resposta;
+    char novo[100];
+
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (id == aux->info.ID)
+        {
+            printf("Utilizador #%d\n", aux->info.ID);
+            printf("Nome atual: %s\n", aux->info.nome);
+            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            fflush(stdin);
+            scanf("%d", &resposta);
+
+            if (resposta == 0)
+            {
+                return;
+            }
+            else if (resposta == 1)
+            {
+                printf("Insira o novo nome: \n");
+                fflush(stdin);
+                scanf("%[^\n]", novo);
+                strcpy(aux->info.nome, novo);
+            }
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
+    }
+}
+
+void altera_username_utilizador(ELEM_UTILIZADOR **iniLista, int id)
+{
+    int ctrl = 0;
+    ELEM_UTILIZADOR *aux = NULL;
+    int resposta;
+    char novo[100];
+
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (id == aux->info.ID)
+        {
+            printf("Utilizador #%d\n", aux->info.ID);
+            printf("Username atual: %s\n", aux->info.username);
+            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            fflush(stdin);
+            scanf("%d", &resposta);
+
+            if (resposta == 0)
+            {
+                return;
+            }
+            else if (resposta == 1)
+            {
+                printf("Insira o novo username: \n");
+                fflush(stdin);
+                scanf("%[^\n]", novo);
+                strcpy(aux->info.username, novo);
+            }
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
+    }
+}
+
+void altera_password_utilizador(ELEM_UTILIZADOR **iniLista, int id)
+{
+    int ctrl = 0;
+    ELEM_UTILIZADOR *aux = NULL;
+    int resposta;
+    char novo[100];
+
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (id == aux->info.ID)
+        {
+            printf("Utilizador #%d\n", aux->info.ID);
+            printf("Password atual: %s\n", aux->info.nome);
+            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            fflush(stdin);
+            scanf("%d", &resposta);
+
+            if (resposta == 0)
+            {
+                return;
+            }
+            else if (resposta == 1)
+            {
+                printf("Insira a nova password: \n");
+                fflush(stdin);
+                scanf("%[^\n]", novo);
+                strcpy(aux->info.nome, novo);
+            }
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
+    }
+}
+
+void altera_tipo_utilizador(ELEM_UTILIZADOR **iniLista, int id)
+{
+    int ctrl = 0;
+    ELEM_UTILIZADOR *aux = NULL;
+    int resposta, tipo;
+
+    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
+    {
+        if (id == aux->info.ID)
+        {
+            printf("Utilizador #%d\n", aux->info.ID);
+            printf("Tipo atual: %s\n", aux->info.tipo);
+            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            fflush(stdin);
+            scanf("%d", &resposta);
+
+            if (resposta == 0)
+            {
+                return;
+            }
+            else if (resposta == 1)
+            {
+                while (tipo != 4 && tipo != 5)
+                {
+                    printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
+                    fflush(stdin);
+                    scanf("%d", &tipo);
+                    if (tipo == 4)
+                    {
+                        strcpy(aux->info.tipo, "Administrador");
+                        aux->info.tipoID = 4;
+                    }
+                    else if (tipo == 5)
+                    {
+                        strcpy(aux->info.tipo, "Analista");
+                        aux->info.tipoID = 5;
+                    }
+                    else
+                    {
+                        printf("OPCAO invalida!\n");
+                    }
+                }
+            }
+            ctrl = 1;
+        }
+    }
+    if (ctrl == 0)
+    {
+        printf("Utilizador nao encontrado!\n");
+    }
 }

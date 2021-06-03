@@ -77,7 +77,7 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
     }
 }
 
-void imprime_prioridades(QUEUES **queue) //TODO
+void imprime_prioridades(QUEUES **queue) //*
 {
     QUEUES *aux = NULL;
     if (queue == NULL)

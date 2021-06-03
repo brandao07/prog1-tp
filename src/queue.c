@@ -11,8 +11,6 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
 {
     QUEUE_CREDITO *novo = NULL;
     QUEUES *aux = NULL;
-    QUEUE_CREDITO *aux2 = NULL;
-    int res = 0;
     novo = (QUEUE_CREDITO *)calloc(1, sizeof(QUEUE_CREDITO));
     //Teste para saber se o programa foi capaz de alocar memória para um nó da lista (CREDITO)
     if (novo == NULL)
@@ -27,11 +25,6 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
     {
         if (strcmp(aux->prioridade.nome, info.prioridade) == 0)
         {
-            for (aux2 = aux->iniLista; aux2 != NULL; aux2 = aux2->seguinte)
-            {
-                res++;
-            }
-            novo->info.numeroSequencial = res;
             if ((aux->iniLista == NULL) && (aux->fimLista == NULL))
             {
                 aux->iniLista = aux->fimLista = novo;
@@ -50,12 +43,18 @@ void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //*
 {
     QUEUES *novo = NULL;
     QUEUES *aux = NULL;
-
     novo = (QUEUES *)calloc(1, sizeof(QUEUES));
     if (novo == NULL)
     {
         printf("FALTA de memoria!\n");
         return;
+    }
+    for (aux = *(queue); aux != NULL; aux = aux->seguinte)
+    {
+        if (strcmp(aux->prioridade.nome, info.nome) == 0)
+        {
+            return;
+        }
     }
     novo->prioridade = info;
     novo->seguinte = NULL;
@@ -100,7 +99,7 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //*
 int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao) //*
 {
     char prioridade[20];
-    int montanteInferior, montanteSuperior;
+    float montanteInferior, montanteSuperior;
     CREDITO info;
     ANALISE analise;
     QUEUES *aux = NULL;
@@ -110,10 +109,10 @@ int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES 
     scanf("%s", prioridade);
     printf("Introduza o montante inferior da prioridade: \n");
     fflush(stdin);
-    scanf("%d", &montanteInferior);
+    scanf("%f", &montanteInferior);
     printf("Introduza o montante superior da prioridade: \n");
     fflush(stdin);
-    scanf("%d", &montanteSuperior);
+    scanf("%f", &montanteSuperior);
     /*
     Tem agora de verificar em qual das listas 
     é que se encontra a prioridade strcmp com for
@@ -122,18 +121,20 @@ int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES 
     {
         if (strcmp(prioridade, aux->prioridade.nome) == 0)
         {
-            if (montanteSuperior == aux->prioridade.montanteSuperior && montanteInferior == aux->prioridade.montanteInferior)
+            if (montanteInferior == aux->prioridade.montanteInferior && montanteSuperior == aux->prioridade.montanteSuperior)
             {
                 /* passa informacao do primeiro elemento da fila de processamento de uma determinada prioridade para o 
                 novo no que sera inserido no fim da lista de propostas de credito*/
                 info = aux->iniLista->info;
+                dequeue_credito(queue, prioridade);
+                listar_propcredito(&info);
+                analise = analisar_credito(iniListaU, sessao);
+                inserir_credito(iniLista, fimLista, &info, &analise);
+                return 0;
             }
         }
     }
-    dequeue_credito(queue, prioridade);
-    analise = analisar_credito(iniListaU, sessao);
-    inserir_credito(iniLista, fimLista, &info, &analise);
-    return 0;
+    return -1;
 }
 
 void gravar_queues(QUEUES *queue) //*
@@ -167,7 +168,6 @@ void carregar_queues(QUEUES **queue) //*
     PRIORIDADE info;
     CREDITO infoCredito;
     QUEUES *aux = NULL;
-    int res = 0;
     FILE *fp = NULL;
     fp = fopen("files/queues.dat", "r+b"); // guarda prioridade de x propostas
     FILE *fp1 = NULL;
@@ -186,7 +186,6 @@ void carregar_queues(QUEUES **queue) //*
             if (strcmp(aux->prioridade.nome, info.nome) != 0)
             {
                 enqueue_prioridade(queue, info);
-                res++;
             }
         }
     }
@@ -194,7 +193,6 @@ void carregar_queues(QUEUES **queue) //*
     {
         enqueue_credito(queue, infoCredito);
     }
-    printf("Foram lidas %d queues com sucesso!\n", res);
     fclose(fp);
     fclose(fp1);
 }

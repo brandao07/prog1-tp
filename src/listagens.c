@@ -20,7 +20,7 @@ void listar_credito(ELEM_CREDITO *aux) //*
            aux->info.prioridade);
     printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
     printf("*--------------------------------------*\n");
-    system("pause");
+    //system("pause");
     for (int i = 0; i < aux->info.garantiaNumero; i++)
     {
         printf("\n*------------GARANTIAS----------------*\n");
@@ -30,7 +30,7 @@ void listar_credito(ELEM_CREDITO *aux) //*
                aux->info.garantia[i].descricao,
                aux->info.garantia[i].valor);
         printf("*--------------------------------------*\n");
-        system("pause");
+        //system("pause");
     }
     printf("\n*------------ANALISE----------------*\n");
     printf("Analise da proposta #%d\n", aux->info.numeroSequencial);
@@ -42,7 +42,7 @@ void listar_credito(ELEM_CREDITO *aux) //*
            aux->analise.data.mes,
            aux->analise.data.ano);
     printf("*--------------------------------------*\n");
-    system("pause");
+    //system("pause");
 }
 
 void listar_por_analisar_aux(QUEUE_CREDITO *aux) //*
@@ -57,7 +57,7 @@ void listar_por_analisar_aux(QUEUE_CREDITO *aux) //*
            aux->info.prioridade);
     printf("Numero de garantias: %d\n", aux->info.garantiaNumero);
     printf("*--------------------------------------*\n");
-    system("pause");
+    //system("pause");
     for (int i = 0; i < aux->info.garantiaNumero; i++)
     {
         printf("\n*------------GARANTIAS----------------*\n");
@@ -67,36 +67,21 @@ void listar_por_analisar_aux(QUEUE_CREDITO *aux) //*
                aux->info.garantia[i].descricao,
                aux->info.garantia[i].valor);
         printf("*--------------------------------------*\n");
-        system("pause");
+        //system("pause");
     }
 }
 
-/* void imprime_credito(ELEM_CREDITO *iniLista, int id) //?
+void print_utilizador(ELEM_UTILIZADOR *aux)
 {
-    if (iniLista == NULL)
-    {
-        printf("Lista de propostas de credito vazia!\n");
-    }
-    else
-    {
-        int ctrl = 0;
-        ELEM_CREDITO *aux = NULL;
-
-        for (aux = iniLista; aux != NULL; aux = aux->seguinte)
-        {
-            if (aux->info.ID == id)
-            {
-                listar_credito(aux);
-                ctrl = 1;
-            }
-        }
-
-        if (ctrl == 0)
-        {
-            printf("Proposta nao encontrada!\n");
-        }
-    }
-} */
+    printf("\n*------------UTILIZADOR----------------*\n");
+    printf("\tID: %d\n\tUsername: %s\n\tNome: %s\n\tTipo: %s",
+           aux->info.ID,
+           aux->info.username,
+           aux->info.nome,
+           aux->info.tipo);
+    printf("\n*--------------------------------------*\n");
+    //system("pause");
+}
 
 void pesquisar_credito(ELEM_CREDITO *iniLista) //*
 {
@@ -110,7 +95,7 @@ void pesquisar_credito(ELEM_CREDITO *iniLista) //*
         char nome[100];
         ELEM_CREDITO *aux = NULL;
 
-        printf("Insira o nome da proposta de credito a pesquisar: \n");
+        printf("Insira o nome: \n");
         fflush(stdin);
         scanf("%[^\n]", nome);
 
@@ -288,7 +273,6 @@ void listar_por_analisar(QUEUES *queue) //*
 
 void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
 {
-
     if (iniLista == NULL)
     {
         printf("Nao existem propostas de credito registadas!!\n");
@@ -297,11 +281,11 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
     {
         ELEM_CREDITO *aux = NULL;
         int ctrl = 0;
-        int id;
+        char username[30];
 
-        printf("Insira o ID: ");
+        printf("Insira o username: ");
         fflush(stdin);
-        scanf("%d", &id);
+        scanf("%s", username);
 
         // primeiro ordena por data e depois por situação
         bubbleSort_data_dia(iniLista);
@@ -311,7 +295,7 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
 
         for (aux = iniLista; aux != NULL; aux = aux->seguinte)
         {
-            if (aux->info.ID == id)
+            if (strcmp(aux->analise.utilizador, username) == 0)
             {
                 listar_credito(aux);
                 ctrl = 1;
@@ -320,12 +304,12 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista) //*
 
         if (ctrl == 0)
         {
-            printf("Nao foram encontradas propostas de credito analisadas por este ID(%d)!", id);
+            printf("Nao foram encontradas propostas de credito analisadas por este ID(%s)!", username);
         }
     }
 }
 
-void listar_ranking(ELEM_UTILIZADOR *iniLista) //!VER MELHOR
+void listar_ranking(ELEM_UTILIZADOR *iniLista) //*
 {
     if (iniLista == NULL)
     {
@@ -333,7 +317,6 @@ void listar_ranking(ELEM_UTILIZADOR *iniLista) //!VER MELHOR
     }
     else
     {
-        int res = 2;
         int ctrl = 0;
         ELEM_UTILIZADOR *aux = NULL;
 
@@ -343,25 +326,66 @@ void listar_ranking(ELEM_UTILIZADOR *iniLista) //!VER MELHOR
 
         for (aux = iniLista; aux != NULL; aux = aux->seguinte)
         {
-            for (int i = 1; i <= res; i++)
+
+            if (aux->info.tipoID == 5)
             {
-                if (aux->info.tipoID == 5)
-                {
-                    printf("#%d - %s (%d) ------- %d\n",
-                           i,
-                           aux->info.nome,
-                           aux->info.ID,
-                           aux->info.rank);
-                    res++; // conta numero de utilizadores
-                    ctrl = 1;
-                }
+                printf("%s - (%d)------- #%d\n",
+                       aux->info.nome,
+                       aux->info.ID,
+                       aux->info.rank);
+                ctrl = 1;
             }
         }
+
         printf("\n*-------------------------------*\n");
+        //system("pause");
 
         if (ctrl == 0)
         {
             printf("Nao se encontram analistas registados!\n");
         }
+    }
+}
+
+void listar_utilizadores(ELEM_UTILIZADOR *iniLista, int tipo) //*
+{
+    ELEM_UTILIZADOR *aux = NULL;
+
+    if (iniLista == NULL)
+    {
+        printf("Lista de utilizadores vazia !\n");
+    }
+    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+    {
+        if (tipo == aux->info.tipoID)
+        {
+            print_utilizador(aux);
+        }
+    }
+}
+
+void listar_propcredito(CREDITO *info)
+{
+    printf("\n*------------PROPOSTA----------------*\n");
+    printf("\nProposta #%d\n", info->numeroSequencial);
+    printf("\tID: %d\n\tNome: %s\n\tIBAN: %s\n\tMontante: %.2f\n\tPrioridade: %s\n",
+           info->ID,
+           info->nome,
+           info->IBAN,
+           info->montante,
+           info->prioridade);
+    printf("Numero de garantias: %d\n", info->garantiaNumero);
+    printf("*--------------------------------------*\n");
+    //system("pause");
+    for (int i = 0; i < info->garantiaNumero; i++)
+    {
+        printf("\n*------------GARANTIAS----------------*\n");
+        printf("\nGarantia #%i\n", i + 1);
+        printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f\n",
+               info->garantia[i].tipo,
+               info->garantia[i].descricao,
+               info->garantia[i].valor);
+        printf("*--------------------------------------*\n");
+        //system("pause");
     }
 }

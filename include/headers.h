@@ -20,6 +20,9 @@
 #define MENU_ANALISTA 3
 #define MENU_ALTERA 4
 #define MENU_LISTAR 5
+#define CRUD_UTILIZADOR 6
+#define MENU_ALETRA_UTILIZADOR 7
+#define CRUD_PROP_CREDITO 8 
 
 //! ESTRUTURAS
 // Estrutra para o utilizador
@@ -133,7 +136,15 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista);
 
 UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista); // Verifica se o login foi efetuado com sucesso
 
-int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista); // Remove um utilizador
+int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR sessao); // Remove um utilizador
+
+void altera_nome_utilizador(ELEM_UTILIZADOR **iniLista, int id); // Altera nome do utilizador
+
+void altera_username_utilizador(ELEM_UTILIZADOR **iniLista, int id); // Altera username do utilizador
+
+void altera_password_utilizador(ELEM_UTILIZADOR **iniLista, int id); // Altera password do utilizador
+
+void altera_tipo_utilizador(ELEM_UTILIZADOR **iniLista, int id); // Altera o tipo de utilizador
 
 //! FUNÇÕES QUEUE.C
 
@@ -149,13 +160,17 @@ void carregar_queues(QUEUES **queue); // carrega o ficheiro queues.dat
 
 int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
 
-void enqueue_prioridade(QUEUES **queue, PRIORIDADE prioridade); // Adiciona x prioridades origem da lista
-
 //!FUNÇÕES DASHBOARD.C
 
 int menu_inicial(); // Menu incial do programa
 
 int menu_entrar(); // Menu secundário do programa
+
+int CRUD_utilizador(); // Menu do utilizador
+
+int CRUD_prop_credito(); // Menu das propostas de credito
+
+int menu_altera_utilizador(); // Menu com as opcoes de alteracao do utilizador
 
 int menu_analista(); // Menu do analista
 
@@ -181,17 +196,13 @@ void imprime_prioridades(QUEUES **queue); // Imprime para o ecrã todas as prior
 
 const char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante); // Insere prioridade em uma proposta de crédito
 
-//int conta_prioridade(ELEM_PRIORIDADE *iniLista); // Conta o número de prioridades
-
 void gravar_prioridades(ELEM_PRIORIDADE *iniLista); // Grava num ficheiro temporario as 
 
 int carrega_prioridades(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista); // Carrega do ficheiro prioridades.dat
 
 //!FUNÇÕES DO CREDITO.C
 
-CREDITO criar_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
-
-//void imprime_credito(ELEM_CREDITO *iniLista, int id); // Imprime para o ecrã uma Proposta de crédito juntamente com as suas garantias e análise
+CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
 
 void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome
 
@@ -206,6 +217,8 @@ void altera_montante(ELEM_CREDITO **iniLista, int id); // Altera o montante
 void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 
 int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista); // Apagar proposta de credito
+
+void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id); // Corrigir erro de análise
 
 void pesquisar_credito(ELEM_CREDITO *iniLista); // Pesquisar proposta de credito pelo nome
 
@@ -247,6 +260,8 @@ void bubbleSort_rank(ELEM_UTILIZADOR *iniLista); //ordena por ordem decrescente 
 
 //! FUNÇÕES LISTAGENS.C
 
+void print_utilizador(ELEM_UTILIZADOR *aux); // Listar os utilizadores de x tipo
+
 void listar_analisadas(ELEM_CREDITO *iniLista); // Listar as propostas de credito analisadas
 
 void listar_prioridade(ELEM_CREDITO *iniLista); // Listar propostas de credito por prioridade
@@ -262,3 +277,8 @@ void bubbleSort_listas_credito(ELEM_CREDITO *iniLista); // Listar todas as propo
 void listar_por_analisar_aux(QUEUE_CREDITO *aux); // Listar propostas ainda nao analisadas
 
 void listar_ranking(ELEM_UTILIZADOR *iniLista); // Listar por ordem decrescente o ranking dos analistas
+
+void listar_utilizadores(ELEM_UTILIZADOR *iniLista, int tipo); // Lista todos os utilizadores registados de x tipo
+
+void listar_propcredito(CREDITO *info); // Lista proposta antes de ser processada
+

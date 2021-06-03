@@ -11,7 +11,7 @@
 #include "headers.h"
 
 //! MAIN
-int main(int argc, char const *argv[]) //TODO
+int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
 {
     ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) //TODO
     UTILIZADOR sessao, utilizador; // sessao = para o programa saber quem é que está com a sessão iniciada
     CREDITO credito;
     int id;
-    int opcao[6]; //MENU INICIAL 0 MENU ENTRAR 1 MENU ADMIN 2 MENU ANALISTA 3 MENU ALTERA 4 MENU LISTAR 5
+    int opcao[9]; //MENU INICIAL 0 MENU ENTRAR 1 MENU ADMIN 2 MENU ANALISTA 3 MENU ALTERA 4 MENU LISTAR 5
     char ficheiroCSV[100];
 
     // Teste para ver se os parâmetros introduzidos na linha de comandos foram lidos com sucesso pelo programa
@@ -78,25 +78,73 @@ int main(int argc, char const *argv[]) //TODO
                                 gravar_queues(iniQueue);
                                 gravar_prioridades(iniListaPRIORIDADE);
                                 return 0;
-                            case 1: //Inserir utilizador
-                                utilizador = criar_utilizador(iniListaUTILIZADOR);
-                                inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
-                                break;
-                            case 2: //Remover utilizador
-                                remove_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR);
-                                break;
-                            case 3: //Inserir proposta de credito
-                                credito = criar_credito(iniListaPRIORIDADE);
-                                enqueue_credito(&iniQueue, credito);
-                                break;
-                            case 4: //Alterar proposta de credito
-                                printf("\nInsira o ID: ");
-                                fflush(stdin);
-                                scanf("%d", &id);
+                            case 1: //CRUD menu utilizador
                                 do
                                 {
-                                    opcao[MENU_ALTERA] = menu_altera();
-                                    switch (opcao[MENU_ALTERA])
+                                    opcao[CRUD_UTILIZADOR] = CRUD_utilizador();
+                                    switch (opcao[CRUD_UTILIZADOR])
+                                    {
+                                    case 0:
+                                        return 0;
+                                        break;
+
+                                    case 1: //Inserir utilizador
+                                        utilizador = criar_utilizador(iniListaUTILIZADOR);
+                                        inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
+                                        break;
+                                    case 2: //Remover utilizador
+                                        remove_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, sessao);
+                                        break;
+                                    case 3: //Menu alterar
+                                        printf("\nInsira o ID: ");
+                                        fflush(stdin);
+                                        scanf("%d", &id);
+                                        do
+                                        {
+                                            opcao[MENU_ALETRA_UTILIZADOR] = menu_altera_utilizador();
+                                            switch (opcao[MENU_ALETRA_UTILIZADOR])
+                                            {
+                                            case 0: //Sair
+                                                return 0;
+                                                break;
+                                            case 1: //Alterar nome
+                                                altera_nome_utilizador(&iniListaUTILIZADOR, id);
+                                                break;
+                                            case 2: //Alterar username
+                                                altera_username_utilizador(&iniListaUTILIZADOR, id);
+                                                break;
+                                            case 3: //Alterar password
+                                                altera_password_utilizador(&iniListaUTILIZADOR, id);
+                                                break;
+                                            case 4: //Alterar tipo
+                                                altera_tipo_utilizador(&iniListaUTILIZADOR, id);
+                                                break;
+                                            case 5: //Voltar ao menu anterior
+                                                opcao[MENU_ALETRA_UTILIZADOR] = 6;
+                                                break;
+                                            default:
+                                                printf("OPCAO invalida!\n");
+                                                opcao[MENU_ALETRA_UTILIZADOR] = -1;
+                                                break;
+                                            }
+                                        } while (opcao[MENU_ALETRA_UTILIZADOR] == -1 || (opcao[MENU_ALETRA_UTILIZADOR] > 0 && opcao[MENU_ALETRA_UTILIZADOR] < 5));
+                                        break;
+                                    case 4: //Voltar ao menu anterior
+                                        opcao[CRUD_UTILIZADOR] = 5;
+                                        break;
+                                    default:
+                                        printf("OPCAO invalida!\n");
+                                        opcao[CRUD_UTILIZADOR] = -1;
+                                        break;
+                                    }
+                                } while (opcao[CRUD_UTILIZADOR] == -1 || (opcao[CRUD_UTILIZADOR] > 0 && opcao[CRUD_UTILIZADOR] < 4));
+                                break;
+
+                            case 2: //CRUD propostas de credito
+                                do
+                                {
+                                    opcao[CRUD_PROP_CREDITO] = CRUD_prop_credito();
+                                    switch (opcao[CRUD_PROP_CREDITO])
                                     {
                                     case 0: //Sair
                                         gravar_credito(iniListaCREDITO);
@@ -104,44 +152,74 @@ int main(int argc, char const *argv[]) //TODO
                                         gravar_queues(iniQueue);
                                         gravar_prioridades(iniListaPRIORIDADE);
                                         return 0;
-                                    case 1: //Alterar o nome
-                                        altera_nome(&iniListaCREDITO, id);
                                         break;
-                                    case 2: //Alterar o IBAN
-                                        altera_iban(&iniListaCREDITO, id);
+                                    case 1: //Inserir proposta de credito
+                                        credito = criar_credito(iniListaCREDITO,iniQueue,iniListaPRIORIDADE);
+                                        enqueue_credito(&iniQueue, credito);
                                         break;
-                                    case 3: //Alterar o numero de garantias
-                                        altera_numero_garantias(&iniListaCREDITO, id);
+                                    case 2: //Alterar proposta de credito
+                                        printf("\nInsira o ID: ");
+                                        fflush(stdin);
+                                        scanf("%d", &id);
+                                        do
+                                        {
+                                            opcao[MENU_ALTERA] = menu_altera();
+                                            switch (opcao[MENU_ALTERA])
+                                            {
+                                            case 0: //Sair
+                                                gravar_credito(iniListaCREDITO);
+                                                gravar_utilizador(iniListaUTILIZADOR);
+                                                gravar_queues(iniQueue);
+                                                gravar_prioridades(iniListaPRIORIDADE);
+                                                return 0;
+                                            case 1: //Alterar o nome
+                                                altera_nome(&iniListaCREDITO, id);
+                                                break;
+                                            case 2: //Alterar o IBAN
+                                                altera_iban(&iniListaCREDITO, id);
+                                                break;
+                                            case 3: //Alterar o numero de garantias
+                                                altera_numero_garantias(&iniListaCREDITO, id);
+                                                break;
+                                            case 4: //Aletrar as garantias
+                                                altera_garantias(&iniListaCREDITO, id);
+                                                break;
+                                            case 5: //Alterar o montante
+                                                altera_montante(&iniListaCREDITO, id);
+                                                break;
+                                            case 6: //Alterar erro na analise
+                                                corrigir_erro_analise(&iniListaCREDITO, id);
+                                                break;
+                                            case 7: //Voltar ao menu anterior
+                                                opcao[MENU_ALTERA] = 8;
+                                                break;
+                                            default:
+                                                printf("OPCAO invalida!\n");
+                                                opcao[MENU_ALTERA] = -1;
+                                                break;
+                                            }
+                                        } while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 7));
                                         break;
-                                    case 4: //Aletrar as garantias
-                                        altera_garantias(&iniListaCREDITO, id);
+                                    case 3: //Apagar proposta de credito
+                                        apagar_credito(&iniListaCREDITO, &fimListaCREDITO);
                                         break;
-                                    case 5: //Alterar o montante
-                                        altera_montante(&iniListaCREDITO, id);
+                                    case 4: //Pesquisa proposta de credito
+                                        pesquisar_credito(iniListaCREDITO);
                                         break;
-                                    case 6: //Alterar erro na analise
-                                        altera_garantias(&iniListaCREDITO, id);
-                                        break;
-                                    case 7: //Voltar ao menu anterior
-                                        opcao[MENU_ALTERA] = 8;
+                                    case 5: //Voltar ao menu anterior
+                                        opcao[CRUD_PROP_CREDITO] = 6;
                                         break;
                                     default:
                                         printf("OPCAO invalida!\n");
-                                        opcao[MENU_ALTERA] = -1;
+                                        opcao[CRUD_PROP_CREDITO] = -1;
                                         break;
                                     }
-                                } while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 7));
+                                } while (opcao[CRUD_PROP_CREDITO] == -1 || (opcao[CRUD_PROP_CREDITO] > 0 && opcao[CRUD_PROP_CREDITO] < 5));
                                 break;
-                            case 5: //Apagar proposta de credito
-                                apagar_credito(&iniListaCREDITO, &fimListaCREDITO);
-                                break;
-                            case 6: //Pesquisa proposta de credito
-                                pesquisar_credito(iniListaCREDITO);
-                                break;
-                            case 7: //Relatório para propostas de crédito
+                            case 3: //Relatório para propostas de crédito
                                 relatorio_proposta(iniListaCREDITO);
                                 break;
-                            case 8: //Menu Listagens
+                            case 4: //Menu Listagens
                                 do
                                 {
                                     opcao[MENU_LISTAR] = menu_listar();
@@ -171,25 +249,31 @@ int main(int argc, char const *argv[]) //TODO
                                     case 6: //Listar os analistas por ordem decrescente do rank
                                         listar_ranking(iniListaUTILIZADOR);
                                         break;
-                                    case 7: //Voltar ao menu anterior
-                                        opcao[MENU_LISTAR] = 8;
+                                    case 7:
+                                        printf("\nInsira o tipo do utilizador(4 - ADMINISTRADOR / 5 - ANALISTA): ");
+                                        fflush(stdin);
+                                        scanf("%d", &id);
+                                        listar_utilizadores(iniListaUTILIZADOR, id);
+                                        break;
+                                    case 8: //Voltar ao menu anterior
+                                        opcao[MENU_LISTAR] = 9;
                                         break;
                                     default:
                                         printf("OPCAO invalida!\n");
                                         opcao[MENU_LISTAR] = -1;
                                         break;
                                     }
-                                } while (opcao[MENU_LISTAR] == -1 || (opcao[MENU_LISTAR] > 0 && opcao[MENU_LISTAR] < 7));
+                                } while (opcao[MENU_LISTAR] == -1 || (opcao[MENU_LISTAR] > 0 && opcao[MENU_LISTAR] < 8));
                                 break;
-                            case 9: //Voltar
-                                opcao[MENU_ADMIN] = 10;
+                            case 5: //Voltar
+                                opcao[MENU_ADMIN] = 6;
                                 break;
                             default:
                                 printf("OPCAO invalida!\n");
                                 opcao[MENU_ADMIN] = -1;
                                 break;
                             }
-                        } while (opcao[MENU_ADMIN] == -1 || (opcao[MENU_ADMIN] > 0 && opcao[MENU_ADMIN] < 9));
+                        } while (opcao[MENU_ADMIN] == -1 || (opcao[MENU_ADMIN] > 0 && opcao[MENU_ADMIN] < 5));
                     }
                     break;
 
