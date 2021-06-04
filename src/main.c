@@ -84,7 +84,11 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                     opcao[CRUD_UTILIZADOR] = CRUD_utilizador();
                                     switch (opcao[CRUD_UTILIZADOR])
                                     {
-                                    case 0:
+                                    case 0: //Sair
+                                        gravar_credito(iniListaCREDITO);
+                                        gravar_utilizador(iniListaUTILIZADOR);
+                                        gravar_queues(iniQueue);
+                                        gravar_prioridades(iniListaPRIORIDADE);
                                         return 0;
                                         break;
 
@@ -105,6 +109,10 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                             switch (opcao[MENU_ALETRA_UTILIZADOR])
                                             {
                                             case 0: //Sair
+                                                gravar_credito(iniListaCREDITO);
+                                                gravar_utilizador(iniListaUTILIZADOR);
+                                                gravar_queues(iniQueue);
+                                                gravar_prioridades(iniListaPRIORIDADE);
                                                 return 0;
                                                 break;
                                             case 1: //Alterar nome
@@ -154,7 +162,7 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                         return 0;
                                         break;
                                     case 1: //Inserir proposta de credito
-                                        credito = criar_credito(iniListaCREDITO,iniQueue,iniListaPRIORIDADE);
+                                        credito = criar_credito(iniListaCREDITO, iniQueue, iniListaPRIORIDADE);
                                         enqueue_credito(&iniQueue, credito);
                                         break;
                                     case 2: //Alterar proposta de credito

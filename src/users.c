@@ -311,7 +311,7 @@ void altera_password_utilizador(ELEM_UTILIZADOR **iniLista, int id)
         if (id == aux->info.ID)
         {
             printf("Utilizador #%d\n", aux->info.ID);
-            printf("Password atual: %s\n", aux->info.nome);
+            printf("Password atual: %s\n", aux->info.password);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
             scanf("%d", &resposta);
