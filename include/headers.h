@@ -281,4 +281,3 @@ void listar_ranking(ELEM_UTILIZADOR *iniLista); // Listar por ordem decrescente 
 void listar_utilizadores(ELEM_UTILIZADOR *iniLista, int tipo); // Lista todos os utilizadores registados de x tipo
 
 void listar_propcredito(CREDITO *info); // Lista proposta antes de ser processada
-

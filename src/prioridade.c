@@ -109,26 +109,6 @@ const char *carrega_prioridade(ELEM_PRIORIDADE *iniLista, float montante) //! re
     return '\0';
 }
 
-/* int conta_prioridade(ELEM_PRIORIDADE *iniLista) //?
-{
-    if (iniLista == NULL)
-    {
-        printf("Sem prioridades!\n");
-    }
-    else
-    {
-        int res = 0;
-        ELEM_PRIORIDADE *aux = NULL;
-
-        for (aux = iniLista; aux != NULL; aux = aux->seguinte)
-        {
-            res++;
-        }
-
-        return res;
-    }
-} */
-
 void gravar_prioridades(ELEM_PRIORIDADE *iniLista) //*
 {
     ELEM_PRIORIDADE *aux = NULL;
