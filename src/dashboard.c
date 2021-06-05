@@ -54,11 +54,10 @@ int menu_altera() //*
     printf("\n*------------MENU ALTERA PROPOSTAS CREDITO---------------*\n");
     printf("1 - Alterar o nome\n");
     printf("2 - Alterar IBAN\n");
-    printf("3 - Alterar o numero de garantias\n");
-    printf("4 - Alterar as garantias\n");
-    printf("5 - Alterar o montante\n");
-    printf("6 - Alterar erro na analise\n");
-    printf("\n7 - Voltar ao menu anterior\n");
+    printf("3 - Alterar as garantias\n");
+    printf("4 - Alterar o montante\n");
+    printf("5 - Alterar erro na analise\n");
+    printf("\n6 - Voltar ao menu anterior\n");
     printf("0 - Sair do programa\n");
     printf("*------------------------------------------------------------*\n");
     printf("\nInsira opcao: ");

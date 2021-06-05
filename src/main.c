@@ -186,27 +186,24 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                             case 2: //Alterar o IBAN
                                                 altera_iban(&iniListaCREDITO, id);
                                                 break;
-                                            case 3: //Alterar o numero de garantias
-                                                altera_numero_garantias(&iniListaCREDITO, id);
-                                                break;
-                                            case 4: //Aletrar as garantias
+                                            case 3: //Aletrar as garantias
                                                 altera_garantias(&iniListaCREDITO, id);
                                                 break;
-                                            case 5: //Alterar o montante
-                                                altera_montante(&iniListaCREDITO, id);
+                                            case 4: //Alterar o montante
+                                                altera_montante(iniListaPRIORIDADE, &iniListaCREDITO, id);
                                                 break;
-                                            case 6: //Alterar erro na analise
+                                            case 5: //Alterar erro na analise
                                                 corrigir_erro_analise(&iniListaCREDITO, id);
                                                 break;
-                                            case 7: //Voltar ao menu anterior
-                                                opcao[MENU_ALTERA] = 8;
+                                            case 6: //Voltar ao menu anterior
+                                                opcao[MENU_ALTERA] = 7;
                                                 break;
                                             default:
                                                 printf("OPCAO invalida!\n");
                                                 opcao[MENU_ALTERA] = -1;
                                                 break;
                                             }
-                                        } while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 7));
+                                        } while (opcao[MENU_ALTERA] == -1 || (opcao[MENU_ALTERA] > 0 && opcao[MENU_ALTERA] < 6));
                                         break;
                                     case 3: //Apagar proposta de credito
                                         apagar_credito(&iniListaCREDITO, &fimListaCREDITO);

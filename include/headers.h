@@ -208,11 +208,11 @@ void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome
 
 void altera_iban(ELEM_CREDITO **iniLista, int id); // Altera o IBAN
 
-void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); // Altera o numero de garantias
+//void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); // Altera o numero de garantias
 
 void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 
-void altera_montante(ELEM_CREDITO **iniLista, int id); // Altera o montante
+void altera_montante(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, int id); // Altera o montante
 
 void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 
