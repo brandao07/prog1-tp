@@ -13,6 +13,7 @@
 
 CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *iniLista) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     CREDITO info;
     ELEM_CREDITO *aux = NULL;
     QUEUES *aux2 = NULL;
@@ -22,19 +23,27 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *
     // Input dos dados da proposta de crédito
     printf("Introduza identificador:\n");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%d", &info.ID);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Introduza nome:\n");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%[^\n]", info.nome);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Introduza IBAN:\n");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%s", info.IBAN);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 
     while (ctrl != 1)
     {
         printf("Quantas garantias?\n");
         fflush(stdin);
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
         scanf("%d", &info.garantiaNumero); // maximo 5
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 
         if (info.garantiaNumero > MAX_GARANTIAS)
         {
@@ -55,7 +64,9 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *
         printf("\n[2] - Depositos");
         printf("\n[3] - Produtos\n");
         fflush(stdin);
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
         scanf("%d", &garantiaOpcao);
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 
         if (garantiaOpcao == 0)
         {
@@ -80,14 +91,20 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *
 
         printf("Descricao sobre a proposta:\n");
         fflush(stdin);
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
         scanf("%[^\n]", info.garantia[i].descricao);
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
         printf("Valor:\n");
         fflush(stdin);
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
         scanf("%f", &info.garantia[i].valor);
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     }
 
     printf("Montante:\n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%f", &info.montante);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante)); // a carrega_prioridade retorna a prioridade entre os montantes x e y
     for (aux = iniListaC; aux != NULL; aux = aux->seguinte)               // soma elementos na lista de propostas analisadas
     {
@@ -106,6 +123,7 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *
 
 void altera_nome(ELEM_CREDITO **iniLista, int id) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
@@ -119,7 +137,9 @@ void altera_nome(ELEM_CREDITO **iniLista, int id) //*
             printf("Nome atual: %s\n", aux->info.nome);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             scanf("%d", &resposta);
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 
             if (resposta == 0)
             {
@@ -129,7 +149,9 @@ void altera_nome(ELEM_CREDITO **iniLista, int id) //*
             {
                 printf("Insira o novo nome: \n");
                 fflush(stdin);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 scanf("%[^\n]", novo);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 strcpy(aux->info.nome, novo);
             }
             ctrl = 1;
@@ -143,6 +165,7 @@ void altera_nome(ELEM_CREDITO **iniLista, int id) //*
 
 void altera_iban(ELEM_CREDITO **iniLista, int id) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
@@ -156,7 +179,9 @@ void altera_iban(ELEM_CREDITO **iniLista, int id) //*
             printf("IBAN atual: %s\n", aux->info.IBAN);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             scanf("%d", &resposta);
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
             if (resposta == 0)
             {
                 return;
@@ -165,7 +190,9 @@ void altera_iban(ELEM_CREDITO **iniLista, int id) //*
             {
                 printf("Insira o novo IBAN: \n");
                 fflush(stdin);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 scanf("%[^\n]", novo);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 strcpy(aux->info.IBAN, novo);
             }
             ctrl = 1;
@@ -214,6 +241,7 @@ void altera_iban(ELEM_CREDITO **iniLista, int id) //*
 
 void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     ELEM_CREDITO *aux = NULL;
     int ctrl = 0;
     int resposta[2];
@@ -226,8 +254,10 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
             printf("Proposta #%d\n", aux->info.numeroSequencial);
             printf("Numero de garantias atual: %d\n", aux->info.garantiaNumero);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             fflush(stdin);
             scanf("%d", &resposta[0]);
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
             if (resposta[0] == 0)
             {
                 break;
@@ -244,8 +274,10 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                         {
                             printf("Esta proposta nao possui garantias!\n");
                             printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             fflush(stdin);
                             scanf("%d", &resposta[1]);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (resposta[1] == 0)
                             {
                                 break;
@@ -263,7 +295,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("\n[2] - Depositos");
                             printf("\n[3] - Produtos\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%d", &garantiaOpcao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (garantiaOpcao == 0)
                             {
                                 strcpy(aux->info.garantia[0].tipo, "Imovel");
@@ -287,10 +321,14 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             }
                             printf("Descricao sobre a proposta:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%[^\n]", aux->info.garantia[0].descricao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             printf("Valor:\n");
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             fflush(stdin);
                             scanf("%f", &(aux->info.garantia[0].valor));
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                         }
                         break;
                     case 2:
@@ -304,7 +342,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("Esta proposta apenas possui 1 garantia!\n");
                             printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%d", &resposta[1]);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (resposta[1] == 0)
                             {
                                 break;
@@ -322,7 +362,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("\n[2] - Depositos");
                             printf("\n[3] - Produtos\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%d", &garantiaOpcao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (garantiaOpcao == 0)
                             {
                                 strcpy(aux->info.garantia[1].tipo, "Imovel");
@@ -346,10 +388,14 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             }
                             printf("Descricao sobre a proposta:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%[^\n]", aux->info.garantia[1].descricao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             printf("Valor:\n");
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             fflush(stdin);
                             scanf("%f", &(aux->info.garantia[1].valor));
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                         }
                         break;
                     case 3:
@@ -363,7 +409,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("Esta proposta apenas possui 2 garantias!\n");
                             printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%d", &resposta[1]);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (resposta[1] == 0)
                             {
                                 break;
@@ -381,7 +429,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("\n[2] - Depositos");
                             printf("\n[3] - Produtos\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%d", &garantiaOpcao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (garantiaOpcao == 0)
                             {
                                 strcpy(aux->info.garantia[2].tipo, "Imovel");
@@ -405,10 +455,14 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             }
                             printf("Descricao sobre a proposta:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%[^\n]", aux->info.garantia[2].descricao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             printf("Valor:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%f", &(aux->info.garantia[2].valor));
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                         }
                         break;
                     case 4:
@@ -421,8 +475,10 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                         {
                             printf("Esta proposta apenas possui 3 garantias!\n");
                             printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             fflush(stdin);
                             scanf("%d", &resposta[1]);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (resposta[1] == 0)
                             {
                                 break;
@@ -439,8 +495,10 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("\n[1] - Fiador");
                             printf("\n[2] - Depositos");
                             printf("\n[3] - Produtos\n");
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             fflush(stdin);
                             scanf("%d", &garantiaOpcao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (garantiaOpcao == 0)
                             {
                                 strcpy(aux->info.garantia[3].tipo, "Imovel");
@@ -464,10 +522,14 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             }
                             printf("Descricao sobre a proposta:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%[^\n]", aux->info.garantia[3].descricao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             printf("Valor:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%f", &(aux->info.garantia[3].valor));
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                         }
                         break;
                     case 5:
@@ -481,7 +543,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("Esta proposta apenas possui 4 garantias!\n");
                             printf("Deseja adicionar?\n**0-NAO**\n**1-SIM**\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%d", &resposta[1]);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (resposta[1] == 0)
                             {
                                 break;
@@ -499,7 +563,9 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             printf("\n[2] - Depositos");
                             printf("\n[3] - Produtos\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%d", &garantiaOpcao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             if (garantiaOpcao == 0)
                             {
                                 strcpy(aux->info.garantia[4].tipo, "Imovel");
@@ -523,10 +589,14 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             }
                             printf("Descricao sobre a proposta:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%[^\n]", aux->info.garantia[4].descricao);
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                             printf("Valor:\n");
                             fflush(stdin);
+                            SetConsoleTextAttribute(console, FOREGROUND_RED);
                             scanf("%f", &(aux->info.garantia[4].valor));
+                            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                         }
                         break;
                     case 6:
@@ -534,7 +604,11 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                         {
                             for (int i = 0; i < aux->info.garantiaNumero; i++)
                             {
-                                printf("\n*------------GARANTIAS----------------*\n");
+                                printf("\n*------------");
+                                SetConsoleTextAttribute(console, FOREGROUND_RED);
+                                printf("GARANTIAS");
+                                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+                                printf("----------------*\n");
                                 printf("\nGarantia #%i\n", i + 1);
                                 printf("\tTipo:%s\n\tDescricao:%s\n\tValor:%.2f\n",
                                        aux->info.garantia[i].tipo,
@@ -563,6 +637,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
 
 void altera_montante(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, int id) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
@@ -575,8 +650,10 @@ void altera_montante(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, int id
             printf("Proposta #%d\n", aux->info.numeroSequencial);
             printf("Montante atual: %.2f\n", aux->info.montante);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             fflush(stdin);
             scanf("%d", &resposta);
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
             if (resposta == 0)
             {
                 return;
@@ -584,8 +661,10 @@ void altera_montante(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, int id
             else if (resposta == 1)
             {
                 printf("Insira o novo montante: \n");
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 fflush(stdin);
                 scanf("%f", &novo);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 
                 aux->info.montante = novo;
                 strcpy(aux->info.prioridade, carrega_prioridade(iniListaP, aux->info.montante));
@@ -601,6 +680,7 @@ void altera_montante(ELEM_PRIORIDADE *iniListaP, ELEM_CREDITO **iniLista, int id
 
 void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_CREDITO *aux = NULL;
     int resposta;
@@ -612,8 +692,10 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //*
         {
             printf("Situacao atual: %s\n", aux->analise.situacao);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             fflush(stdin);
             scanf("%d", &resposta);
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
             if (resposta == 0)
             {
                 break;
@@ -622,7 +704,9 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //*
             {
                 printf("Insira a nova situacao:\n**0-NEGATIVO**\n**1-POSITIVO**\n");
                 fflush(stdin);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 scanf("%d", &novo);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 switch (novo)
                 {
                 case 0:
@@ -637,16 +721,24 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id) //*
                 }
                 printf("Insira uma nova justificacao:\n");
                 fflush(stdin);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 scanf("%[^\n]", aux->analise.justificacao);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 printf("Insira um dia: \n");
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 fflush(stdin);
                 scanf("%d", &aux->analise.data.dia);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 printf("Insira um mes: \n");
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 fflush(stdin);
                 scanf("%d", &aux->analise.data.mes);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 printf("Insira um ano: \n");
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 fflush(stdin);
                 scanf("%d", &aux->analise.data.ano);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
             }
             ctrl = 1;
         }
@@ -704,6 +796,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //*
 
 ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 1;
     int situacao;
     ANALISE info;
@@ -713,7 +806,9 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //*
     {
         printf("Situacao da analise\n [0] - Negativa\n [1] - Positiva\n");
         fflush(stdin);
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
         scanf("%d", &situacao);
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
         if (situacao == 0)
         {
             strcpy(info.situacao, "Negativa");
@@ -731,17 +826,25 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //*
         }
     }
     printf("Introduza uma justificacao:\n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%[^\n]", info.justificacao);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Insira um dia: \n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%d", &info.data.dia);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Insira um mes: \n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%d", &info.data.mes);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Insira um ano: \n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%d", &info.data.ano);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
         if (sessao.ID == aux->info.ID)

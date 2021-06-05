@@ -98,6 +98,7 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //*
 
 int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     char prioridade[20];
     float montanteInferior, montanteSuperior;
     CREDITO info;
@@ -105,14 +106,20 @@ int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES 
     QUEUES *aux = NULL;
     imprime_prioridades(queue);
     printf("Introduza o tipo de prioridade que pretende analisar: \n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%s", prioridade);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Introduza o montante inferior da prioridade: \n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%f", &montanteInferior);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Introduza o montante superior da prioridade: \n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%f", &montanteSuperior);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     /*
     Tem agora de verificar em qual das listas 
     é que se encontra a prioridade strcmp com for

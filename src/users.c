@@ -11,30 +11,49 @@
 
 UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     UTILIZADOR info;
     int res = 0;
     ELEM_UTILIZADOR *aux = NULL;
     printf("Introduza um username:\n");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%s", info.username);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     while (verifique_username(iniLista, info.username) == 1)
     {
         printf("Username ja existente!\n");
         printf("\nIntroduza um username:\n");
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
         fflush(stdin);
         scanf("%s", info.username);
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     }
     printf("Introduza um nome:\n");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%[^\n]", info.nome);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Introduza uma password:\n");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%s", info.password);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     while (info.tipoID != 4 && info.tipoID != 5)
     {
-        printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
+        printf("Introduza o tipo de utilizador\n");
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
+        printf("[4]");
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+        printf(" - Administrador\n");
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
+        printf("[5]");
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+        printf(" - Analista\n");
         fflush(stdin);
+        SetConsoleTextAttribute(console, FOREGROUND_RED);
         scanf("%d", &info.tipoID);
+        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
         if (info.tipoID == 4)
         {
             strcpy(info.tipo, "Administrador");
@@ -147,16 +166,21 @@ int carregar_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista) 
 
 UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     ELEM_UTILIZADOR *aux = NULL;
     UTILIZADOR erro;
     char username[20], password[20];
 
     printf("Username: ");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%s", username);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     printf("Password: ");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%s", password);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     for (aux = *iniLista; aux != NULL; aux = aux->seguinte)
     {
         if (strcmp(username, aux->info.username) == 0)
@@ -169,19 +193,22 @@ UTILIZADOR login_utilizador(ELEM_UTILIZADOR **iniLista) //*
         }
     }
     printf("Os dados de login nao sao validos !!\n");
-    ////system("pause");
+    //system("pause");
     erro.tipoID = 0;
     return erro;
 }
 
 int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UTILIZADOR sessao) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     char username[20];
     int ctrl = 0;
     ELEM_UTILIZADOR *aux = NULL;
     printf("Insira o username a ser removido: ");
     fflush(stdin);
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
     scanf("%s", username);
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     if (strcmp(username, sessao.username) == 0)
     {
         printf("Nao se pode remover a si mesmo!\n");
@@ -227,6 +254,7 @@ int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UT
 
 void altera_nome_utilizador(ELEM_UTILIZADOR **iniLista, int id)
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_UTILIZADOR *aux = NULL;
     int resposta;
@@ -239,9 +267,10 @@ void altera_nome_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             printf("Utilizador #%d\n", aux->info.ID);
             printf("Nome atual: %s\n", aux->info.nome);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             fflush(stdin);
             scanf("%d", &resposta);
-
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
             if (resposta == 0)
             {
                 return;
@@ -249,8 +278,10 @@ void altera_nome_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             else if (resposta == 1)
             {
                 printf("Insira o novo nome: \n");
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 fflush(stdin);
                 scanf("%[^\n]", novo);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 strcpy(aux->info.nome, novo);
             }
             ctrl = 1;
@@ -264,6 +295,7 @@ void altera_nome_utilizador(ELEM_UTILIZADOR **iniLista, int id)
 
 void altera_username_utilizador(ELEM_UTILIZADOR **iniLista, int id)
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_UTILIZADOR *aux = NULL;
     int resposta;
@@ -276,8 +308,10 @@ void altera_username_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             printf("Utilizador #%d\n", aux->info.ID);
             printf("Username atual: %s\n", aux->info.username);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             fflush(stdin);
             scanf("%d", &resposta);
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 
             if (resposta == 0)
             {
@@ -286,8 +320,10 @@ void altera_username_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             else if (resposta == 1)
             {
                 printf("Insira o novo username: \n");
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 fflush(stdin);
                 scanf("%[^\n]", novo);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 strcpy(aux->info.username, novo);
             }
             ctrl = 1;
@@ -301,6 +337,7 @@ void altera_username_utilizador(ELEM_UTILIZADOR **iniLista, int id)
 
 void altera_password_utilizador(ELEM_UTILIZADOR **iniLista, int id)
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_UTILIZADOR *aux = NULL;
     int resposta;
@@ -314,7 +351,9 @@ void altera_password_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             printf("Password atual: %s\n", aux->info.password);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             scanf("%d", &resposta);
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
 
             if (resposta == 0)
             {
@@ -324,7 +363,9 @@ void altera_password_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             {
                 printf("Insira a nova password: \n");
                 fflush(stdin);
+                SetConsoleTextAttribute(console, FOREGROUND_RED);
                 scanf("%[^\n]", novo);
+                SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                 strcpy(aux->info.nome, novo);
             }
             ctrl = 1;
@@ -338,6 +379,7 @@ void altera_password_utilizador(ELEM_UTILIZADOR **iniLista, int id)
 
 void altera_tipo_utilizador(ELEM_UTILIZADOR **iniLista, int id)
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 0;
     ELEM_UTILIZADOR *aux = NULL;
     int resposta, tipo;
@@ -350,8 +392,9 @@ void altera_tipo_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             printf("Tipo atual: %s\n", aux->info.tipo);
             printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
             fflush(stdin);
+            SetConsoleTextAttribute(console, FOREGROUND_RED);
             scanf("%d", &resposta);
-
+            SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
             if (resposta == 0)
             {
                 return;
@@ -360,9 +403,19 @@ void altera_tipo_utilizador(ELEM_UTILIZADOR **iniLista, int id)
             {
                 while (tipo != 4 && tipo != 5)
                 {
-                    printf("Introduza o tipo de utilizador\n [4] - Administrador\n [5] - Analista\n");
+                    printf("Introduza o tipo de utilizador\n");
+                    SetConsoleTextAttribute(console, FOREGROUND_RED);
+                    printf("[4]");
+                    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+                    printf(" - Administrador\n");
+                    SetConsoleTextAttribute(console, FOREGROUND_RED);
+                    printf("[5]");
+                    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+                    printf(" - Analista\n");
                     fflush(stdin);
+                    SetConsoleTextAttribute(console, FOREGROUND_RED);
                     scanf("%d", &tipo);
+                    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                     if (tipo == 4)
                     {
                         strcpy(aux->info.tipo, "Administrador");

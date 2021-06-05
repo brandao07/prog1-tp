@@ -79,13 +79,18 @@ void inserir_prioridade(ELEM_PRIORIDADE **iniLista, ELEM_PRIORIDADE **fimLista, 
 
 void imprime_prioridades(QUEUES **queue) //*
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     QUEUES *aux = NULL;
     if (queue == NULL)
     {
         printf("Lista vazia!\n");
         return;
     }
-    printf("\n*------------PRIORIDADES---------------*\n");
+    printf("\n*------------");
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
+    printf("PRIORIDADES");
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+    printf("---------------*\n");
     for (aux = (*queue); aux != NULL; aux = aux->seguinte)
     {
         printf("%s;%.2f;%.2f\n", // print com estrutura CSV

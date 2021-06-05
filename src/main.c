@@ -13,6 +13,7 @@
 //! MAIN
 int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
 {
+    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
     ELEM_CREDITO *iniListaCREDITO = NULL, *fimListaCREDITO = NULL;
     ELEM_PRIORIDADE *iniListaPRIORIDADE = NULL, *fimListaPRIORIDADE = NULL;
@@ -101,7 +102,9 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                         break;
                                     case 3: //Menu alterar
                                         printf("\nInsira o ID: ");
+                                        SetConsoleTextAttribute(console, FOREGROUND_RED);
                                         fflush(stdin);
+                                        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                                         scanf("%d", &id);
                                         do
                                         {
@@ -167,8 +170,10 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                         break;
                                     case 2: //Alterar proposta de credito
                                         printf("\nInsira o ID: ");
+                                        SetConsoleTextAttribute(console, FOREGROUND_RED);
                                         fflush(stdin);
                                         scanf("%d", &id);
+                                        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                                         do
                                         {
                                             opcao[MENU_ALTERA] = menu_altera();
@@ -257,7 +262,9 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                     case 7:
                                         printf("\nInsira o tipo do utilizador(4 - ADMINISTRADOR / 5 - ANALISTA): ");
                                         fflush(stdin);
+                                        SetConsoleTextAttribute(console, FOREGROUND_RED);
                                         scanf("%d", &id);
+                                        SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
                                         listar_utilizadores(iniListaUTILIZADOR, id);
                                         break;
                                     case 8: //Voltar ao menu anterior
