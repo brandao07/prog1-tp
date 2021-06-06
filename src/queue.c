@@ -27,7 +27,8 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
         {
             if ((aux->iniLista == NULL) && (aux->fimLista == NULL))
             {
-                aux->iniLista = aux->fimLista = novo;
+                aux->fimLista = novo;
+                aux->iniLista=novo;
             }
             else
             {
@@ -74,7 +75,7 @@ void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //*
     }
 }
 
-void dequeue_credito(QUEUES **queue, char prioridade[]) //*
+void dequeue_credito(QUEUES **queue, char prioridade[]) //! ERRO
 {
     QUEUE_CREDITO *temp = NULL;
     QUEUES *aux = NULL;
@@ -96,7 +97,7 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //*
     }
 }
 
-int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR *sessao) //TODO RANK
+int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR *sessao) //*
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     char prioridade[20];
