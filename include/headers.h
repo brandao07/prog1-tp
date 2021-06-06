@@ -222,7 +222,7 @@ void corrigir_erro_analise(ELEM_CREDITO **iniLista, int id); // Corrigir erro de
 
 void pesquisar_credito(ELEM_CREDITO *iniLista); // Pesquisar proposta de credito pelo nome
 
-ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao); // Insere análise na proposta de crédito
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao); // Insere análise na proposta de crédito
 
 void gravar_credito(ELEM_CREDITO *iniLista); // grava no ficheiro propostas.dat
 

@@ -798,14 +798,14 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //*
     return 0;
 }
 
-ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //*
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao) //*
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 1;
     int situacao;
     ANALISE info;
     ELEM_UTILIZADOR *aux = NULL;
-    strcpy(info.utilizador, sessao.username);
+    strcpy(info.utilizador, sessao->username);
     while (ctrl == 1)
     {
         printf("Situacao da analise\n [0] - Negativa\n [1] - Positiva\n");
@@ -851,10 +851,10 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR sessao) //*
     SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
     {
-        if (sessao.ID == aux->info.ID)
+        if (sessao->ID == aux->info.ID)
         {
-            sessao.rank++;
-            aux->info.rank = sessao.rank; // adicionar pontos após ter analisado uma proposta
+            sessao->rank++;
+            aux->info.rank = sessao->rank; // adicionar pontos após ter analisado uma proposta
         }
     }
     return info;

@@ -135,7 +135,7 @@ int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES 
                 info = aux->iniLista->info;
                 dequeue_credito(queue, prioridade);
                 listar_propcredito(&info);
-                analise = analisar_credito(iniListaU, sessao);
+                analise = analisar_credito(iniListaU, &sessao);
                 inserir_credito(iniLista, fimLista, &info, &analise);
                 return 0;
             }
