@@ -305,7 +305,7 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                 gravar_prioridades(iniListaPRIORIDADE);
                                 return 0;
                             case 1: //Analisar proposta de credito
-                                if (insere_propcredito(&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, sessao) == 0)
+                                if (insere_propcredito(&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, &sessao) == 0)
                                 {
                                     printf("Proposta de credito introduzida com sucesso!\n");
                                 }

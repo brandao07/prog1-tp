@@ -202,7 +202,6 @@ int remove_utilizador(ELEM_UTILIZADOR **iniLista, ELEM_UTILIZADOR **fimLista, UT
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     char username[20];
-    int ctrl = 0;
     ELEM_UTILIZADOR *aux = NULL;
     printf("Insira o username a ser removido: ");
     fflush(stdin);

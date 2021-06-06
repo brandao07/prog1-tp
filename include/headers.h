@@ -158,7 +158,7 @@ void gravar_queues(QUEUES *queue); // Gravar no ficheiro queues.dat
 
 void carregar_queues(QUEUES **queue); // carrega o ficheiro queues.dat
 
-int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR sessao); // Insere no fim na lista de propostas de crédito analisadas
+int insere_propcredito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista, QUEUES **queue, ELEM_UTILIZADOR **iniListaU, UTILIZADOR *sessao); // Insere no fim na lista de propostas de crédito analisadas
 
 //!FUNÇÕES DASHBOARD.C
 
