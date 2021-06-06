@@ -1,0 +1,28 @@
+
+*------------PROPOSTA----------------*
+
+Proposta #0
+	ID: 10
+	Nome: teste
+	IBAN: 123
+	Montante: 100.00
+	Prioridade: minimo
+Numero de garantias: 1
+*--------------------------------------*
+
+*------------GARANTIAS----------------*
+
+Garantia #1
+	Tipo:Produtos
+	Descricao:teste
+	Valor:100.00
+*--------------------------------------*
+
+*------------ANALISE----------------*
+Analise da proposta #0
+
+	Analisada por: analista
+	Situacao: Positiva
+	Justificacao: teste
+	Data: 12/12/2021
+*--------------------------------------*

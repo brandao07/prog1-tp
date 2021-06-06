@@ -619,12 +619,16 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                             }
                         }
                         break;
+                    case 7:
+                        opcao = 8;
+                        break;
                     default:
                         printf("OPCAO invalida!\n");
+                        opcao=-1;
                         break;
                     }
-
-                } while (0 < opcao < 7);
+                } while (opcao == -1 || (opcao > 0 && opcao < 7));
+                break;
             }
             ctrl = 1;
         }
