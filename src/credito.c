@@ -853,8 +853,9 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao) //TODO 
     {
         if (sessao->ID == aux->info.ID)
         {
-            sessao->rank++;
-            aux->info.rank = sessao->rank; // adicionar pontos após ter analisado uma proposta
+            //sessao->rank++;
+           aux->info.rank++;
+           // aux->info.rank = sessao->rank; // adicionar pontos após ter analisado uma proposta
         }
     }
     return info;
