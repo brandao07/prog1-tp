@@ -1,0 +1,28 @@
+
+*------------PROPOSTA----------------*
+
+Proposta #0
+	ID: 1
+	Nome: Coutinho2
+	IBAN: 23123
+	Montante: 1000.00
+	Prioridade: media
+Numero de garantias: 1
+*--------------------------------------*
+
+*------------GARANTIAS----------------*
+
+Garantia #1
+	Tipo:Produtos
+	Descricao:teste
+	Valor:100.00
+*--------------------------------------*
+
+*------------ANALISE----------------*
+Analise da proposta #0
+
+	Analisada por: neves
+	Situacao: Positiva
+	Justificacao: 123123
+	Data: 23/23/1999
+*--------------------------------------*
