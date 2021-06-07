@@ -90,8 +90,8 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //! ERRO
             }
             else
             {
-                aux->iniLista = aux->iniLista->seguinte;
-                free(temp);
+                aux->iniLista = aux->iniLista->seguinte; //!
+                free(temp); //!
             }
         }
     }
