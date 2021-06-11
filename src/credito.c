@@ -204,41 +204,6 @@ void altera_iban(ELEM_CREDITO **iniLista, int id) //*
     }
 }
 
-/*void altera_numero_garantias(ELEM_CREDITO **iniLista, int id) //*
-{
-    int ctrl = 0;
-    ELEM_CREDITO *aux = NULL;
-    int resposta;
-    int novo;
-    for (aux = (*iniLista); aux != NULL; aux = aux->seguinte)
-    {
-        if (id == aux->info.ID)
-        {
-            printf("Proposta #%d\n", aux->info.numeroSequencial);
-            printf("Numero de garantias atuais: %d\n", aux->info.garantiaNumero);
-            printf("Corresponde ao inserido\n**0-NAO**\n**1-SIM**\n");
-            fflush(stdin);
-            scanf("%d", &resposta);
-            if (resposta == 0)
-            {
-                return;
-            }
-            else if (resposta == 1)
-            {
-                printf("Insira o novo numero de garantias: \n");
-                fflush(stdin);
-                scanf("%d", &novo);
-                aux->info.garantiaNumero = novo;
-            }
-            ctrl = 1;
-        }
-        if (ctrl == 0)
-        {
-            printf("Utilizador nao encontrado!\n");
-        }
-    }
-}*/
-
 void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -798,7 +763,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //*
     return 0;
 }
 
-ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao) //*
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao) //!
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 1;

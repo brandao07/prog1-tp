@@ -281,3 +281,13 @@ void listar_ranking(ELEM_UTILIZADOR *iniLista); // Listar por ordem decrescente 
 void listar_utilizadores(ELEM_UTILIZADOR *iniLista, int tipo); // Lista todos os utilizadores registados de x tipo
 
 void listar_propcredito(CREDITO *info); // Lista proposta antes de ser processada
+
+//! FUNÇÕES FREE.C
+
+void libertaLista_CREDITO(ELEM_CREDITO **iniLista); // Liberta a lista de Credito
+
+void libertaLista_PRIORIDADE(ELEM_PRIORIDADE **iniLista); // Liberta a lista de Prioridades
+
+void libertaLista_UTILIZADOR(ELEM_UTILIZADOR **iniLista); // Liberta a lista de Utilizadores
+
+void libertaLista_QUEUES(QUEUES **iniLista); // Liberta a lista de queues

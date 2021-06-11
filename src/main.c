@@ -11,7 +11,7 @@
 #include "headers.h"
 
 //! MAIN
-int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
+int main(int argc, char const *argv[]) //*
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     ELEM_UTILIZADOR *iniListaUTILIZADOR = NULL, *fimListaUTILIZADOR = NULL;
@@ -59,10 +59,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                 switch (opcao[MENU_ENTRAR])
                 {
                 case 0:
+                    //SAVE
                     gravar_credito(iniListaCREDITO);
                     gravar_utilizador(iniListaUTILIZADOR);
                     gravar_queues(iniQueue);
                     gravar_prioridades(iniListaPRIORIDADE);
+
+                    //FREE
+                    libertaLista_CREDITO(&iniListaCREDITO);
+                    libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                    libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                    libertaLista_QUEUES(&iniQueue);
                     return 0;
                 case 1:
                     sessao = login_utilizador(&iniListaUTILIZADOR);
@@ -74,10 +81,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                             switch (opcao[MENU_ADMIN])
                             {
                             case 0: //Sair
+                                //SAVE
                                 gravar_credito(iniListaCREDITO);
                                 gravar_utilizador(iniListaUTILIZADOR);
                                 gravar_queues(iniQueue);
                                 gravar_prioridades(iniListaPRIORIDADE);
+
+                                //FREE
+                                libertaLista_CREDITO(&iniListaCREDITO);
+                                libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                                libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                                libertaLista_QUEUES(&iniQueue);
                                 return 0;
                             case 1: //CRUD menu utilizador
                                 do
@@ -86,10 +100,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                     switch (opcao[CRUD_UTILIZADOR])
                                     {
                                     case 0: //Sair
+                                        //SAVE
                                         gravar_credito(iniListaCREDITO);
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
                                         gravar_prioridades(iniListaPRIORIDADE);
+
+                                        //FREE
+                                        libertaLista_CREDITO(&iniListaCREDITO);
+                                        libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                                        libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                                        libertaLista_QUEUES(&iniQueue);
                                         return 0;
                                         break;
 
@@ -112,10 +133,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                             switch (opcao[MENU_ALETRA_UTILIZADOR])
                                             {
                                             case 0: //Sair
+                                                //SAVE
                                                 gravar_credito(iniListaCREDITO);
                                                 gravar_utilizador(iniListaUTILIZADOR);
                                                 gravar_queues(iniQueue);
                                                 gravar_prioridades(iniListaPRIORIDADE);
+
+                                                //FREE
+                                                libertaLista_CREDITO(&iniListaCREDITO);
+                                                libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                                                libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                                                libertaLista_QUEUES(&iniQueue);
                                                 return 0;
                                                 break;
                                             case 1: //Alterar nome
@@ -158,10 +186,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                     switch (opcao[CRUD_PROP_CREDITO])
                                     {
                                     case 0: //Sair
+                                        //SAVE
                                         gravar_credito(iniListaCREDITO);
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
                                         gravar_prioridades(iniListaPRIORIDADE);
+
+                                        //FREE
+                                        libertaLista_CREDITO(&iniListaCREDITO);
+                                        libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                                        libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                                        libertaLista_QUEUES(&iniQueue);
                                         return 0;
                                         break;
                                     case 1: //Inserir proposta de credito
@@ -180,10 +215,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                             switch (opcao[MENU_ALTERA])
                                             {
                                             case 0: //Sair
+                                                //SAVE
                                                 gravar_credito(iniListaCREDITO);
                                                 gravar_utilizador(iniListaUTILIZADOR);
                                                 gravar_queues(iniQueue);
                                                 gravar_prioridades(iniListaPRIORIDADE);
+
+                                                //FREE
+                                                libertaLista_CREDITO(&iniListaCREDITO);
+                                                libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                                                libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                                                libertaLista_QUEUES(&iniQueue);
                                                 return 0;
                                             case 1: //Alterar o nome
                                                 altera_nome(&iniListaCREDITO, id);
@@ -236,10 +278,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                                     switch (opcao[MENU_LISTAR])
                                     {
                                     case 0: //Sair
+                                        //SAVE
                                         gravar_credito(iniListaCREDITO);
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
                                         gravar_prioridades(iniListaPRIORIDADE);
+
+                                        //FREE
+                                        libertaLista_CREDITO(&iniListaCREDITO);
+                                        libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                                        libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                                        libertaLista_QUEUES(&iniQueue);
                                         return 0;
                                     case 1: //Listar proposta de credito por analisar
                                         listar_por_analisar(iniQueue);
@@ -299,10 +348,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
                             switch (opcao[MENU_ANALISTA])
                             {
                             case 0: //Sair
+                                //SAVE
                                 gravar_credito(iniListaCREDITO);
                                 gravar_utilizador(iniListaUTILIZADOR);
                                 gravar_queues(iniQueue);
                                 gravar_prioridades(iniListaPRIORIDADE);
+
+                                //FREE
+                                libertaLista_CREDITO(&iniListaCREDITO);
+                                libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+                                libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+                                libertaLista_QUEUES(&iniQueue);
                                 return 0;
                             case 1: //Analisar proposta de credito
                                 if (insere_propcredito(&iniListaCREDITO, &fimListaCREDITO, &iniQueue, &iniListaUTILIZADOR, &sessao) == 0)
@@ -343,10 +399,17 @@ int main(int argc, char const *argv[]) //TODO FREE DE TODAS LISTAS
         }
     } while (opcao[MENU_INICIAL] == 1 || opcao[MENU_INICIAL] == 2);
 
+    //SAVE
     gravar_credito(iniListaCREDITO);
     gravar_utilizador(iniListaUTILIZADOR);
     gravar_queues(iniQueue);
     gravar_prioridades(iniListaPRIORIDADE);
+
+    //FREE
+    libertaLista_CREDITO(&iniListaCREDITO);
+    libertaLista_PRIORIDADE(&iniListaPRIORIDADE);
+    libertaLista_UTILIZADOR(&iniListaUTILIZADOR);
+    libertaLista_QUEUES(&iniQueue);
 
     return 0;
 }
