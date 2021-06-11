@@ -28,7 +28,7 @@ void enqueue_credito(QUEUES **queue, CREDITO info) //*
             if ((aux->iniLista == NULL) && (aux->fimLista == NULL))
             {
                 aux->fimLista = novo;
-                aux->iniLista=novo;
+                aux->iniLista = novo;
             }
             else
             {
@@ -75,7 +75,7 @@ void enqueue_prioridade(QUEUES **queue, PRIORIDADE info) //*
     }
 }
 
-void dequeue_credito(QUEUES **queue, char prioridade[]) //! ERRO
+void dequeue_credito(QUEUES **queue, char prioridade[]) //*
 {
     QUEUE_CREDITO *temp = NULL;
     QUEUES *aux = NULL;
@@ -90,8 +90,17 @@ void dequeue_credito(QUEUES **queue, char prioridade[]) //! ERRO
             }
             else
             {
-                aux->iniLista = aux->iniLista->seguinte; //!
-                free(temp); //!
+                if (temp->seguinte == NULL)
+                {
+                    aux->iniLista = NULL; 
+                    aux->fimLista = NULL;
+                }
+                else
+                {
+                    temp->seguinte->anterior = NULL;
+                    aux->iniLista = temp->seguinte;
+                }
+                free(temp);
             }
         }
     }

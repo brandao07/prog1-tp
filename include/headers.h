@@ -202,13 +202,11 @@ int carrega_prioridades(QUEUES **queue, ELEM_PRIORIDADE **iniLista, ELEM_PRIORID
 
 //!FUNÇÕES DO CREDITO.C
 
-CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista); // Cria uma nova proposta de crédito
 
 void altera_nome(ELEM_CREDITO **iniLista, int id); // Altera o nome
 
 void altera_iban(ELEM_CREDITO **iniLista, int id); // Altera o IBAN
-
-//void altera_numero_garantias(ELEM_CREDITO **iniLista, int id); // Altera o numero de garantias
 
 void altera_garantias(ELEM_CREDITO **iniLista, int id); // Altera as garantias
 

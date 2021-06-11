@@ -13,8 +13,6 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista) //*
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     UTILIZADOR info;
-    int res = 0;
-    ELEM_UTILIZADOR *aux = NULL;
     printf("Introduza um username:\n");
     SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
@@ -67,12 +65,7 @@ UTILIZADOR criar_utilizador(ELEM_UTILIZADOR *iniLista) //*
             printf("OPCAO invalida!\n");
         }
     }
-    for (aux = iniLista; aux != NULL; aux = aux->seguinte)
-    {
-        res++;
-    }
     info.rank = 0;
-    info.ID = res;
     return info;
 }
 

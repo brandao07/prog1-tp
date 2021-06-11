@@ -2,18 +2,18 @@
 *------------PROPOSTA----------------*
 
 Proposta #0
-	ID: 10
+	ID: 1
 	Nome: teste
-	IBAN: 123
-	Montante: 100.00
-	Prioridade: minimo
+	IBAN: teste
+	Montante: 1000.00
+	Prioridade: media
 Numero de garantias: 1
 *--------------------------------------*
 
 *------------GARANTIAS----------------*
 
 Garantia #1
-	Tipo:Produtos
+	Tipo:Fiador
 	Descricao:teste
 	Valor:100.00
 *--------------------------------------*
@@ -21,120 +21,36 @@ Garantia #1
 *------------ANALISE----------------*
 Analise da proposta #0
 
-	Analisada por: analista
+	Analisada por: teste
 	Situacao: Positiva
 	Justificacao: teste
-	Data: 12/12/2021
+	Data: 23/23/23
 *--------------------------------------*
 
 *------------PROPOSTA----------------*
 
 Proposta #1
-	ID: 11
-	Nome: teste2
-	IBAN: 123
-	Montante: 100.00
-	Prioridade: minimo
+	ID: 2
+	Nome: teste
+	IBAN: teste
+	Montante: 1000.00
+	Prioridade: media
 Numero de garantias: 1
 *--------------------------------------*
 
 *------------GARANTIAS----------------*
 
 Garantia #1
-	Tipo:Produtos
-	Descricao:teste2
+	Tipo:Fiador
+	Descricao:teste
 	Valor:100.00
 *--------------------------------------*
 
 *------------ANALISE----------------*
 Analise da proposta #1
 
-	Analisada por: analista
+	Analisada por: teste
 	Situacao: Positiva
-	Justificacao: teste2
-	Data: 12/12/2021
-*--------------------------------------*
-
-*------------PROPOSTA----------------*
-
-Proposta #2
-	ID: 12
-	Nome: teste3
-	IBAN: 123
-	Montante: 500.00
-	Prioridade: minimo
-Numero de garantias: 1
-*--------------------------------------*
-
-*------------GARANTIAS----------------*
-
-Garantia #1
-	Tipo:Imovel
-	Descricao:teste3
-	Valor:500.00
-*--------------------------------------*
-
-*------------ANALISE----------------*
-Analise da proposta #2
-
-	Analisada por: analista
-	Situacao: Positiva
-	Justificacao: teste3
-	Data: 12/1/2018
-*--------------------------------------*
-
-*------------PROPOSTA----------------*
-
-Proposta #3
-	ID: 15
-	Nome: teste5
-	IBAN: 123
-	Montante: 1400.00
-	Prioridade: media
-Numero de garantias: 1
-*--------------------------------------*
-
-*------------GARANTIAS----------------*
-
-Garantia #1
-	Tipo:Depositos
-	Descricao:teste5
-	Valor:1400.00
-*--------------------------------------*
-
-*------------ANALISE----------------*
-Analise da proposta #3
-
-	Analisada por: analista
-	Situacao: Positiva
-	Justificacao: teste5
-	Data: 30/4/2020
-*--------------------------------------*
-
-*------------PROPOSTA----------------*
-
-Proposta #4
-	ID: 5
-	Nome: teste6
-	IBAN: 123
-	Montante: 1600.00
-	Prioridade: media
-Numero de garantias: 1
-*--------------------------------------*
-
-*------------GARANTIAS----------------*
-
-Garantia #1
-	Tipo:Imovel
-	Descricao:teste6
-	Valor:1600.00
-*--------------------------------------*
-
-*------------ANALISE----------------*
-Analise da proposta #4
-
-	Analisada por: analista
-	Situacao: Positiva
-	Justificacao: teste6
-	Data: 30/6/2021
+	Justificacao: teste
+	Data: 23/23/23
 *--------------------------------------*

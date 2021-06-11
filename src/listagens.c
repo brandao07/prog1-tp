@@ -192,7 +192,13 @@ void listar_analisadas(ELEM_CREDITO *iniLista) //*
         ELEM_CREDITO *aux = NULL;
         int ctrl = 0;
         int id;
-
+        printf("\n\tPROPOSTAS POR ANALISAR:\n");
+        for (aux = iniLista; aux != NULL; aux = aux->seguinte)
+        {
+            printf("ID: %d\tPrioridade:%s\n",
+                   aux->info.ID,
+                   aux->info.prioridade);
+        }
         printf("Insira o ID: ");
         fflush(stdin);
         SetConsoleTextAttribute(console, FOREGROUND_RED);
@@ -327,8 +333,18 @@ void listar_por_analisar(QUEUES *queue) //*
     int id;
     QUEUE_CREDITO *aux_in = NULL; // ciclo for para a lista de listas duplamente ligadas (percorre linhas)
     QUEUES *aux_out = NULL;       // ciclo for para a lista duplamente ligada (percorre colunas)
+    printf("\n\tPROPOSTAS POR ANALISAR:\n");
+    for (aux_out = queue; aux_out != NULL; aux_out = aux_out->seguinte) // percorre a lista ligada de listas duplamente ligadas
+    {
+        for (aux_in = (aux_out)->iniLista; aux_in != NULL; aux_in = aux_in->seguinte) // percorre a lista duplamente ligadas
+        {
+            printf("ID: %d\tPrioridade:%s\n",
+                   aux_in->info.ID,
+                   aux_in->info.prioridade);
+        }
+    }
 
-    printf("Insira o ID: ");
+    printf("\nInsira o ID: ");
     SetConsoleTextAttribute(console, FOREGROUND_RED);
     fflush(stdin);
     scanf("%d", &id);

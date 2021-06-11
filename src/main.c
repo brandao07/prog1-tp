@@ -10,6 +10,38 @@
 //! HEADER
 #include "headers.h"
 
+int idUtilizador, idCredito;
+
+// Grava quantidade total de IDs
+void gravaConfig()
+{
+    FILE *fp = NULL;
+    fp = fopen("files/config.txt", "w+");
+
+    if (fp == NULL) // Teste para ver se houve problema ao criar o ficheiro
+    {
+        printf("ERRO ao criar o ficheiro config.txt!\n");
+        return;
+    }
+    fprintf(fp, "ID UTILIZADORES: %d\nID PROPOSTAS: %d", idUtilizador, idCredito);
+    fclose(fp);
+}
+
+// Carrega quantidade total de IDs
+void carregaConfig()
+{
+    FILE *fp = NULL;
+    fp = fopen("files/config.txt", "r+");
+
+    if (fp == NULL) // Teste para ver se houve problema ao carregar o ficheiro
+    {
+        printf("ERRO ao carregar o ficheiro config.txt!\n");
+        return;
+    }
+    fscanf(fp, "ID UTILIZADORES: %d\nID PROPOSTAS: %d", &idUtilizador, &idCredito);
+    fclose(fp);
+}
+
 //! MAIN
 int main(int argc, char const *argv[]) //*
 {
@@ -36,7 +68,7 @@ int main(int argc, char const *argv[]) //*
         recebe_csv(&iniQueue, &iniListaPRIORIDADE, &fimListaPRIORIDADE, ficheiroCSV); // Carrega para o programa toda a informação do ficheiro csvS
         printf("Ficheiro CSV carregado com sucesso!\n\n");
     }
-
+    carregaConfig();
     carregar_queues(&iniQueue);
     carregar_credito(&iniListaCREDITO, &fimListaCREDITO);
     do
@@ -50,8 +82,11 @@ int main(int argc, char const *argv[]) //*
         case 1:
             if (carregar_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR) == -1)
             {
+                idUtilizador = 0;
                 utilizador = criar_utilizador(iniListaUTILIZADOR);
+                utilizador.ID = idUtilizador;
                 inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
+                idUtilizador++;
             }
             do
             {
@@ -64,6 +99,7 @@ int main(int argc, char const *argv[]) //*
                     gravar_utilizador(iniListaUTILIZADOR);
                     gravar_queues(iniQueue);
                     gravar_prioridades(iniListaPRIORIDADE);
+                    gravaConfig();
 
                     //FREE
                     libertaLista_CREDITO(&iniListaCREDITO);
@@ -86,6 +122,7 @@ int main(int argc, char const *argv[]) //*
                                 gravar_utilizador(iniListaUTILIZADOR);
                                 gravar_queues(iniQueue);
                                 gravar_prioridades(iniListaPRIORIDADE);
+                                gravaConfig();
 
                                 //FREE
                                 libertaLista_CREDITO(&iniListaCREDITO);
@@ -105,6 +142,7 @@ int main(int argc, char const *argv[]) //*
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
                                         gravar_prioridades(iniListaPRIORIDADE);
+                                        gravaConfig();
 
                                         //FREE
                                         libertaLista_CREDITO(&iniListaCREDITO);
@@ -116,7 +154,9 @@ int main(int argc, char const *argv[]) //*
 
                                     case 1: //Inserir utilizador
                                         utilizador = criar_utilizador(iniListaUTILIZADOR);
+                                        utilizador.ID = idUtilizador;
                                         inserir_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, &utilizador);
+                                        idUtilizador++;
                                         break;
                                     case 2: //Remover utilizador
                                         remove_utilizador(&iniListaUTILIZADOR, &fimListaUTILIZADOR, sessao);
@@ -138,6 +178,7 @@ int main(int argc, char const *argv[]) //*
                                                 gravar_utilizador(iniListaUTILIZADOR);
                                                 gravar_queues(iniQueue);
                                                 gravar_prioridades(iniListaPRIORIDADE);
+                                                gravaConfig();
 
                                                 //FREE
                                                 libertaLista_CREDITO(&iniListaCREDITO);
@@ -191,6 +232,7 @@ int main(int argc, char const *argv[]) //*
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
                                         gravar_prioridades(iniListaPRIORIDADE);
+                                        gravaConfig();
 
                                         //FREE
                                         libertaLista_CREDITO(&iniListaCREDITO);
@@ -200,8 +242,10 @@ int main(int argc, char const *argv[]) //*
                                         return 0;
                                         break;
                                     case 1: //Inserir proposta de credito
-                                        credito = criar_credito(iniListaCREDITO, iniQueue, iniListaPRIORIDADE);
+                                        credito = criar_credito(iniListaPRIORIDADE);
+                                        credito.numeroSequencial = idCredito;
                                         enqueue_credito(&iniQueue, credito);
+                                        idCredito++;
                                         break;
                                     case 2: //Alterar proposta de credito
                                         printf("\nInsira o ID: ");
@@ -220,6 +264,7 @@ int main(int argc, char const *argv[]) //*
                                                 gravar_utilizador(iniListaUTILIZADOR);
                                                 gravar_queues(iniQueue);
                                                 gravar_prioridades(iniListaPRIORIDADE);
+                                                gravaConfig();
 
                                                 //FREE
                                                 libertaLista_CREDITO(&iniListaCREDITO);
@@ -283,6 +328,7 @@ int main(int argc, char const *argv[]) //*
                                         gravar_utilizador(iniListaUTILIZADOR);
                                         gravar_queues(iniQueue);
                                         gravar_prioridades(iniListaPRIORIDADE);
+                                        gravaConfig();
 
                                         //FREE
                                         libertaLista_CREDITO(&iniListaCREDITO);
@@ -353,6 +399,7 @@ int main(int argc, char const *argv[]) //*
                                 gravar_utilizador(iniListaUTILIZADOR);
                                 gravar_queues(iniQueue);
                                 gravar_prioridades(iniListaPRIORIDADE);
+                                gravaConfig();
 
                                 //FREE
                                 libertaLista_CREDITO(&iniListaCREDITO);
@@ -404,6 +451,7 @@ int main(int argc, char const *argv[]) //*
     gravar_utilizador(iniListaUTILIZADOR);
     gravar_queues(iniQueue);
     gravar_prioridades(iniListaPRIORIDADE);
+    gravaConfig();
 
     //FREE
     libertaLista_CREDITO(&iniListaCREDITO);

@@ -9,17 +9,12 @@
 //! HEADER
 #include "headers.h"
 
-//TODO
-
-CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *iniLista) //*
+CREDITO criar_credito(ELEM_PRIORIDADE *iniLista) //*
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     CREDITO info;
-    ELEM_CREDITO *aux = NULL;
-    QUEUES *aux2 = NULL;
-    QUEUE_CREDITO *aux3 = NULL;
     int garantiaOpcao;
-    int ctrl = 0, res = 0;
+    int ctrl = 0;
     // Input dos dados da proposta de crédito
     printf("Introduza identificador:\n");
     fflush(stdin);
@@ -106,18 +101,6 @@ CREDITO criar_credito(ELEM_CREDITO *iniListaC, QUEUES *queues, ELEM_PRIORIDADE *
     scanf("%f", &info.montante);
     SetConsoleTextAttribute(console, FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
     strcpy(info.prioridade, carrega_prioridade(iniLista, info.montante)); // a carrega_prioridade retorna a prioridade entre os montantes x e y
-    for (aux = iniListaC; aux != NULL; aux = aux->seguinte)               // soma elementos na lista de propostas analisadas
-    {
-        res++;
-    }
-    for (aux2 = queues; aux2 != NULL; aux2 = aux2->seguinte) // percorre lista de prioridades
-    {
-        for (aux3 = aux2->iniLista; aux3 != NULL; aux3 = aux3->seguinte) // percorre lista ligada de cada prioridade e soma elementos
-        {
-            res++;
-        }
-    }
-    info.numeroSequencial = res;
     return info;
 }
 
@@ -589,7 +572,7 @@ void altera_garantias(ELEM_CREDITO **iniLista, int id) //*
                         break;
                     default:
                         printf("OPCAO invalida!\n");
-                        opcao=-1;
+                        opcao = -1;
                         break;
                     }
                 } while (opcao == -1 || (opcao > 0 && opcao < 7));
@@ -763,7 +746,7 @@ int apagar_credito(ELEM_CREDITO **iniLista, ELEM_CREDITO **fimLista) //*
     return 0;
 }
 
-ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao) //!
+ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao) //*
 {
     HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
     int ctrl = 1;
@@ -818,9 +801,8 @@ ANALISE analisar_credito(ELEM_UTILIZADOR **iniLista, UTILIZADOR *sessao) //!
     {
         if (sessao->ID == aux->info.ID)
         {
-            //sessao->rank++;
-           aux->info.rank++;
-           // aux->info.rank = sessao->rank; // adicionar pontos após ter analisado uma proposta
+            aux->info.rank++;
+            sessao->rank = aux->info.rank;
         }
     }
     return info;
